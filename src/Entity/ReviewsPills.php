@@ -93,6 +93,7 @@ class ReviewsPills
     /**
      * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="reviews")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"pill_reviews"})
      */
     private $user;
 
