@@ -6,6 +6,7 @@ use App\Repository\PillsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=PillsRepository::class)
@@ -16,61 +17,87 @@ class Pills
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"reviews"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * 
+     * @Groups({"reviews"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     * 
+     * @Groups({"reviews"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=128)
+     * 
+     * @Groups({"reviews"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="smallint")
+     * 
+     * @Groups({"reviews"})
      */
     private $reimbursed;
 
     /**
      * @ORM\Column(type="smallint")
+     * 
+     * @Groups({"reviews"})
      */
     private $generation;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * 
+     * @Groups({"reviews"})
+     * 
      */
     private $type;
 
     /**
      * @ORM\Column(type="string", length=3)
+     * 
+     * @Groups({"reviews"})
      */
     private $interruption;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * 
+     * @Groups({"reviews"})
      */
     private $laboratory;
 
     /**
      * @ORM\Column(type="smallint")
+     * @Groups({"reviews"})
+     * 
      */
     private $delay_intake;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * 
+     * @Groups({"reviews"})
+     * 
      */
     private $composition;
 
     /**
      * @ORM\Column(type="datetime")
+     * 
+     * @Groups({"reviews"})
      */
     private $date;
 
@@ -91,6 +118,7 @@ class Pills
 
     /**
      * @ORM\OneToMany(targetEntity=ReviewsPills::class, mappedBy="pill")
+     * 
      */
     private $reviews;
 

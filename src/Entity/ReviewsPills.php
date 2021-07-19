@@ -15,21 +15,21 @@ class ReviewsPills
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups("reviews") 
+     * @Groups({"reviews"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
      * 
-     * @Groups("reviews")
+     * @Groups({"reviews"})
      */
     private $rate;
 
     /**
      * @ORM\Column(type="text")
      * 
-     * @Groups("reviews")
+     * @Groups({"reviews"})
      * 
      */
     private $content;
@@ -37,78 +37,78 @@ class ReviewsPills
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups("reviews")
+     * @Groups({"reviews"})
      */
     private $acne;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups("reviews")
+     * @Groups({"reviews"})
      */
     private $libido;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups("reviews")
+     * @Groups({"reviews"})
      */
     private $migraine;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups("reviews") 
+     * @Groups({"reviews"})
      */
     private $weight;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups("reviews")
+     * @Groups({"reviews"})
      */
     private $breast_pain;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups("reviews")
+     * @Groups({"reviews"})
      */
     private $nausea;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups("reviews")
+     * @Groups({"reviews"})
      */
     private $pms;
 
     /**
      * @ORM\Column(type="string", length=3)
      * 
-     * 
-     * @Groups("reviews") 
+     * @Groups({"reviews"})
      */
     private $perturbation_period;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      * 
-     
+     * @Groups({"reviews"})
+     * 
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      * 
-     
      */
     private $updated_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=Pills::class, inversedBy="reviews")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups("reviews")
+     * 
+     * @Groups({"reviews"})
      */
     private $pill;
 
@@ -116,7 +116,8 @@ class ReviewsPills
      * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="reviews")
      * @ORM\JoinColumn(nullable=false)
      * 
-     * @Groups("reviews") 
+     * @Groups({"reviews"})
+     *
      */
     private $user;
 

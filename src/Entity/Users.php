@@ -6,6 +6,7 @@ use App\Repository\UsersRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UsersRepository::class)
@@ -16,21 +17,29 @@ class Users
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"reviews"})
+     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * 
+     * @Groups({"reviews"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"reviews"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="smallint")
+     * 
+     * @Groups({"reviews"})
      */
     private $age;
 
@@ -51,16 +60,19 @@ class Users
 
     /**
      * @ORM\Column(type="string", length=128)
+     * @Groups({"reviews"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=3)
+     * @Groups({"reviews"})
      */
     private $smoker;
 
     /**
      * @ORM\Column(type="string", length=3)
+     * @Groups({"reviews"})
      */
     private $children;
 
@@ -76,6 +88,7 @@ class Users
 
     /**
      * @ORM\OneToMany(targetEntity=ReviewsPills::class, mappedBy="user", orphanRemoval=true)
+     * 
      */
     private $reviews;
 
