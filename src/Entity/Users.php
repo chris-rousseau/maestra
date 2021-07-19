@@ -21,6 +21,7 @@ class Users
 
     /**
      * @ORM\Column(type="string", length=64)
+     * 
      */
     private $firstname;
 

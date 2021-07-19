@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReviewsPillsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ReviewsPillsRepository::class)
@@ -14,16 +15,19 @@ class ReviewsPills
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"pill_reviews"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"pill_reviews"})
      */
     private $rate;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"pill_reviews"})
      */
     private $content;
 
@@ -64,16 +68,19 @@ class ReviewsPills
 
     /**
      * @ORM\Column(type="string", length=3)
+     * @Groups({"pill_reviews"})
      */
     private $perturbation_period;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups({"pill_reviews"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @Groups({"pill_reviews"})
      */
     private $updated_at;
 
@@ -202,12 +209,12 @@ class ReviewsPills
         return $this;
     }
 
-    public function getPerturbationPeriod(): ?int
+    public function getPerturbationPeriod(): ?string
     {
         return $this->perturbation_period;
     }
 
-    public function setPerturbationPeriod(int $perturbation_period): self
+    public function setPerturbationPeriod(string $perturbation_period): self
     {
         $this->perturbation_period = $perturbation_period;
 
