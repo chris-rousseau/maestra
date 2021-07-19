@@ -77,6 +77,18 @@ class ReviewsPills
      */
     private $updated_at;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Pills::class, inversedBy="reviews")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $pill;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="reviews")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -222,6 +234,30 @@ class ReviewsPills
     public function setUpdatedAt(?\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getPill(): ?Pills
+    {
+        return $this->pill;
+    }
+
+    public function setPill(?Pills $pill): self
+    {
+        $this->pill = $pill;
+
+        return $this;
+    }
+
+    public function getUser(): ?Users
+    {
+        return $this->user;
+    }
+
+    public function setUser(?Users $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
