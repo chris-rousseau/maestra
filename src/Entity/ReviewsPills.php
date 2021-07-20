@@ -3,8 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\ReviewsPillsRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=ReviewsPillsRepository::class)
  */
@@ -28,7 +30,7 @@ class ReviewsPills
 
     /**
      * @ORM\Column(type="text")
-     * 
+     * @Assert\NotBlank
      * @Groups({"reviews"})
      * 
      */
@@ -91,7 +93,7 @@ class ReviewsPills
     private $perturbation_period;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      * 
      * @Groups({"reviews"})
      * 
@@ -99,13 +101,13 @@ class ReviewsPills
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      * 
      */
     private $updated_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Pills::class, inversedBy="reviews")
+     * @ORM\ManyToOne(targetEntity=Pills::class, inversedBy="reviews", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * 
      * @Groups({"reviews"})
@@ -113,13 +115,19 @@ class ReviewsPills
     private $pill;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="reviews")
+     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="reviews", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * 
      * @Groups({"reviews"})
      *
      */
     private $user;
+
+    public function __construct()
+    {
+        $this->created_at = new DateTime();
+        $this->updated_at = new DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -246,24 +254,24 @@ class ReviewsPills
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
 
