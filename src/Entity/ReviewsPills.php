@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ReviewsPillsRepository;
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -93,7 +93,7 @@ class ReviewsPills
     private $perturbation_period;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime_immutable")
      * 
      * @Groups({"reviews"})
      * 
@@ -101,7 +101,7 @@ class ReviewsPills
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      * 
      */
     private $updated_at;
@@ -125,8 +125,8 @@ class ReviewsPills
 
     public function __construct()
     {
-        $this->created_at = new DateTime();
-        $this->updated_at = new DateTime();
+        $this->created_at = new DateTimeImmutable();
+        $this->updated_at = new DateTimeImmutable();
     }
 
     public function getId(): ?int

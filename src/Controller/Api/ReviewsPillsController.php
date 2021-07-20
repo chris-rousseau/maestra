@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use App\Entity\ReviewsPills;
 use App\Repository\ReviewsPillsRepository;
@@ -52,8 +52,6 @@ class ReviewsPillsController extends AbstractController
         $review = $serializer->deserialize($JsonData, ReviewsPills::class, 'json');
         //dd($review);
 
-        dd($review->getPill());
-
         // Verifying that all validation criterias of entity ReviewsPills are okay (Assert\NotBlank, ...)
         // will display an array of violations ("this value should not be blank")
         $errors = $validator->validate($review);
@@ -82,8 +80,6 @@ class ReviewsPillsController extends AbstractController
                 201 // 201 - Created https://developer.mozilla.org/fr/docs/Web/HTTP/Status/201
             );
         }
-
-        
     }
 
     /**
@@ -131,14 +127,7 @@ class ReviewsPillsController extends AbstractController
         $em->remove($review);
         $em->flush();
 
-        // return $this->json([
-        //     'message' => 'Suppression de la catégorie ' . $category->getName()
-        // ], 204);
-
         // Code 204 : https://developer.mozilla.org/fr/docs/Web/HTTP/Status/204
-        return $this->json('', 204);
+        return $this->json('Suppression de l\'avis', 204);
     }
-
-
-
 }
