@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\ReviewsPillsRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Bundle\FixturesBundle;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=ReviewsPillsRepository::class)
  */
@@ -15,87 +17,116 @@ class ReviewsPills
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"pill_reviews"})
+     * 
+     * @Groups({"reviews", "pill_reviews"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"pill_reviews"})
+     * 
+     * @Groups({"reviews", "pill_reviews"})
      */
     private $rate;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"pill_reviews"})
+     * @Assert\NotBlank
+     * @Groups({"reviews", "pill_reviews"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="smallint")
+     * 
+     * @Groups({"reviews"})
      */
     private $acne;
 
     /**
      * @ORM\Column(type="smallint")
+     * 
+     * @Groups({"reviews"})
      */
     private $libido;
 
     /**
      * @ORM\Column(type="smallint")
+     * 
+     * @Groups({"reviews"})
      */
     private $migraine;
 
     /**
      * @ORM\Column(type="smallint")
+     * 
+     * @Groups({"reviews"})
      */
     private $weight;
 
     /**
      * @ORM\Column(type="smallint")
+     * 
+     * @Groups({"reviews"})
      */
     private $breast_pain;
 
     /**
      * @ORM\Column(type="smallint")
+     * 
+     * @Groups({"reviews"})
      */
     private $nausea;
 
     /**
      * @ORM\Column(type="smallint")
+     * 
+     * @Groups({"reviews"})
      */
     private $pms;
 
     /**
      * @ORM\Column(type="string", length=3)
-     * @Groups({"pill_reviews"})
+     * 
+     *  @Groups({"reviews", "pill_reviews"})
      */
     private $perturbation_period;
 
     /**
      * @ORM\Column(type="datetime_immutable")
-     * @Groups({"pill_reviews"})
+     * 
+     * @Groups({"reviews", "pill_reviews"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
+     * 
      */
     private $updated_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Pills::class, inversedBy="reviews")
+     * @ORM\ManyToOne(targetEntity=Pills::class, inversedBy="reviews", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * 
+     * @Groups({"reviews"})
      */
     private $pill;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="reviews")
+     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="reviews", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"pill_reviews"})
+     * 
+     * @Groups({"reviews", "pill_reviews"})
+     *
      */
     private $user;
 
+    public function __construct()
+    {
+        $this->created_at = new DateTimeImmutable();
+        $this->updated_at = new DateTimeImmutable();
+    }
     /**
      * @ORM\Column(type="smallint")
      */

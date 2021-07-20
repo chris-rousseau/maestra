@@ -19,12 +19,16 @@ class Users
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"reviews"})
+     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"pill_reviews"})
+     * 
+     * @Groups({"reviews", "pill_reviews"})
      */
     private $firstname;
 
@@ -35,7 +39,8 @@ class Users
 
     /**
      * @ORM\Column(type="smallint")
-     * @Groups({"pill_reviews"})
+     * 
+     * @Groups({"reviews", "pill_reviews"})
      */
     private $age;
 
@@ -56,18 +61,19 @@ class Users
 
     /**
      * @ORM\Column(type="string", length=128)
+     * @Groups({"reviews"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=3)
-     * @Groups({"pill_reviews"})
+     * @Groups({"reviews", "pill_reviews"})
      */
     private $smoker;
 
     /**
      * @ORM\Column(type="string", length=3)
-     * @Groups({"pill_reviews"})
+     * @Groups({"reviews", "pill_reviews"})
      */
     private $children;
 
@@ -83,6 +89,7 @@ class Users
 
     /**
      * @ORM\OneToMany(targetEntity=ReviewsPills::class, mappedBy="user", orphanRemoval=true)
+     * 
      */
     private $reviews;
 

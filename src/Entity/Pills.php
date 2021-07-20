@@ -17,67 +17,77 @@ class Pills
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"pills"})
+     * 
+     * @Groups({"reviews", "pills"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"pills"})
+     * 
+     * @Groups({"reviews", "pills"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"pills"})
+     * 
+     * @Groups({"reviews", "pills"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=128)
-     * @Groups({"pills"})
+     * 
+     * @Groups({"reviews", "pills"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="smallint")
-     * @Groups({"pills"})
+     * 
+     * @Groups({"reviews", "pills"})
      */
     private $reimbursed;
 
     /**
      * @ORM\Column(type="smallint")
-     * @Groups({"pills"})
+     * 
+     * @Groups({"reviews", "pills"})
      */
     private $generation;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
-     * @Groups({"pills"})
+     * 
+     * @Groups({"reviews", "pills"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="string", length=3)
-     * @Groups({"pills"})
+     * 
+     * @Groups({"reviews", "pills"})
      */
     private $interruption;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"pills"})
+     * 
+     * @Groups({"reviews", "pills"})
      */
     private $laboratory;
 
     /**
      * @ORM\Column(type="smallint")
-     * @Groups({"pills"})
+     * @Groups({"reviews", "pills"})
      */
     private $delay_intake;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"pills"})
+     * 
+     * @Groups({"reviews", "pills"})
      */
     private $composition;
 
@@ -101,6 +111,7 @@ class Pills
 
     /**
      * @ORM\OneToMany(targetEntity=ReviewsPills::class, mappedBy="pill")
+     * 
      */
     private $reviews;
 
