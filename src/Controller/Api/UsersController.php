@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use App\Entity\Users;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,11 +20,14 @@ class UsersController extends AbstractController
      */
     public function register(Request $request, SerializerInterface $serializer, ValidatorInterface $validator): Response
     {
+        // We get the content of the request
         $JsonData = $request->getContent();
 
+        // We transform the json into Users object
         $user = $serializer->deserialize($JsonData, Users::class, 'json');
         $errors = $validator->validate($user);
 
+        // If there is at least one error, we return a 500
         if (count($errors) > 0) {
             $errorsString = (string) $errors;
 
@@ -35,16 +38,12 @@ class UsersController extends AbstractController
                 500
             );
         } else {
+            // If there is no error, we add in BDD
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
             return $this->json('L\'utilisateur ' . $user->getFirstname() . ' ' .  $user->getLastname() . ' a bien été ajouté !', 201);
         }
-
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/UsersController.php',
-        ]);
     }
 }

@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PillsController extends AbstractController
 {
     /**
+     * Displays all pills
      * @Route("", name="list", methods={"GET"})
      */
     public function list(PillsRepository $pillsRepository): Response
@@ -27,6 +28,7 @@ class PillsController extends AbstractController
     }
 
     /**
+     * Displays the details of a pill
      * @Route("/{id}", name="details", methods={"GET"})
      */
     public function details(Pills $pills): Response
@@ -37,6 +39,7 @@ class PillsController extends AbstractController
     }
 
     /**
+     * Displays all the reviews of a pill
      * @Route("/{id}/review", name="reviews", methods={"GET"})
      */
     public function reviews(Pills $pills, ReviewsPillsRepository $reviewsPillsRepository): Response
