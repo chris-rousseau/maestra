@@ -82,12 +82,6 @@ class Pills
     private $composition;
 
     /**
-     * @ORM\Column(type="datetime")
-     * @Groups({"pills"})
-     */
-    private $date;
-
-    /**
      * @ORM\Column(type="string", length=100, nullable=true)
      * @Groups({"pills"})
      */
@@ -109,6 +103,21 @@ class Pills
      * @ORM\OneToMany(targetEntity=ReviewsPills::class, mappedBy="pill")
      */
     private $reviews;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $count_reviews;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $generic;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $posology;
 
     public function __construct()
     {
@@ -240,18 +249,6 @@ class Pills
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -314,6 +311,42 @@ class Pills
                 $review->setPill(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCountReviews(): ?int
+    {
+        return $this->count_reviews;
+    }
+
+    public function setCountReviews(int $count_reviews): self
+    {
+        $this->count_reviews = $count_reviews;
+
+        return $this;
+    }
+
+    public function getGeneric(): ?string
+    {
+        return $this->generic;
+    }
+
+    public function setGeneric(?string $generic): self
+    {
+        $this->generic = $generic;
+
+        return $this;
+    }
+
+    public function getPosology(): ?string
+    {
+        return $this->posology;
+    }
+
+    public function setPosology(string $posology): self
+    {
+        $this->posology = $posology;
 
         return $this;
     }
