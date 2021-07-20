@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -51,6 +52,8 @@ class ReviewsPillsController extends AbstractController
         $review = $serializer->deserialize($JsonData, ReviewsPills::class, 'json');
         //dd($review);
 
+        dd($review->getPill());
+
         // Verifying that all validation criterias of entity ReviewsPills are okay (Assert\NotBlank, ...)
         // will display an array of violations ("this value should not be blank")
         $errors = $validator->validate($review);
@@ -81,6 +84,59 @@ class ReviewsPillsController extends AbstractController
         }
 
         
+    }
+
+    /**
+     * Method updating partially (patch) or entirely (put) the review
+     * @Route("/{id}", name="update", methods={"PUT|PATCH"})
+     *
+     * @return void
+     */
+    public function update(ReviewsPills $review, Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
+    {
+        $jsonData = $request->getContent();
+        $review = $serializer->deserialize($jsonData, ReviewsPills::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $review]);
+        //dd($review);
+
+        $errors = $validator->validate($review);
+
+        if (count($errors) == 0) {
+         
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->json([
+                'message' => 'La review a bien été mise à jour'
+            ]);
+        }
+
+        // 400 : code d'erreur BAD request
+        // à retourner si le client a mal formatée sa requete
+        return $this->json([
+            'errors' => (string) $errors
+            //(string) $errors => convertir un tableau d'objet en string, 
+        ], 400);
+
+    }
+
+    /**
+     * Removal of a review in the DB
+     *
+     * @Route("/{id}", name="delete", methods={"DELETE"})
+     * 
+     * @return Response
+     */
+    public function delete(ReviewsPills $review)
+    {  
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($review);
+        $em->flush();
+
+        // return $this->json([
+        //     'message' => 'Suppression de la catégorie ' . $category->getName()
+        // ], 204);
+
+        // Code 204 : https://developer.mozilla.org/fr/docs/Web/HTTP/Status/204
+        return $this->json('', 204);
     }
 
 
