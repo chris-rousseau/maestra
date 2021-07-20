@@ -18,101 +18,94 @@ class Pills
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "pills"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "pills"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "pills"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=128)
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "pills"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "pills"})
      */
     private $reimbursed;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "pills"})
      */
     private $generation;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
      * 
-     * @Groups({"reviews"})
-     * 
+     * @Groups({"reviews", "pills"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="string", length=3)
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "pills"})
      */
     private $interruption;
 
     /**
      * @ORM\Column(type="string", length=64)
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "pills"})
      */
     private $laboratory;
 
     /**
      * @ORM\Column(type="smallint")
-     * @Groups({"reviews"})
-     * 
+     * @Groups({"reviews", "pills"})
      */
     private $delay_intake;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * 
-     * @Groups({"reviews"})
-     * 
+     * @Groups({"reviews", "pills"})
      */
     private $composition;
 
     /**
-     * @ORM\Column(type="datetime")
-     * 
-     * @Groups({"reviews"})
-     */
-    private $date;
-
-    /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups({"pills"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups({"pills"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @Groups({"pills"})
      */
     private $updated_at;
 
@@ -121,6 +114,21 @@ class Pills
      * 
      */
     private $reviews;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $count_reviews;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $generic;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $posology;
 
     public function __construct()
     {
@@ -252,18 +260,6 @@ class Pills
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -326,6 +322,42 @@ class Pills
                 $review->setPill(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCountReviews(): ?int
+    {
+        return $this->count_reviews;
+    }
+
+    public function setCountReviews(int $count_reviews): self
+    {
+        $this->count_reviews = $count_reviews;
+
+        return $this;
+    }
+
+    public function getGeneric(): ?string
+    {
+        return $this->generic;
+    }
+
+    public function setGeneric(?string $generic): self
+    {
+        $this->generic = $generic;
+
+        return $this;
+    }
+
+    public function getPosology(): ?string
+    {
+        return $this->posology;
+    }
+
+    public function setPosology(string $posology): self
+    {
+        $this->posology = $posology;
 
         return $this;
     }

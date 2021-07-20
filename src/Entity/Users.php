@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -26,20 +28,19 @@ class Users
     /**
      * @ORM\Column(type="string", length=64)
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "pill_reviews"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"reviews"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "pill_reviews"})
      */
     private $age;
 
@@ -66,13 +67,13 @@ class Users
 
     /**
      * @ORM\Column(type="string", length=3)
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "pill_reviews"})
      */
     private $smoker;
 
     /**
      * @ORM\Column(type="string", length=3)
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "pill_reviews"})
      */
     private $children;
 
@@ -95,6 +96,7 @@ class Users
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
+        $this->created_at = new DateTimeImmutable();
     }
 
     public function getId(): ?int
