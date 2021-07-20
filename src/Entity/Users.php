@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UsersRepository::class)
@@ -21,6 +24,7 @@ class Users
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"pill_reviews"})
      */
     private $firstname;
 
@@ -31,6 +35,7 @@ class Users
 
     /**
      * @ORM\Column(type="smallint")
+     * @Groups({"pill_reviews"})
      */
     private $age;
 
@@ -56,11 +61,13 @@ class Users
 
     /**
      * @ORM\Column(type="string", length=3)
+     * @Groups({"pill_reviews"})
      */
     private $smoker;
 
     /**
      * @ORM\Column(type="string", length=3)
+     * @Groups({"pill_reviews"})
      */
     private $children;
 
@@ -82,6 +89,7 @@ class Users
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
+        $this->created_at = new DateTimeImmutable();
     }
 
     public function getId(): ?int

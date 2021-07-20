@@ -6,6 +6,7 @@ use App\Repository\PillsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=PillsRepository::class)
@@ -16,76 +17,91 @@ class Pills
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"pills"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"pills"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"pills"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=128)
+     * @Groups({"pills"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="smallint")
+     * @Groups({"pills"})
      */
     private $reimbursed;
 
     /**
      * @ORM\Column(type="smallint")
+     * @Groups({"pills"})
      */
     private $generation;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
+     * @Groups({"pills"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="string", length=3)
+     * @Groups({"pills"})
      */
     private $interruption;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"pills"})
      */
     private $laboratory;
 
     /**
      * @ORM\Column(type="smallint")
+     * @Groups({"pills"})
      */
     private $delay_intake;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"pills"})
      */
     private $composition;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"pills"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups({"pills"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups({"pills"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @Groups({"pills"})
      */
     private $updated_at;
 
