@@ -127,8 +127,6 @@ class ReviewsPills
         $this->created_at = new DateTimeImmutable();
         $this->updated_at = new DateTimeImmutable();
     }
-   
-
     /**
      * @ORM\Column(type="smallint")
      */
@@ -264,24 +262,24 @@ class ReviewsPills
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
 
