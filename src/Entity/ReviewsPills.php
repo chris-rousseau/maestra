@@ -80,7 +80,6 @@ class ReviewsPills
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
-     * @Groups({"pill_reviews"})
      */
     private $updated_at;
 
