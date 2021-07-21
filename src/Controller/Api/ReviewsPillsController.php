@@ -13,13 +13,13 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
-* @Route("api/reviews/pills", name="reviews_pills_")
+* @Route("api/pill/review", name="reviews_pills_")
 */
 class ReviewsPillsController extends AbstractController
 {
     /**
      * Method displaying the list of all reviews
-     * @Route("", name="list",  methods="GET")
+     * @Route("", name="list", methods="GET")
      */
     public function index(ReviewsPillsRepository $reviewsPillsRepository): Response
     {

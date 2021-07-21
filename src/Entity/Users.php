@@ -20,7 +20,7 @@ class Users
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "users"})
      * 
      */
     private $id;
@@ -28,24 +28,26 @@ class Users
     /**
      * @ORM\Column(type="string", length=64)
      * 
-     * @Groups({"reviews", "pill_reviews"})
+     * @Groups({"reviews", "pill_reviews", "users"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"users"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews", "pill_reviews"})
+     * @Groups({"reviews", "pill_reviews", "users"})
      */
     private $age;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"users"})
      */
     private $email;
 
@@ -56,24 +58,25 @@ class Users
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"users"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=128)
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "users"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=3)
-     * @Groups({"reviews", "pill_reviews"})
+     * @Groups({"reviews", "pill_reviews", "users"})
      */
     private $smoker;
 
     /**
      * @ORM\Column(type="string", length=3)
-     * @Groups({"reviews", "pill_reviews"})
+     * @Groups({"reviews", "pill_reviews", "users"})
      */
     private $children;
 
