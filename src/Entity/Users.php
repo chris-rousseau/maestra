@@ -28,52 +28,56 @@ class Users
     /**
      * @ORM\Column(type="string", length=64)
      * 
-     * @Groups({"reviews", "pill_reviews"})
+     * @Groups({"reviews", "pill_reviews", "login"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"login"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews", "pill_reviews"})
+     * @Groups({"reviews", "pill_reviews", "login"})
      */
     private $age;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"login"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Groups({"login"})
      */
     private $role;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"login"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=128)
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "login"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=3)
-     * @Groups({"reviews", "pill_reviews"})
+     * @Groups({"reviews", "pill_reviews", "login"})
      */
     private $smoker;
 
     /**
      * @ORM\Column(type="string", length=3)
-     * @Groups({"reviews", "pill_reviews"})
+     * @Groups({"reviews", "pill_reviews", "login"})
      */
     private $children;
 
