@@ -20,13 +20,13 @@ class ReviewsPillsController extends AbstractController
 {
     /**
      * Method displaying the list of all reviews
-     * @Route("", name="list", methods="GET")
+     * @Route("/", name="list", methods="GET", priority=10)
      */
     public function index(ReviewsPillsRepository $reviewsPillsRepository): Response
     {
         $reviews = $reviewsPillsRepository->findAll();
         return $this->json($reviews, 200, [], [
-            "groups" => "reviews"
+            "groups" => "reviews_list"
         ]);
     }
 
@@ -38,8 +38,10 @@ class ReviewsPillsController extends AbstractController
     {
         //dd($review);
         return $this->json($review, 200, [], [
-            "groups" => "reviews"
+            "groups" => "reviews_details"
         ]);
+
+        //id pill
     }
 
     /**
@@ -48,6 +50,7 @@ class ReviewsPillsController extends AbstractController
      */
     public function add(Request $request, SerializerInterface $serializer, ValidatorInterface $validator): Response
     {
+        
         $JsonData = $request->getContent();
         // transforming json into an object of ReviewsPills
         $review = $serializer->deserialize($JsonData, ReviewsPills::class, 'json');

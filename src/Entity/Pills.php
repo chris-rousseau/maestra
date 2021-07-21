@@ -18,14 +18,14 @@ class Pills
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"reviews", "pills"})
+     * @Groups({"reviews_list", "pills", "reviews_details"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      * 
-     * @Groups({"reviews", "pills", "user_reviews"})
+     * @Groups({"reviews_list", "pills", "user_reviews"})
      */
     private $name;
 

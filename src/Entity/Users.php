@@ -20,7 +20,7 @@ class Users
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"reviews", "users"})
+     * @Groups({"reviews_list", "users", "reviews_details"})
      * 
      */
     private $id;
@@ -28,20 +28,20 @@ class Users
     /**
      * @ORM\Column(type="string", length=64)
      * 
-     * @Groups({"reviews", "pill_reviews", "users"})
+     * @Groups({"reviews_list", "pill_reviews", "users"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"users"})
+     * @Groups({"reviews_list", "users"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews", "pill_reviews", "users"})
+     * @Groups({"pill_reviews", "users"})
      */
     private $age;
 

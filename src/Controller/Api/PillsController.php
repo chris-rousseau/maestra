@@ -29,7 +29,7 @@ class PillsController extends AbstractController
 
     /**
      * Displays the details of a pill
-     * @Route("/{id}", name="details", methods={"GET"})
+     * @Route("/{id}", name="details", methods={"GET"}, requirements={"id"="\d+"})
      */
     public function details(Pills $pills): Response
     {
@@ -40,7 +40,7 @@ class PillsController extends AbstractController
 
     /**
      * Displays all the reviews of a pill
-     * @Route("/{id}/review", name="reviews", methods={"GET"})
+     * @Route("/{id}/review", name="reviews", methods={"GET"}, requirements={"id"="\d+"})
      */
     public function reviews(Pills $pills, ReviewsPillsRepository $reviewsPillsRepository): Response
     {

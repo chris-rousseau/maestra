@@ -18,77 +18,77 @@ class ReviewsPills
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"reviews", "pill_reviews"})
+     * @Groups({"pill_reviews", "reviews_details"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"reviews", "pill_reviews", "user_reviews"})
+     * @Groups({"reviews_list", "pill_reviews", "user_reviews", "reviews_details"})
      */
     private $rate;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank
-     * @Groups({"reviews", "pill_reviews", "user_reviews"})
+     * @Groups({"reviews_list", "pill_reviews", "user_reviews", "reviews_details"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews", "user_reviews"})
+     * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $acne;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews", "user_reviews"})
+     * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $libido;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews", "user_reviews"})
+     * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $migraine;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews", "user_reviews"})
+     * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $weight;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews", "user_reviews"})
+     * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $breast_pain;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews", "user_reviews"})
+     * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $nausea;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews", "user_reviews"})
+     * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $pms;
 
     /**
      * @ORM\Column(type="string", length=3)
      * 
-     *  @Groups({"reviews", "pill_reviews", "user_reviews"})
+     *  @Groups({"reviews_list", "pill_reviews", "user_reviews", "reviews_details"})
      */
     private $perturbation_period;
 
@@ -109,7 +109,7 @@ class ReviewsPills
      * @ORM\ManyToOne(targetEntity=Pills::class, inversedBy="reviews")
      * @ORM\JoinColumn(nullable=false)
      * 
-     * @Groups({"reviews", "user_reviews"})
+     * @Groups({"reviews_list", "user_reviews"})
      */
     private $pill;
 
@@ -117,7 +117,7 @@ class ReviewsPills
      * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="reviews")
      * @ORM\JoinColumn(nullable=false)
      * 
-     * @Groups({"reviews", "pill_reviews"})
+     * @Groups({"reviews_list", "pill_reviews"})
      *
      */
     private $user;
