@@ -25,70 +25,70 @@ class ReviewsPills
     /**
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"reviews", "pill_reviews"})
+     * @Groups({"reviews", "pill_reviews", "user_reviews"})
      */
     private $rate;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank
-     * @Groups({"reviews", "pill_reviews"})
+     * @Groups({"reviews", "pill_reviews", "user_reviews"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "user_reviews"})
      */
     private $acne;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "user_reviews"})
      */
     private $libido;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "user_reviews"})
      */
     private $migraine;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "user_reviews"})
      */
     private $weight;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "user_reviews"})
      */
     private $breast_pain;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "user_reviews"})
      */
     private $nausea;
 
     /**
      * @ORM\Column(type="smallint")
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "user_reviews"})
      */
     private $pms;
 
     /**
      * @ORM\Column(type="string", length=3)
      * 
-     *  @Groups({"reviews", "pill_reviews"})
+     *  @Groups({"reviews", "pill_reviews", "user_reviews"})
      */
     private $perturbation_period;
 
@@ -106,15 +106,15 @@ class ReviewsPills
     private $updated_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Pills::class, inversedBy="reviews", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity=Pills::class, inversedBy="reviews")
      * @ORM\JoinColumn(nullable=false)
      * 
-     * @Groups({"reviews"})
+     * @Groups({"reviews", "user_reviews"})
      */
     private $pill;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="reviews", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="reviews")
      * @ORM\JoinColumn(nullable=false)
      * 
      * @Groups({"reviews", "pill_reviews"})

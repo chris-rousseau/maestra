@@ -25,7 +25,7 @@ class Pills
     /**
      * @ORM\Column(type="string", length=100)
      * 
-     * @Groups({"reviews", "pills"})
+     * @Groups({"reviews", "pills", "user_reviews"})
      */
     private $name;
 
