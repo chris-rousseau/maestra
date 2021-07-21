@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @Route("/api", name="users_")
+ * @Route("/api", name="register")
  */
 class RegisterController extends AbstractController
 {

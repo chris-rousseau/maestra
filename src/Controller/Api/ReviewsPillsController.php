@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\EntityNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -31,7 +32,7 @@ class ReviewsPillsController extends AbstractController
 
     /**
      * Method displaying one review according to its id
-     * @Route("/{id}", name="details", methods="GET")
+     * @Route("/{id}", name="details", methods="GET", requirements={"id"="\d+"})
      */
     public function details(ReviewsPills $review): Response
     {
@@ -84,7 +85,7 @@ class ReviewsPillsController extends AbstractController
 
     /**
      * Method updating partially (patch) or entirely (put) the review
-     * @Route("/{id}", name="update", methods={"PUT|PATCH"})
+     * @Route("/{id}", name="update", methods={"PUT|PATCH"}, requirements={"id"="\d+"})
      *
      * @return void
      */
@@ -115,9 +116,9 @@ class ReviewsPillsController extends AbstractController
     }
 
     /**
-     * Removal of a review in the DB
+     * Method removing a review in the DB
      *
-     * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @Route("/{id}", name="delete", methods={"DELETE"}, requirements={"id"="\d+"})
      * 
      * @return Response
      */
@@ -128,6 +129,6 @@ class ReviewsPillsController extends AbstractController
         $em->flush();
 
         // Code 204 : https://developer.mozilla.org/fr/docs/Web/HTTP/Status/204
-        return $this->json('Suppression de l\'avis', 204);
+        return $this->json('Suppression de l\'avis', 200);
     }
 }

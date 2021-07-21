@@ -111,7 +111,7 @@ class Pills
 
     /**
      * @ORM\OneToMany(targetEntity=ReviewsPills::class, mappedBy="pill")
-     * 
+     * @Groups({"reviews"})
      */
     private $reviews;
 
@@ -122,11 +122,13 @@ class Pills
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups({"reviews"})
      */
     private $generic;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"reviews"})
      */
     private $posology;
 
