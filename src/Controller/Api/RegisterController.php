@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * @Route("/api", name="users_")
  */
-class UsersController extends AbstractController
+class RegisterController extends AbstractController
 {
     /**
      * @Route("/register", name="register", methods={"POST"})
