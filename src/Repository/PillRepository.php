@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Pills;
+use App\Entity\Pill;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Pills|null find($id, $lockMode = null, $lockVersion = null)
- * @method Pills|null findOneBy(array $criteria, array $orderBy = null)
- * @method Pills[]    findAll()
- * @method Pills[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Pill|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Pill|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Pill[]    findAll()
+ * @method Pill[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PillsRepository extends ServiceEntityRepository
+class PillRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Pills::class);
+        parent::__construct($registry, Pill::class);
     }
 
     // /**
-    //  * @return Pills[] Returns an array of Pills objects
+    //  * @return Pill[] Returns an array of Pill objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class PillsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Pills
+    public function findOneBySomeField($value): ?Pill
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')
