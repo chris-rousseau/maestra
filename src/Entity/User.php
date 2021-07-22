@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -74,6 +76,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $updated_at;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ReviewPill::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $reviewPills;
+
+    public function __construct()
+    {
+        $this->reviewPills = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -256,6 +268,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(?\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ReviewPill[]
+     */
+    public function getReviewPills(): Collection
+    {
+        return $this->reviewPills;
+    }
+
+    public function addReviewPill(ReviewPill $reviewPill): self
+    {
+        if (!$this->reviewPills->contains($reviewPill)) {
+            $this->reviewPills[] = $reviewPill;
+            $reviewPill->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReviewPill(ReviewPill $reviewPill): self
+    {
+        if ($this->reviewPills->removeElement($reviewPill)) {
+            // set the owning side to null (unless already changed)
+            if ($reviewPill->getUser() === $this) {
+                $reviewPill->setUser(null);
+            }
+        }
 
         return $this;
     }
