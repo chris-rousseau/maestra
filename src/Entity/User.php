@@ -59,7 +59,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *      max = 64,
      *      notInRangeMessage = "Le prénom doit être compris entre {{ min }} et {{ max }} caractères."
      * )
-     * @Groups({"users"})
+     * @Groups({"users", "reviews_details", "reviews_list"})
      */
     private $firstname;
 
@@ -70,7 +70,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *      max = 64,
      *      notInRangeMessage = "Le nom doit être compris entre {{ min }} et {{ max }} caractères."
      * )
-     * @Groups({"users"})
+     * @Groups({"users", "reviews_details", "reviews_list"})
      */
     private $lastname;
 

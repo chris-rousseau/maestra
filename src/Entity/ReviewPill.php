@@ -31,6 +31,7 @@ class ReviewPill
      *      minMessage = "Merci de saisir un titre d'au moins {{ limit }} caractères.",
      *      maxMessage = "La longueur maximale d'un titre doit être de {{ limit }} caractères."
      * )
+     * @Groups({"reviews_list", "reviews_details"})
      */
     private $title;
 
@@ -154,14 +155,14 @@ class ReviewPill
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reviewPills")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"reviews_list", "user_reviews"})
+     * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Pill::class, inversedBy="reviews")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"reviews_list", "pill_reviews"})
+     * @Groups({"reviews_list", "pill_reviews", "reviews_details"})
      */
     private $pill;
 

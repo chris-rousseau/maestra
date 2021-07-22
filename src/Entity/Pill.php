@@ -29,7 +29,7 @@ class Pill
      *      max = 100,
      *      maxMessage = "La longueur maximale du nom doit être de {{ limit }} caractères."
      * )     
-     * @Groups({"reviews_list", "pills", "user_reviews"})
+     * @Groups({"reviews_list", "pills", "user_reviews", "reviews_details"})
      */
     private $name;
 
