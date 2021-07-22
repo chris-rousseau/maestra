@@ -35,8 +35,7 @@ class ReviewPill
     private $title;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 0})
-     * @Assert\NotBlank
+     * @ORM\Column(type="integer", options={"default" : 0}, nullable=true)
      * @Groups({"reviews_list", "pill_reviews", "user_reviews", "reviews_details"})
      */
     private $rate;
