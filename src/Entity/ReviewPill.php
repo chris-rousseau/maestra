@@ -2,144 +2,106 @@
 
 namespace App\Entity;
 
-use App\Repository\ReviewsPillsRepository;
-use DateTimeImmutable;
+use App\Repository\ReviewPillRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Bundle\FixturesBundle;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
+
 /**
- * @ORM\Entity(repositoryClass=ReviewsPillsRepository::class)
+ * @ORM\Entity(repositoryClass=ReviewPillRepository::class)
  */
-class ReviewsPills
+class ReviewPill
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * 
-     * @Groups({"reviews", "pill_reviews"})
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="integer")
-     * 
-     * @Groups({"reviews", "pill_reviews"})
-     */
-    private $rate;
-
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank
-     * @Groups({"reviews", "pill_reviews"})
-     */
-    private $content;
-
-    /**
-     * @ORM\Column(type="smallint")
-     * 
-     * @Groups({"reviews"})
-     */
-    private $acne;
-
-    /**
-     * @ORM\Column(type="smallint")
-     * 
-     * @Groups({"reviews"})
-     */
-    private $libido;
-
-    /**
-     * @ORM\Column(type="smallint")
-     * 
-     * @Groups({"reviews"})
-     */
-    private $migraine;
-
-    /**
-     * @ORM\Column(type="smallint")
-     * 
-     * @Groups({"reviews"})
-     */
-    private $weight;
-
-    /**
-     * @ORM\Column(type="smallint")
-     * 
-     * @Groups({"reviews"})
-     */
-    private $breast_pain;
-
-    /**
-     * @ORM\Column(type="smallint")
-     * 
-     * @Groups({"reviews"})
-     */
-    private $nausea;
-
-    /**
-     * @ORM\Column(type="smallint")
-     * 
-     * @Groups({"reviews"})
-     */
-    private $pms;
-
-    /**
-     * @ORM\Column(type="string", length=3)
-     * 
-     *  @Groups({"reviews", "pill_reviews"})
-     */
-    private $perturbation_period;
-
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     * 
-     * @Groups({"reviews", "pill_reviews"})
-     */
-    private $created_at;
-
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     * 
-     */
-    private $updated_at;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Pills::class, inversedBy="reviews", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     * 
-     * @Groups({"reviews"})
-     */
-    private $pill;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="reviews", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     * 
-     * @Groups({"reviews", "pill_reviews"})
-     *
-     */
-    private $user;
-
-    public function __construct()
-    {
-        $this->created_at = new DateTimeImmutable();
-        $this->updated_at = new DateTimeImmutable();
-    }
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private $status;
 
     /**
      * @ORM\Column(type="string", length=64)
      */
     private $title;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $rate;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $content;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $acne;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $libido;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $migraine;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $weight;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $breast_pain;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $nausea;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $pms;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $perturbation_period;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $status;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $updated_at;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
     }
 
     public function getRate(): ?int
@@ -250,14 +212,26 @@ class ReviewsPills
         return $this;
     }
 
-    public function getPerturbationPeriod(): ?string
+    public function getPerturbationPeriod(): ?bool
     {
         return $this->perturbation_period;
     }
 
-    public function setPerturbationPeriod(string $perturbation_period): self
+    public function setPerturbationPeriod(bool $perturbation_period): self
     {
         $this->perturbation_period = $perturbation_period;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
@@ -282,54 +256,6 @@ class ReviewsPills
     public function setUpdatedAt(?\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
-    public function getPill(): ?Pills
-    {
-        return $this->pill;
-    }
-
-    public function setPill(?Pills $pill): self
-    {
-        $this->pill = $pill;
-
-        return $this;
-    }
-
-    public function getUser(): ?Users
-    {
-        return $this->user;
-    }
-
-    public function setUser(?Users $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    public function getStatus(): ?int
-    {
-        return $this->status;
-    }
-
-    public function setStatus(int $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
 
         return $this;
     }

@@ -2,14 +2,15 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Staff;
 use App\Entity\Users;
 use App\Repository\UsersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/api", name="users_")
@@ -19,7 +20,7 @@ class LoginController extends AbstractController
     /**
      * @Route("/login", name="login", methods={"POST"})
      */
-    public function login(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, UsersRepository $usersRepository): Response
+    public function login(Request $request, SerializerInterface $serializer, UsersRepository $usersRepository): Response
     {
         // We get the content of the request
         $JsonData = $request->getContent();

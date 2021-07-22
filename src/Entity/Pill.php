@@ -2,118 +2,80 @@
 
 namespace App\Entity;
 
-use App\Repository\PillsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\PillRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ORM\Entity(repositoryClass=PillsRepository::class)
+ * @ORM\Entity(repositoryClass=PillRepository::class)
  */
-class Pills
+class Pill
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * 
-     * @Groups({"reviews", "pills"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * 
-     * @Groups({"reviews", "pills"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
-     * 
-     * @Groups({"reviews", "pills"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=128)
-     * 
-     * @Groups({"reviews", "pills"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="smallint")
-     * 
-     * @Groups({"reviews", "pills"})
      */
     private $reimbursed;
 
     /**
-     * @ORM\Column(type="smallint")
-     * 
-     * @Groups({"reviews", "pills"})
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $generation;
+    private $generic;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $posology;
 
     /**
      * @ORM\Column(type="string", length=64, nullable=true)
-     * 
-     * @Groups({"reviews", "pills"})
      */
     private $type;
 
     /**
-     * @ORM\Column(type="string", length=3)
-     * 
-     * @Groups({"reviews", "pills"})
+     * @ORM\Column(type="smallint")
+     */
+    private $generation;
+
+    /**
+     * @ORM\Column(type="boolean")
      */
     private $interruption;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * 
-     * @Groups({"reviews", "pills"})
      */
     private $laboratory;
 
     /**
      * @ORM\Column(type="smallint")
-     * @Groups({"reviews", "pills"})
      */
     private $delay_intake;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * 
-     * @Groups({"reviews", "pills"})
      */
     private $composition;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     * @Groups({"pills"})
-     */
-    private $slug;
-
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     * @Groups({"pills"})
-     */
-    private $created_at;
-
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     * @Groups({"pills"})
-     */
-    private $updated_at;
-
-    /**
-     * @ORM\OneToMany(targetEntity=ReviewsPills::class, mappedBy="pill")
-     * 
-     */
-    private $reviews;
 
     /**
      * @ORM\Column(type="integer")
@@ -123,17 +85,17 @@ class Pills
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $generic;
+    private $slug;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="datetime_immutable")
      */
-    private $posology;
+    private $created_at;
 
-    public function __construct()
-    {
-        $this->reviews = new ArrayCollection();
-    }
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $updated_at;
 
     public function getId(): ?int
     {
@@ -188,14 +150,26 @@ class Pills
         return $this;
     }
 
-    public function getGeneration(): ?int
+    public function getGeneric(): ?string
     {
-        return $this->generation;
+        return $this->generic;
     }
 
-    public function setGeneration(int $generation): self
+    public function setGeneric(?string $generic): self
     {
-        $this->generation = $generation;
+        $this->generic = $generic;
+
+        return $this;
+    }
+
+    public function getPosology(): ?string
+    {
+        return $this->posology;
+    }
+
+    public function setPosology(string $posology): self
+    {
+        $this->posology = $posology;
 
         return $this;
     }
@@ -212,12 +186,24 @@ class Pills
         return $this;
     }
 
-    public function getInterruption(): ?string
+    public function getGeneration(): ?int
+    {
+        return $this->generation;
+    }
+
+    public function setGeneration(int $generation): self
+    {
+        $this->generation = $generation;
+
+        return $this;
+    }
+
+    public function getInterruption(): ?bool
     {
         return $this->interruption;
     }
 
-    public function setInterruption(string $interruption): self
+    public function setInterruption(bool $interruption): self
     {
         $this->interruption = $interruption;
 
@@ -260,6 +246,18 @@ class Pills
         return $this;
     }
 
+    public function getCountReviews(): ?int
+    {
+        return $this->count_reviews;
+    }
+
+    public function setCountReviews(int $count_reviews): self
+    {
+        $this->count_reviews = $count_reviews;
+
+        return $this;
+    }
+
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -292,72 +290,6 @@ class Pills
     public function setUpdatedAt(?\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ReviewsPills[]
-     */
-    public function getReviews(): Collection
-    {
-        return $this->reviews;
-    }
-
-    public function addReview(ReviewsPills $review): self
-    {
-        if (!$this->reviews->contains($review)) {
-            $this->reviews[] = $review;
-            $review->setPill($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReview(ReviewsPills $review): self
-    {
-        if ($this->reviews->removeElement($review)) {
-            // set the owning side to null (unless already changed)
-            if ($review->getPill() === $this) {
-                $review->setPill(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getCountReviews(): ?int
-    {
-        return $this->count_reviews;
-    }
-
-    public function setCountReviews(int $count_reviews): self
-    {
-        $this->count_reviews = $count_reviews;
-
-        return $this;
-    }
-
-    public function getGeneric(): ?string
-    {
-        return $this->generic;
-    }
-
-    public function setGeneric(?string $generic): self
-    {
-        $this->generic = $generic;
-
-        return $this;
-    }
-
-    public function getPosology(): ?string
-    {
-        return $this->posology;
-    }
-
-    public function setPosology(string $posology): self
-    {
-        $this->posology = $posology;
 
         return $this;
     }
