@@ -16,11 +16,15 @@ class Pill
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * 
+     * @Groups({"reviews_list", "pills", "reviews_details"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * 
+     * @Groups({"reviews_list", "pills", "user_reviews"})
      */
     private $name;
 
