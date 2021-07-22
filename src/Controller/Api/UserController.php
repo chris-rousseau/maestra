@@ -2,9 +2,9 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\ReviewsPills;
-use App\Entity\Users;
-use App\Repository\ReviewsPillsRepository;
+use App\Entity\ReviewPill;
+use App\Entity\User;
+use App\Repository\ReviewPillRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,13 +16,13 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
 * @Route("/api/user/account", name="user_")
 */
-class UsersController extends AbstractController
+class UserController extends AbstractController
 {
     /**
      * Method displaying the infos of a user according to its id
      * @Route("/{id}", name="show", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function show(Users $user): Response
+    public function show(User $user): Response
     {
         
         return $this->json($user, 200, [], [
@@ -36,10 +36,10 @@ class UsersController extends AbstractController
     *
     * @return void
     */
-    public function update(Users $user, Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
+    public function update(User $user, Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
     {
         $jsonData = $request->getContent();
-        $user = $serializer->deserialize($jsonData, Users::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
+        $user = $serializer->deserialize($jsonData, User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
         //dd($user);
 
         $errors = $validator->validate($user);
@@ -65,9 +65,9 @@ class UsersController extends AbstractController
     * Method displaying the reviews of a user according to its id
     * @Route("/{id}/review", name="reviews", methods={"GET"}, requirements={"id"="\d+"})
     */
-    public function reviews(Users $user, ReviewsPillsRepository $reviewsPillsRepository): Response
+    public function reviews(User $user, ReviewPillRepository $reviewPillRepository): Response
     {
-        $reviewsUser = $reviewsPillsRepository->findBy([
+        $reviewsUser = $reviewPillRepository->findBy([
             'user' => $user->getId()
         ]);
 
@@ -86,16 +86,16 @@ class UsersController extends AbstractController
      * 
      * @return Response
      */
-    public function reviewsDelete(Users $user, ReviewsPillsRepository $reviewsPillsRepository, ReviewsPills $reviewsPills)
+    public function reviewsDelete(User $user, ReviewPillRepository $reviewPillRepository, ReviewPill $reviewPill)
     {  
         // getting the reviews of one user thanks to its id
-        $reviewsUser = $reviewsPillsRepository->findBy([
+        $reviewsUser = $reviewPillRepository->findBy([
             'user' => $user->getId()
         ]);
 
         // getting the id of review of said user to delete
 
-        dd($reviewsUser, $reviewsPills);
+        dd($reviewsUser, $reviewPill);
     }
 
     /**
@@ -105,7 +105,7 @@ class UsersController extends AbstractController
      * 
      * @return Response
      */
-    public function delete(Users $user)
+    public function delete(User $user)
     {  
        
         $em = $this->getDoctrine()->getManager();

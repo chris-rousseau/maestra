@@ -2,9 +2,9 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Pills;
-use App\Repository\PillsRepository;
-use App\Repository\ReviewsPillsRepository;
+use App\Entity\Pill;
+use App\Repository\PillRepository;
+use App\Repository\ReviewPillRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,15 +12,15 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/api/pill", name="api_pill_")
  */
-class PillsController extends AbstractController
+class PillController extends AbstractController
 {
     /**
      * Displays all pills
      * @Route("", name="list", methods={"GET"})
      */
-    public function list(PillsRepository $pillsRepository): Response
+    public function list(PillRepository $pillRepository): Response
     {
-        $allPills = $pillsRepository->findAll();
+        $allPills = $pillRepository->findAll();
 
         return $this->json($allPills, 200, [], [
             "groups" => "pills"
@@ -31,9 +31,9 @@ class PillsController extends AbstractController
      * Displays the details of a pill
      * @Route("/{id}", name="details", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function details(Pills $pills): Response
+    public function details(Pill $pill): Response
     {
-        return $this->json($pills, 200, [], [
+        return $this->json($pill, 200, [], [
             "groups" => "pills"
         ]);
     }
@@ -42,11 +42,11 @@ class PillsController extends AbstractController
      * Displays all the reviews of a pill
      * @Route("/{id}/review", name="reviews", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function reviews(Pills $pills, ReviewsPillsRepository $reviewsPillsRepository): Response
+    public function reviews(Pill $pill, ReviewPillRepository $reviewPillRepository): Response
     {
         // dd($pills->getId());
-        $reviewsPill = $reviewsPillsRepository->findBy([
-            'pill' => $pills->getId()
+        $reviewsPill = $reviewPillRepository->findBy([
+            'pill' => $pill->getId()
         ]);
         // dd($reviewsPill);
         return $this->json($reviewsPill, 200, [], [

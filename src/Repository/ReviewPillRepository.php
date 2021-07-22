@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\ReviewsPills;
+use App\Entity\ReviewPill;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method ReviewsPills|null find($id, $lockMode = null, $lockVersion = null)
- * @method ReviewsPills|null findOneBy(array $criteria, array $orderBy = null)
- * @method ReviewsPills[]    findAll()
- * @method ReviewsPills[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ReviewPill|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ReviewPill|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ReviewPill[]    findAll()
+ * @method ReviewPill[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ReviewsPillsRepository extends ServiceEntityRepository
+class ReviewPillRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ReviewsPills::class);
+        parent::__construct($registry, ReviewPill::class);
     }
 
     // /**
-    //  * @return ReviewsPills[] Returns an array of ReviewsPills objects
+    //  * @return ReviewPill[] Returns an array of ReviewPill objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class ReviewsPillsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?ReviewsPills
+    public function findOneBySomeField($value): ?ReviewPill
     {
         return $this->createQueryBuilder('r')
             ->andWhere('r.exampleField = :val')

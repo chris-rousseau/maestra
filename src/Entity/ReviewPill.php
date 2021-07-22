@@ -2,16 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ReviewsPillsRepository;
-use DateTimeImmutable;
+use App\Repository\ReviewPillRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Bundle\FixturesBundle;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
+
 /**
- * @ORM\Entity(repositoryClass=ReviewsPillsRepository::class)
+ * @ORM\Entity(repositoryClass=ReviewPillRepository::class)
  */
-class ReviewsPills
+class ReviewPill
 {
     /**
      * @ORM\Id
@@ -21,6 +18,11 @@ class ReviewsPills
      * @Groups({"pill_reviews", "reviews_details"})
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $title;
 
     /**
      * @ORM\Column(type="integer")
@@ -89,57 +91,54 @@ class ReviewsPills
      * @ORM\Column(type="string", length=3)
      * 
      *  @Groups({"reviews_list", "pill_reviews", "user_reviews", "reviews_details"})
+     * @ORM\Column(type="boolean")
      */
     private $perturbation_period;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     * 
-     * @Groups({"reviews", "pill_reviews"})
-     */
-    private $created_at;
-
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     * 
-     */
-    private $updated_at;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Pills::class, inversedBy="reviews")
-     * @ORM\JoinColumn(nullable=false)
-     * 
-     * @Groups({"reviews_list", "user_reviews"})
-     */
-    private $pill;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="reviews")
-     * @ORM\JoinColumn(nullable=false)
-     * 
-     * @Groups({"reviews_list", "pill_reviews"})
-     *
-     */
-    private $user;
-
-    public function __construct()
-    {
-        $this->created_at = new DateTimeImmutable();
-        $this->updated_at = new DateTimeImmutable();
-    }
     /**
      * @ORM\Column(type="smallint")
      */
     private $status;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="datetime_immutable")
      */
-    private $title;
+    private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $updated_at;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reviewPills")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"reviews_list", "user_reviews"})
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Pill::class, inversedBy="reviews")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"reviews_list", "pill_reviews"})
+     */
+    private $pill;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
     }
 
     public function getRate(): ?int
@@ -250,14 +249,26 @@ class ReviewsPills
         return $this;
     }
 
-    public function getPerturbationPeriod(): ?string
+    public function getPerturbationPeriod(): ?bool
     {
         return $this->perturbation_period;
     }
 
-    public function setPerturbationPeriod(string $perturbation_period): self
+    public function setPerturbationPeriod(bool $perturbation_period): self
     {
         $this->perturbation_period = $perturbation_period;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
@@ -286,50 +297,26 @@ class ReviewsPills
         return $this;
     }
 
-    public function getPill(): ?Pills
-    {
-        return $this->pill;
-    }
-
-    public function setPill(?Pills $pill): self
-    {
-        $this->pill = $pill;
-
-        return $this;
-    }
-
-    public function getUser(): ?Users
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(?Users $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getStatus(): ?int
+    public function getPill(): ?Pill
     {
-        return $this->status;
+        return $this->pill;
     }
 
-    public function setStatus(int $status): self
+    public function setPill(?Pill $pill): self
     {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
+        $this->pill = $pill;
 
         return $this;
     }

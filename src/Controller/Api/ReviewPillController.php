@@ -2,8 +2,8 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\ReviewsPills;
-use App\Repository\ReviewsPillsRepository;
+use App\Entity\ReviewPill;
+use App\Repository\ReviewPillRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,15 +16,15 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
 * @Route("api/pill/review", name="reviews_pills_")
 */
-class ReviewsPillsController extends AbstractController
+class ReviewPillController extends AbstractController
 {
     /**
      * Method displaying the list of all reviews
      * @Route("/", name="list", methods="GET", priority=10)
      */
-    public function index(ReviewsPillsRepository $reviewsPillsRepository): Response
+    public function index(ReviewPillRepository $reviewPillRepository): Response
     {
-        $reviews = $reviewsPillsRepository->findAll();
+        $reviews = $reviewPillRepository->findAll();
         return $this->json($reviews, 200, [], [
             "groups" => "reviews_list"
         ]);
@@ -34,7 +34,7 @@ class ReviewsPillsController extends AbstractController
      * Method displaying one review according to its id
      * @Route("/{id}", name="details", methods="GET", requirements={"id"="\d+"})
      */
-    public function details(ReviewsPills $review): Response
+    public function details(ReviewPill $review): Response
     {
         //dd($review);
         return $this->json($review, 200, [], [
@@ -52,11 +52,11 @@ class ReviewsPillsController extends AbstractController
     {
         
         $JsonData = $request->getContent();
-        // transforming json into an object of ReviewsPills
-        $review = $serializer->deserialize($JsonData, ReviewsPills::class, 'json');
+        // transforming json into an object of ReviewPill
+        $review = $serializer->deserialize($JsonData, ReviewPill::class, 'json');
         //dd($review);
 
-        // Verifying that all validation criterias of entity ReviewsPills are okay (Assert\NotBlank, ...)
+        // Verifying that all validation criterias of entity ReviewPill are okay (Assert\NotBlank, ...)
         // will display an array of violations ("this value should not be blank")
         $errors = $validator->validate($review);
         
@@ -92,10 +92,10 @@ class ReviewsPillsController extends AbstractController
      *
      * @return void
      */
-    public function update(ReviewsPills $review, Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
+    public function update(ReviewPill $review, Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
     {
         $jsonData = $request->getContent();
-        $review = $serializer->deserialize($jsonData, ReviewsPills::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $review]);
+        $review = $serializer->deserialize($jsonData, ReviewPill::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $review]);
         //dd($review);
 
         $errors = $validator->validate($review);
@@ -125,7 +125,7 @@ class ReviewsPillsController extends AbstractController
      * 
      * @return Response
      */
-    public function delete(ReviewsPills $review)
+    public function delete(ReviewPill $review)
     {  
         $em = $this->getDoctrine()->getManager();
         $em->remove($review);
