@@ -22,55 +22,86 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"reviews_list", "users", "reviews_details"})
+     * @Groups({"reviews_list", "users", "reviews_details", "pill_reviews"})
      * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(
+     *     message = "L'email '{{ value }}' saisi n'est pas valide"
+     * )
+     * @Groups({"users"})
      */
     private $email;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json", nullable=true, options={"default" : "[]"})
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
+     * @Assert\Regex(
+     * pattern = "/^(?=.\d)(?=.[A-Z])(?=.[@#$%])(?!.(.)\1{2}).*[a-z]/m",
+     * match=true,
+     * message="Votre mot de passe doit comporter au moins huit caractères, dont des lettres majuscules et minuscules, un chiffre et un symbole."
+     * )
      * @ORM\Column(type="string")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"users"})
+     * @Assert\Range(
+     *      min = 2,
+     *      max = 64,
+     *      notInRangeMessage = "Le prénom doit être compris entre {{ min }} et {{ max }} caractères."
+     * )
+     * @Groups({"users", "pill_reviews"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\Range(
+     *      min = 2,
+     *      max = 64,
+     *      notInRangeMessage = "Le nom doit être compris entre {{ min }} et {{ max }} caractères."
+     * )
+     * @Groups({"users"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="smallint")
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 120,
+     *      notInRangeMessage = "L'age doit être compris entre {{ min }} et {{ max }} caractères."
+     * )
+     * @Groups({"users", "pill_reviews"})
      */
     private $age;
 
     /**
-     * @ORM\Column(type="string", length=128, nullable=true)
+     * @ORM\Column(type="string", length=128, nullable=true, options={"default" : "no-avatar.jpg"})
+     * @Groups({"users"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\Type("boolean")
+     * @Groups({"users", "pill_reviews"})
      */
     private $smoker;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\Type("boolean")
+     * @Groups({"users", "pill_reviews"})
      */
     private $children;
 
