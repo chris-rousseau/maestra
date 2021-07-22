@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ReviewPillRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -23,77 +24,116 @@ class ReviewPill
 
     /**
      * @ORM\Column(type="string", length=64)
+     * 
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 64,
+     *      minMessage = "Merci de saisir un titre d'au moins {{ limit }} caractères.",
+     *      maxMessage = "La longueur maximale d'un titre doit être de {{ limit }} caractères."
+     * )
      */
     private $title;
 
     /**
-     * @ORM\Column(type="integer")
-     * 
+     * @ORM\Column(type="integer", options={"default" : 0})
+     * @Assert\NotBlank
      * @Groups({"reviews_list", "pill_reviews", "user_reviews", "reviews_details"})
      */
     private $rate;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank
+     * @Assert\Length(
+     *      min = 25,
+     *      max = 1500,
+     *      minMessage = "Merci de saisir un avis d'au moins {{ limit }} caractères.",
+     *      maxMessage = "La longueur maximale d'un avis doit être de {{ limit }} caractères."
+     * )
      * @Groups({"reviews_list", "pill_reviews", "user_reviews", "reviews_details"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="smallint")
-     * 
+     * @Assert\Range(
+     *      min = -1,
+     *      max = 1,
+     *      notInRangeMessage = "Une erreur est survenue"
+     * )
      * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $acne;
 
     /**
      * @ORM\Column(type="smallint")
-     * 
+     * @Assert\Range(
+     *      min = -1,
+     *      max = 1,
+     *      notInRangeMessage = "Une erreur est survenue"
+     * )
      * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $libido;
 
     /**
      * @ORM\Column(type="smallint")
-     * 
+     * @Assert\Range(
+     *      min = -1,
+     *      max = 1,
+     *      notInRangeMessage = "Une erreur est survenue"
+     * )
      * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $migraine;
 
     /**
      * @ORM\Column(type="smallint")
-     * 
+     * @Assert\Range(
+     *      min = -1,
+     *      max = 1,
+     *      notInRangeMessage = "Une erreur est survenue"
+     * )
      * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $weight;
 
     /**
      * @ORM\Column(type="smallint")
-     * 
+     * @Assert\Range(
+     *      min = -1,
+     *      max = 1,
+     *      notInRangeMessage = "Une erreur est survenue"
+     * )
      * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $breast_pain;
 
     /**
      * @ORM\Column(type="smallint")
-     * 
+     * @Assert\Range(
+     *      min = -1,
+     *      max = 1,
+     *      notInRangeMessage = "Une erreur est survenue"
+     * )
      * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $nausea;
 
     /**
      * @ORM\Column(type="smallint")
-     * 
+     * @Assert\Range(
+     *      min = -1,
+     *      max = 1,
+     *      notInRangeMessage = "Une erreur est survenue"
+     * )
      * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $pms;
 
     /**
-     * @ORM\Column(type="string", length=3)
-     * 
-     *  @Groups({"reviews_list", "pill_reviews", "user_reviews", "reviews_details"})
      * @ORM\Column(type="boolean")
+     * @Assert\Type("boolean")
+     * @Groups({"reviews_list", "pill_reviews", "user_reviews", "reviews_details"})
      */
     private $perturbation_period;
 
@@ -125,6 +165,11 @@ class ReviewPill
      * @Groups({"reviews_list", "pill_reviews"})
      */
     private $pill;
+
+    public function __construct()
+    {
+        $this->created_at = new DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
