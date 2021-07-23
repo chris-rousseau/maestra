@@ -70,7 +70,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *      max = 64,
      *      notInRangeMessage = "Le nom doit être compris entre {{ min }} et {{ max }} caractères."
      * )
-     * @Groups({"users", "reviews_details", "reviews_list"})
+     * @Groups({"users"})
      */
     private $lastname;
 
@@ -81,27 +81,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *      max = 120,
      *      notInRangeMessage = "L'age doit être compris entre {{ min }} et {{ max }} caractères."
      * )
-     * @Groups({"users"})
+     * @Groups({"users", "reviews_details", "reviews_list"})
      */
     private $age;
 
     /**
      * @ORM\Column(type="string", length=128, nullable=true, options={"default" : "no-avatar.jpg"})
-     * @Groups({"users"})
+     * @Groups({"users", "reviews_list", "reviews_details"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\Type("boolean")
-     * @Groups({"users"})
+     * @Groups({"users", "reviews_list", "reviews_details"})
      */
     private $smoker;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\Type("boolean")
-     * @Groups({"users"})
+     * @Groups({"users", "reviews_list", "reviews_details"})
      */
     private $children;
 

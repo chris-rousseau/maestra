@@ -86,16 +86,16 @@ class UserController extends AbstractController
      * 
      * @return Response
      */
-    public function reviewsDelete(User $user, ReviewPillRepository $reviewPillRepository, ReviewPill $reviewPill)
+    public function reviewsDelete(ReviewPill $reviewPill)
     {  
-        // getting the reviews of one user thanks to its id
-        $reviewsUser = $reviewPillRepository->findBy([
-            'user' => $user->getId()
-        ]);
-
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($reviewPill);
+        $em->flush();
+       
+        return $this->json('La suppression de l\'avis ' . $reviewPill->getTitle() . ' a bien été prise en compte', 200);
+        
         // getting the id of review of said user to delete
-
-        dd($reviewsUser, $reviewPill);
+        
     }
 
     /**

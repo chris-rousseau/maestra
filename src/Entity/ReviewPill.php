@@ -18,7 +18,7 @@ class ReviewPill
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"pill_reviews", "reviews_details"})
+     * @Groups({"pill_reviews", "reviews_details", "user_reviews"})
      */
     private $id;
 
@@ -31,13 +31,13 @@ class ReviewPill
      *      minMessage = "Merci de saisir un titre d'au moins {{ limit }} caractères.",
      *      maxMessage = "La longueur maximale d'un titre doit être de {{ limit }} caractères."
      * )
-     * @Groups({"reviews_list", "reviews_details"})
+     * @Groups({"reviews_list", "reviews_details", "user_reviews"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="integer", options={"default" : 0}, nullable=true)
-     * @Groups({"reviews_list", "pill_reviews", "user_reviews", "reviews_details"})
+     * @Groups({"pill_reviews", "user_reviews", "reviews_details"})
      */
     private $rate;
 
@@ -60,7 +60,6 @@ class ReviewPill
      *      max = 1,
      *      notInRangeMessage = "Une erreur est survenue"
      * )
-     * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $acne;
 
@@ -71,7 +70,6 @@ class ReviewPill
      *      max = 1,
      *      notInRangeMessage = "Une erreur est survenue"
      * )
-     * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $libido;
 
@@ -82,7 +80,6 @@ class ReviewPill
      *      max = 1,
      *      notInRangeMessage = "Une erreur est survenue"
      * )
-     * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $migraine;
 
@@ -93,7 +90,6 @@ class ReviewPill
      *      max = 1,
      *      notInRangeMessage = "Une erreur est survenue"
      * )
-     * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $weight;
 
@@ -104,7 +100,6 @@ class ReviewPill
      *      max = 1,
      *      notInRangeMessage = "Une erreur est survenue"
      * )
-     * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $breast_pain;
 
@@ -115,7 +110,6 @@ class ReviewPill
      *      max = 1,
      *      notInRangeMessage = "Une erreur est survenue"
      * )
-     * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $nausea;
 
@@ -126,14 +120,13 @@ class ReviewPill
      *      max = 1,
      *      notInRangeMessage = "Une erreur est survenue"
      * )
-     * @Groups({"reviews_list", "user_reviews", "reviews_details"})
      */
     private $pms;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\Type("boolean")
-     * @Groups({"reviews_list", "pill_reviews", "user_reviews", "reviews_details"})
+     * @Groups({"pill_reviews"})
      */
     private $perturbation_period;
 
@@ -155,14 +148,14 @@ class ReviewPill
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reviewPills")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"reviews_list", "user_reviews", "reviews_details"})
+     * @Groups({"reviews_list", "reviews_details"})
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Pill::class, inversedBy="reviews")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"reviews_list", "pill_reviews", "reviews_details"})
+     * @Groups({"reviews_list", "pill_reviews", "reviews_details", "user_reviews"})
      */
     private $pill;
 
