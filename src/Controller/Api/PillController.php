@@ -63,17 +63,32 @@ class PillController extends AbstractController
      */
     public function search(Request $request, PillRepository $pillRepository)
     {
-        // On récupère l'information saisie dans le formulaire
         $searchValue = $request->get('query');
-
-        // On effectue une recherche de séries basée sur $searchValue
-        // $tvShows = $tvShowRepository->findSearchByTitleDQL($searchValue);
         $pillSearch = $pillRepository->findSearchByName($searchValue);
+        
 
         return $this->json($pillSearch, 200, [], [
             "groups" => "pill_search"
         ]);
     }
 
-    
+    /**
+     * Method enabling the search of a particular pill 
+     * @Route("/search/generation", name="search_generation")
+     *
+     * @return void
+     */
+    public function searchByGeneration(Request $request, PillRepository $pillRepository)
+    {
+        // On récupère l'information saisie dans select
+        $searchValue = $request->get('query'); //1 ou 2 
+       
+        $pillSearch = $pillRepository->findSearchByGeneration($searchValue);
+        //dd($searchValue, $pillSearch);
+
+        return $this->json($pillSearch, 200, [], [
+            "groups" => "pill_search"
+        ]);
+    }
+
 }
