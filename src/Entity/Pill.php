@@ -19,7 +19,7 @@ class Pill
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      *  
-     * @Groups({"reviews_list", "pills", "reviews_details"})
+     * @Groups({"reviews_list", "pills", "reviews_details", "user_reviews", "pills_details"})
      */
     private $id;
 
@@ -28,8 +28,8 @@ class Pill
      * @Assert\Length(
      *      max = 100,
      *      maxMessage = "La longueur maximale du nom doit être de {{ limit }} caractères."
-     * )     
-     * @Groups({"reviews_list", "pills", "user_reviews"})
+     * )   
+     * @Groups({"reviews_list", "pills", "user_reviews", "reviews_details", "pills_details"})  
      */
     private $name;
 
@@ -39,12 +39,13 @@ class Pill
      *      max = 1000,
      *      maxMessage = "La longueur maximale de la description doit être de {{ limit }} caractères."
      * )
+     * @Groups({"pills_details"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=128, options={"default" : "no-pill.jpg"}, nullable=true)
-     * 
+     * @Groups({"pills", "pills_details"})
      */
     private $picture;
 
@@ -55,6 +56,7 @@ class Pill
      *      max = 100,
      *      notInRangeMessage = "Le taux de remboursement doit être compris entre {{ min }} et {{ max }}."
      * )
+     * @Groups({"pills_details"})
      */
     private $reimbursed;
 
@@ -63,7 +65,8 @@ class Pill
      * @Assert\Length(
      *      max = 255,
      *      maxMessage = "La longueur maximale doit être de {{ limit }} caractères."
-     * ) 
+     * )
+     * @Groups({"pills_details"})
      */
     private $generic;
 
@@ -72,7 +75,8 @@ class Pill
      * @Assert\Length(
      *      max = 100,
      *      maxMessage = "La longueur maximale doit être de {{ limit }} caractères."
-     * ) 
+     * )
+     * @Groups({"pills_details"})
      */
     private $posology;
 
@@ -81,19 +85,22 @@ class Pill
      * @Assert\Length(
      *      max = 64,
      *      maxMessage = "La longueur maximale doit être de {{ limit }} caractères."
-     * ) 
+     * )
+     * @Groups({"pills_details"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank
+     * @Groups({"pills_details"})
      */
     private $generation;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\Type("boolean")
+     * @Groups({"pills_details"})
      */
     private $interruption;
 
@@ -103,13 +110,14 @@ class Pill
      *      max = 64,
      *      maxMessage = "La longueur maximale doit être de {{ limit }} caractères."
      * )
+     * @Groups({"pills_details"})
      */
     private $laboratory;
 
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank
-     * 
+     * @Groups({"pills_details"})
      */
     private $delay_intake;
 
@@ -119,13 +127,14 @@ class Pill
      *      max = 1000,
      *      maxMessage = "La longueur maximale doit être de {{ limit }} caractères."
      * )
-     * 
+     * @Groups({"pills_details"})
      */
     private $composition;
 
     /**
      * @ORM\Column(type="integer")
      * @Assert\NotBlank
+     * @Groups({"pills", "pills_details"})
      */
     private $count_reviews;
 

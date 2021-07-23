@@ -22,7 +22,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"reviews_list", "users", "reviews_details"})
+     * @Groups({"reviews_list", "users", "reviews_details", "pill_reviews"})
      * 
      */
     private $id;
@@ -59,7 +59,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *      max = 64,
      *      notInRangeMessage = "Le prénom doit être compris entre {{ min }} et {{ max }} caractères."
      * )
-     * @Groups({"users"})
+     * @Groups({"users", "reviews_details", "reviews_list", "pill_reviews"})
      */
     private $firstname;
 
@@ -81,27 +81,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *      max = 120,
      *      notInRangeMessage = "L'age doit être compris entre {{ min }} et {{ max }} caractères."
      * )
-     * @Groups({"users"})
+     * @Groups({"users", "reviews_details", "reviews_list", "pill_reviews"})
      */
     private $age;
 
     /**
      * @ORM\Column(type="string", length=128, nullable=true, options={"default" : "no-avatar.jpg"})
-     * @Groups({"users"})
+     * @Groups({"users", "reviews_list", "reviews_details", "pill_reviews"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\Type("boolean")
-     * @Groups({"users"})
+     * @Groups({"users", "reviews_list", "reviews_details", "pill_reviews"})
      */
     private $smoker;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\Type("boolean")
-     * @Groups({"users"})
+     * @Groups({"users", "reviews_list", "reviews_details", "pill_reviews"})
      */
     private $children;
 
