@@ -19,7 +19,7 @@ class Pill
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      *  
-     * @Groups({"reviews_list", "pills", "reviews_details", "pills_details"})
+     * @Groups({"reviews_list", "pills", "reviews_details", "user_reviews", "pills_details"})
      */
     private $id;
 
@@ -28,8 +28,8 @@ class Pill
      * @Assert\Length(
      *      max = 100,
      *      maxMessage = "La longueur maximale du nom doit être de {{ limit }} caractères."
-     * )     
-     * @Groups({"reviews_list", "pills", "user_reviews", "pills_details"})
+     * )   
+     * @Groups({"reviews_list", "pills", "user_reviews", "reviews_details", "pills_details"})  
      */
     private $name;
 
