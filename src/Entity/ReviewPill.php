@@ -18,7 +18,7 @@ class ReviewPill
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * 
-     * @Groups({"pill_reviews", "reviews_details", "user_reviews"})
+     * @Groups({"pill_reviews", "reviews_details"})
      */
     private $id;
 
@@ -31,7 +31,7 @@ class ReviewPill
      *      minMessage = "Merci de saisir un titre d'au moins {{ limit }} caractères.",
      *      maxMessage = "La longueur maximale d'un titre doit être de {{ limit }} caractères."
      * )
-     * @Groups({"reviews_list", "reviews_details", "user_reviews"})
+     * @Groups({"reviews_list", "reviews_details", "user_reviews", "pill_reviews"})
      */
     private $title;
 
@@ -126,7 +126,6 @@ class ReviewPill
     /**
      * @ORM\Column(type="boolean")
      * @Assert\Type("boolean")
-     * @Groups({"pill_reviews"})
      */
     private $perturbation_period;
 
@@ -137,6 +136,7 @@ class ReviewPill
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups({"pill_reviews", "reviews_details"})
      */
     private $created_at;
 
@@ -148,14 +148,14 @@ class ReviewPill
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reviewPills")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"reviews_list", "reviews_details"})
+     * @Groups({"reviews_list", "reviews_details", "pill_reviews"})
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Pill::class, inversedBy="reviews")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"reviews_list", "pill_reviews", "reviews_details", "user_reviews"})
+     * @Groups({"reviews_list", "reviews_details", "user_reviews"})
      */
     private $pill;
 

@@ -7,6 +7,7 @@ use App\Repository\PillRepository;
 use App\Repository\ReviewPillRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -53,4 +54,26 @@ class PillController extends AbstractController
             "groups" => "pill_reviews"
         ]);
     }
+
+    /**
+     * Method enabling the search of a particular pill 
+     * @Route("/search", name="search")
+     *
+     * @return void
+     */
+    public function search(Request $request, PillRepository $pillRepository)
+    {
+        // On récupère l'information saisie dans le formulaire
+        $searchValue = $request->get('query');
+
+        // On effectue une recherche de séries basée sur $searchValue
+        // $tvShows = $tvShowRepository->findSearchByTitleDQL($searchValue);
+        $pillSearch = $pillRepository->findSearchByName($searchValue);
+
+        return $this->json($pillSearch, 200, [], [
+            "groups" => "pill_search"
+        ]);
+    }
+
+    
 }

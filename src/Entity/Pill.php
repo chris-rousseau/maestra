@@ -19,7 +19,7 @@ class Pill
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      *  
-     * @Groups({"reviews_list", "pills", "reviews_details", "user_reviews"})
+     * @Groups({"reviews_list", "pills", "reviews_details", "user_reviews", "pills_details", "pill_search"})
      */
     private $id;
 
@@ -28,8 +28,8 @@ class Pill
      * @Assert\Length(
      *      max = 100,
      *      maxMessage = "La longueur maximale du nom doit être de {{ limit }} caractères."
-     * )     
-     * @Groups({"reviews_list", "pills", "user_reviews", "reviews_details"})
+     * )   
+     * @Groups({"reviews_list", "pills", "user_reviews", "reviews_details", "pills_details", "pill_search"})  
      */
     private $name;
 
@@ -39,12 +39,13 @@ class Pill
      *      max = 1000,
      *      maxMessage = "La longueur maximale de la description doit être de {{ limit }} caractères."
      * )
+     * @Groups({"pills_details"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=128, options={"default" : "no-pill.jpg"}, nullable=true)
-     * 
+     * @Groups({"pills", "pills_details", "pill_search"})
      */
     private $picture;
 
@@ -55,6 +56,7 @@ class Pill
      *      max = 100,
      *      notInRangeMessage = "Le taux de remboursement doit être compris entre {{ min }} et {{ max }}."
      * )
+     * @Groups({"pills_details"})
      */
     private $reimbursed;
 
@@ -63,7 +65,8 @@ class Pill
      * @Assert\Length(
      *      max = 255,
      *      maxMessage = "La longueur maximale doit être de {{ limit }} caractères."
-     * ) 
+     * )
+     * @Groups({"pills_details"})
      */
     private $generic;
 
@@ -72,7 +75,8 @@ class Pill
      * @Assert\Length(
      *      max = 100,
      *      maxMessage = "La longueur maximale doit être de {{ limit }} caractères."
-     * ) 
+     * )
+     * @Groups({"pills_details"})
      */
     private $posology;
 
@@ -81,19 +85,22 @@ class Pill
      * @Assert\Length(
      *      max = 64,
      *      maxMessage = "La longueur maximale doit être de {{ limit }} caractères."
-     * ) 
+     * )
+     * @Groups({"pills_details"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank
+     * @Groups({"pills_details"})
      */
     private $generation;
 
     /**
      * @ORM\Column(type="boolean")
      * @Assert\Type("boolean")
+     * @Groups({"pills_details"})
      */
     private $interruption;
 
@@ -103,13 +110,14 @@ class Pill
      *      max = 64,
      *      maxMessage = "La longueur maximale doit être de {{ limit }} caractères."
      * )
+     * @Groups({"pills_details"})
      */
     private $laboratory;
 
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank
-     * 
+     * @Groups({"pills_details"})
      */
     private $delay_intake;
 
@@ -119,13 +127,14 @@ class Pill
      *      max = 1000,
      *      maxMessage = "La longueur maximale doit être de {{ limit }} caractères."
      * )
-     * 
+     * @Groups({"pills_details"})
      */
     private $composition;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
      * @Assert\NotBlank
+     * @Groups({"pills", "pills_details"})
      */
     private $count_reviews;
 
@@ -138,6 +147,47 @@ class Pill
      */
     private $slug;
 
+    
+    /**
+     * @ORM\OneToMany(targetEntity=ReviewPill::class, mappedBy="pill", orphanRemoval=true)
+     */
+    private $reviews;
+    
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
+     */
+    private $score_acne;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
+     */
+    private $score_libido;
+    
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
+     */
+    private $score_migraine;
+    
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
+     */
+    private $score_weight;
+    
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
+     */
+    private $score_breast_pain;
+    
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
+     */
+    private $score_nausea;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
+     */
+    private $score_pms;
+    
     /**
      * @ORM\Column(type="datetime_immutable")
      */
@@ -148,16 +198,11 @@ class Pill
      */
     private $updated_at;
 
-    /**
-     * @ORM\OneToMany(targetEntity=ReviewPill::class, mappedBy="pill", orphanRemoval=true)
-     */
-    private $reviews;
-
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
     }
-
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -381,6 +426,90 @@ class Pill
                 $review->setPill(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getScoreAcne(): ?int
+    {
+        return $this->score_acne;
+    }
+
+    public function setScoreAcne(?int $score_acne): self
+    {
+        $this->score_acne = $score_acne;
+
+        return $this;
+    }
+
+    public function getScoreLibido(): ?int
+    {
+        return $this->score_libido;
+    }
+
+    public function setScoreLibido(?int $score_libido): self
+    {
+        $this->score_libido = $score_libido;
+
+        return $this;
+    }
+
+    public function getScoreMigraine(): ?int
+    {
+        return $this->score_migraine;
+    }
+
+    public function setScoreMigraine(?int $score_migraine): self
+    {
+        $this->score_migraine = $score_migraine;
+
+        return $this;
+    }
+
+    public function getScoreWeight(): ?int
+    {
+        return $this->score_weight;
+    }
+
+    public function setScoreWeight(?int $score_weight): self
+    {
+        $this->score_weight = $score_weight;
+
+        return $this;
+    }
+
+    public function getScoreBreastPain(): ?int
+    {
+        return $this->score_breast_pain;
+    }
+
+    public function setScoreBreastPain(?int $score_breast_pain): self
+    {
+        $this->score_breast_pain = $score_breast_pain;
+
+        return $this;
+    }
+
+    public function getScoreNausea(): ?int
+    {
+        return $this->score_nausea;
+    }
+
+    public function setScoreNausea(?int $score_nausea): self
+    {
+        $this->score_nausea = $score_nausea;
+
+        return $this;
+    }
+
+    public function getScorePms(): ?int
+    {
+        return $this->score_pms;
+    }
+
+    public function setScorePms(?int $score_pms): self
+    {
+        $this->score_pms = $score_pms;
 
         return $this;
     }
