@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une pilule{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid px-4">
+		<h1 class="mt-4">Ajouter une pilule</h1>
+		<ol class="breadcrumb mb-4">
+			<li class="breadcrumb-item">
+				<a href="index.html">Dashboard</a>
+			</li>
+			<li class="breadcrumb-item active">Static Navigation</li>
+		</ol>
+		<div class="card mb-4">
+			<div class="card-body">
+				{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+				{{ form_errors(form) }}
+
+				<div class="form-group">
+					{{ form_row(form.name) }}
+				</div>
+				<div class="form-group">
+					{{ form_row(form.description) }}
+				</div>
+				<div class="form-group">
+					{{ form_row(form.pillImg) }}
+				</div>
+				<div class="form-group">
+					{{ form_row(form.reimbursed) }}
+				</div>
+				<div class="form-group">
+					{{ form_row(form.generic) }}
+				</div>
+				<div class="form-group">
+					{{ form_row(form.posology) }}
+				</div>
+				<div class="form-group">
+					{{ form_row(form.type) }}
+				</div>
+				<div class="form-group">
+					{{ form_row(form.generation) }}
+				</div>
+				<div class="form-group">
+					{{ form_row(form.interruption) }}
+				</div>
+				<div class="form-group">
+					{{ form_row(form.laboratory) }}
+				</div>
+				<div class="form-group">
+					{{ form_row(form.delay_intake) }}
+				</div>
+				<div class="form-group">
+					{{ form_row(form.composition) }}
+				</div>
+				<button type="submit" class="btn btn-dark mt-4">Ajouter une pilule</button>
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

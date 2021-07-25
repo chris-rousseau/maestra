@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PillRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -124,8 +125,7 @@ class Pill
     private $composition;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank
+     * @ORM\Column(type="integer", options={"default" : 0}, nullable=true)
      */
     private $count_reviews;
 
@@ -156,6 +156,7 @@ class Pill
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
+        $this->created_at = new DateTimeImmutable();
     }
 
     public function getId(): ?int
