@@ -4,7 +4,9 @@ namespace App\Controller\Admin;
 
 use App\Entity\Pill;
 use App\Form\PillType;
+use App\Repository\PillRepository;
 use App\Service\UploadImage;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,17 +19,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class PillController extends AbstractController
 {
     /**
-     * @Route("/", name="list")
-     */
-    public function list(): Response
-    {
-        return $this->render('admin/pill/list.html.twig', [
-            'controller_name' => 'PillController',
-        ]);
-    }
-
-    /**
-     * @Route("/add", name="add")
+     * @Route("/add", name="add", methods={"GET","POST"})
      */
     public function add(Request $request, UploadImage $upload, SluggerInterface $slugger): Response
     {
@@ -60,6 +52,37 @@ class PillController extends AbstractController
 
         return $this->render('admin/pill/add.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("", name="list", methods={"GET"})
+     */
+    public function list(Request $request, PillRepository $pillRepository, PaginatorInterface $paginator): Response
+    {
+        $pills = $pillRepository->findAll();
+
+        $allPills = $paginator->paginate(
+            $pills,
+            $request->query->getInt('page', 1),
+            2
+        );
+        return $this->render('admin/pill/list.html.twig', [
+            'allPills' => $allPills,
+        ]);
+    }
+
+    /**
+     * @Route("/search", name="search", methods={"GET"})
+     */
+    public function search(Request $request, PillRepository $pillRepository): Response
+    {
+        $searchValue = $request->get('q');
+
+        $pills = $pillRepository->findSearchByName($searchValue);
+        return $this->render('admin/pill/search.html.twig', [
+            'searchValue' => $searchValue,
+            'pills' => $pills,
         ]);
     }
 }
