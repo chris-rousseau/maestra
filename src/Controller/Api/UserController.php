@@ -24,7 +24,6 @@ class UserController extends AbstractController
      */
     public function show(User $user): Response
     {
-        
         return $this->json($user, 200, [], [
             "groups" => "users"
         ]);
