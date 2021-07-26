@@ -63,17 +63,23 @@ class PillRepository extends ServiceEntityRepository
     }
 
 
-      /***
-     * Method enabling to return a pill based on its generation 
+     /***
+     * Method enabling to return a pill based on criterias
      * 
      * Query Builder
      */
-    public function findSearchByGeneration($generation)
+    public function findSearchSortedBy($interruption, $reimbursed, $generation, $undesirable)
     {
-        // On instancie le querybuilder
         $qb = $this->createQueryBuilder('pill'); // SELECT * FROM pill
-        $qb->where('pill.generation = :generation'); // WHERE name LIKE %name%
+        $qb->where('pill.interruption = :interruption'); 
+        $qb->andWhere('pill.reimbursed = :reimbursed'); 
+        $qb->andWhere('pill.generation = :generation'); 
+        $qb->orderBy('pill.' . $undesirable, 'ASC');
+        
+        $qb->setParameter(':interruption', $interruption);
+        $qb->setParameter(':reimbursed', $reimbursed);
         $qb->setParameter(':generation', $generation);
+        
         $query = $qb->getQuery();
         return $query->getResult();
     }

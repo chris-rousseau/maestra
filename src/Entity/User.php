@@ -44,7 +44,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @Assert\Regex(
-     * pattern = "/^(?=.\d)(?=.[A-Z])(?=.[@#$%])(?!.(.)\1{2}).*[a-z]/m",
+     * pattern = "#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{10,}$#",
      * match=true,
      * message="Votre mot de passe doit comporter au moins huit caractères, dont des lettres majuscules et minuscules, un chiffre et un symbole."
      * )
@@ -54,10 +54,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Assert\Range(
+     * @Assert\Length(
      *      min = 2,
      *      max = 64,
-     *      notInRangeMessage = "Le prénom doit être compris entre {{ min }} et {{ max }} caractères."
+     *      minMessage = "Le prénom doit avoir au minimum {{ limit }} caractères.",
+     *      maxMessage = "Le prénom doit avoir au maximum {{ limit }} caractères."
      * )
      * @Groups({"users", "reviews_details", "reviews_list", "pill_reviews"})
      */
@@ -65,10 +66,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Assert\Range(
+     * @Assert\Length(
      *      min = 2,
      *      max = 64,
-     *      notInRangeMessage = "Le nom doit être compris entre {{ min }} et {{ max }} caractères."
+     *      minMessage = "Le nom doit avoir au minimum {{ limit }} caractères.",
+     *      maxMessage = "Le nom doit avoir au maximum {{ limit }} caractères."
      * )
      * @Groups({"users"})
      */

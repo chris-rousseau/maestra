@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PillRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -133,8 +134,7 @@ class Pill
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
-     * @Assert\NotBlank
-     * @Groups({"pills", "pills_details"})
+     * @Groups({"pills", "pills_details", "pill_search"})
      */
     private $count_reviews;
 
@@ -147,12 +147,12 @@ class Pill
      */
     private $slug;
 
-    
+
     /**
      * @ORM\OneToMany(targetEntity=ReviewPill::class, mappedBy="pill", orphanRemoval=true)
      */
     private $reviews;
-    
+
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
      */
@@ -162,22 +162,22 @@ class Pill
      * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
      */
     private $score_libido;
-    
+
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
      */
     private $score_migraine;
-    
+
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
      */
     private $score_weight;
-    
+
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
      */
     private $score_breast_pain;
-    
+
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
      */
@@ -187,7 +187,7 @@ class Pill
      * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
      */
     private $score_pms;
-    
+
     /**
      * @ORM\Column(type="datetime_immutable")
      */
@@ -201,8 +201,9 @@ class Pill
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
+        $this->created_at = new DateTimeImmutable();
     }
-    
+
     public function getId(): ?int
     {
         return $this->id;

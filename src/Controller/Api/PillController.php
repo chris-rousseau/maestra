@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/api/pill", name="api_pill_")
@@ -35,7 +36,7 @@ class PillController extends AbstractController
     public function details(Pill $pill): Response
     {
         return $this->json($pill, 200, [], [
-            "groups" => "pills"
+            "groups" => "pills_details"
         ]);
     }
 
@@ -65,7 +66,6 @@ class PillController extends AbstractController
     {
         $searchValue = $request->get('query');
         $pillSearch = $pillRepository->findSearchByName($searchValue);
-        
 
         return $this->json($pillSearch, 200, [], [
             "groups" => "pill_search"
@@ -73,22 +73,41 @@ class PillController extends AbstractController
     }
 
     /**
-     * Method enabling the search of a particular pill 
-     * @Route("/search/generation", name="search_generation")
+     * Method enabling the search of a particular pill according to what's been selected
+     * @Route("/search/sort", name="search_sorting", methods={"POST"} )
      *
      * @return void
      */
-    public function searchByGeneration(Request $request, PillRepository $pillRepository)
+    public function searchSorted(Request $request, PillRepository $pillRepository)
     {
-        // On récupère l'information saisie dans select
-        $searchValue = $request->get('query'); //1 ou 2 
-       
-        $pillSearch = $pillRepository->findSearchByGeneration($searchValue);
-        //dd($searchValue, $pillSearch);
+        $searchValue = $request->getContent(); //1 ou 2 
+        $decodeur = json_decode($searchValue);
 
+        $interruption = $decodeur->interruption;
+        $reimbursed = $decodeur->reimbursed;
+        $generation = $decodeur->generation;
+        $undesirable = $decodeur->undesirable;
+
+        $pillSearch = $pillRepository->findSearchSortedBy($interruption, $reimbursed, $generation, $undesirable);
+        
         return $this->json($pillSearch, 200, [], [
             "groups" => "pill_search"
         ]);
     }
 
+
+    /**
+     * Displays the pills of the homepage
+     * @Route("/home", name="homepagePills", methods={"GET"})
+     */
+    public function homepagePills(PillRepository $pillRepository): Response
+    {
+        $allPills = $pillRepository->findBy([], [
+            "count_reviews" => "DESC"
+        ], 5);
+
+        return $this->json($allPills, 200, [], [
+            "groups" => "pills"
+        ]);
+    }
 }
