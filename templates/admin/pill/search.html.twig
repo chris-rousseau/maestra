@@ -35,16 +35,20 @@
 					<tbody>
 						{% for pill in pills %}
 							<tr>
-								<td>{{ pill.name }}</td>
+								<th scope="row">{{ pill.name }}</th>
 								<td>{{ pill.laboratory }}</td>
 								<td>
 									<i class="fas fa-comment"></i>
 									{{ pill.countReviews }}</td>
 								<td>
-									<i class="fas fa-edit"></i>
-									Editer -
-									<i class="fas fa-trash-alt"></i>
-									Supprimer</td>
+									<a class="btn btn-outline-primary" href="">
+										<i class="fas fa-edit"></i>
+										Editer
+									</a>
+									<a class="btn btn-outline-danger" href="" onclick="return confirm('Etes-vous sur de vouloir supprimer ?');">
+										<i class="fas fa-trash-alt"></i>
+										Supprimer</a>
+								</td>
 							</tr>
 						{% endfor %}
 					</tbody>
