@@ -22,7 +22,7 @@
         </tr>
     </thead>
     <tbody>
-      {% for review in reviews %}
+      {% for review in data %}
         
         <tr>
             <td>{{review.id}}</td>
@@ -54,6 +54,6 @@
     </tbody>
 </table>
             <ul class="pagination">
-            <li>{{ knp_pagination_render(pagination) }}</li>
+            <li>{{ knp_pagination_render(data) }}</li>
             </ul>
 {% endblock %}

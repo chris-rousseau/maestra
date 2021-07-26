@@ -23,15 +23,14 @@ class ReviewPillController extends AbstractController
     {
         $reviews = $reviewPillRepository->findAllOrderedByStatus();
 
-        $pagination = $paginator->paginate(
+        $data = $paginator->paginate(
             $reviews, 
             $request->query->getInt('page', 1), 
-            2 
+            10
         );
 
         return $this->render('admin/review_pill/index.html.twig', [
-            'reviews' => $reviews,
-            'pagination' => $pagination,
+            'data' => $data
 
         ]);
     }
@@ -64,7 +63,7 @@ class ReviewPillController extends AbstractController
     }
 
     /**
-     * Method displaying one review according to its id
+     * Method to validate one review (will go from status : 0 to status:1)
      * @Route("/{id}/validate", name="validate", methods="GET", requirements={"id"="\d+"})
      */
     public function validateReview(ReviewPill $review): Response
