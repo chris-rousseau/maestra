@@ -78,7 +78,7 @@ class PillController extends AbstractController
      *
      * @return void
      */
-    public function searchCriterias(Request $request, PillRepository $pillRepository)
+    public function searchSorted(Request $request, PillRepository $pillRepository)
     {
         $searchValue = $request->getContent(); //1 ou 2 
         $decodeur = json_decode($searchValue);
@@ -88,7 +88,7 @@ class PillController extends AbstractController
         $generation = $decodeur->generation;
         $undesirable = $decodeur->undesirable;
 
-        $pillSearch = $pillRepository->findSearchBySelectiveSearch($interruption, $reimbursed, $generation, $undesirable);
+        $pillSearch = $pillRepository->findSearchSortedBy($interruption, $reimbursed, $generation, $undesirable);
         
         return $this->json($pillSearch, 200, [], [
             "groups" => "pill_search"
