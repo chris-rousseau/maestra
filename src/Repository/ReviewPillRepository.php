@@ -54,6 +54,10 @@ class ReviewPillRepository extends ServiceEntityRepository
        $qb = $this->createQueryBuilder('review'); 
        $qb->orderBy('review.status', 'ASC'); 
 
+       $qb->leftJoin('review.user', 'user');
+        $qb->leftJoin('review.pill', 'pill');
+        $qb->addSelect('user, pill');
+
        $query = $qb->getQuery();
 
        return $query->getResult();

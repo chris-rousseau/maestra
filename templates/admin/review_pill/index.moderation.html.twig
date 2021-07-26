@@ -43,11 +43,7 @@
 					<a href="{{ path('admin_pill_review_details', {id:review.id}) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
 			</td>
              <td class="text-right">
-             {% if review.status == 0 %}
-                        <a href="{{ path('admin_pill_review_validate', {'id': review.id})}} " class="btn btn-sm btn-success">
-                            <i class="far fa-check-circle"></i>
-                        </a>
-                             {% endif %}
+             
                    <!-- Example single danger button -->
                         <div class="btn-group">
                         <a href="{{ path('admin_pill_review_delete', {'id': review.id})}}" class="btn btn-sm btn-danger">

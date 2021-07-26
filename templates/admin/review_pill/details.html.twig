@@ -51,8 +51,18 @@
         </tbody>
     </table>
 
-    <a href="{{ path('admin_pill_review_list') }}" class="btn btn-sm btn-outline-primary"><strong>Retour à la liste générale</strong></a>
-    <a href="{{ path('admin_pill_review_pending') }}" class="btn btn-sm btn-outline-primary"><strong>Retour à la liste des avis à valider</strong></a>
+{% if review.status == 0 %}
+    <a href="{{ path('admin_pill_review_validate', {'id': review.id}) }}" class="btn btn-sm btn-outline-success"><strong>Valider</strong></a>
+    <a href="{{ path('admin_pill_review_delete', {'id': review.id}) }}" class="btn btn-sm btn-outline-danger"><strong>Supprimer</strong></a>
 
-  <a href="{{ path('admin_pill_review_validate', {'id': review.id}) }}" class="btn btn-sm btn-outline-success"><strong>Valider</strong></a>
+  {% endif %}
+{% if review.status == 1 %}
+  <a href="{{ path('admin_pill_review_delete', {'id': review.id}) }}" class="btn btn-sm btn-outline-danger"><strong>Supprimer</strong></a>
+  {% endif %}
+
+    <p class="mb-2">
+        <a href="{{ path('admin_pill_review_list') }}" class="btn btn-sm btn-outline-primary my-3"><strong>Retour à la liste générale</strong></a>
+        <a href="{{ path('admin_pill_review_pending') }}" class="btn btn-sm btn-outline-primary"><strong>Retour à la liste des avis à valider</strong></a>
+    </p>
+
  {% endblock %}
