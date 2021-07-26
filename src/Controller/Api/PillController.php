@@ -35,7 +35,7 @@ class PillController extends AbstractController
     public function details(Pill $pill): Response
     {
         return $this->json($pill, 200, [], [
-            "groups" => "pills"
+            "groups" => "pills_details"
         ]);
     }
 
@@ -91,4 +91,18 @@ class PillController extends AbstractController
         ]);
     }
 
+    /**
+     * Displays the pills of the homepage
+     * @Route("/home", name="homepagePills", methods={"GET"})
+     */
+    public function homepagePills(PillRepository $pillRepository): Response
+    {
+        $allPills = $pillRepository->findBy([], [
+            "count_reviews" => "DESC"
+        ], 5);
+
+        return $this->json($allPills, 200, [], [
+            "groups" => "pills"
+        ]);
+    }
 }
