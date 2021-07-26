@@ -134,7 +134,7 @@ class Pill
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"default" : 0})
-     * @Groups({"pills", "pills_details"})
+     * @Groups({"pills", "pills_details", "pill_search"})
      */
     private $count_reviews;
 
