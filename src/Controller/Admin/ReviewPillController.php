@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\ReviewPill;
 use App\Repository\ReviewPillRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,12 +19,20 @@ class ReviewPillController extends AbstractController
      * Method displaying all the reviews
      * @Route("/list", name="list")
      */
-    public function index(ReviewPillRepository $reviewPillRepository): Response
+    public function index(ReviewPillRepository $reviewPillRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $reviews = $reviewPillRepository->findAllOrderedByStatus();
 
+        $pagination = $paginator->paginate(
+            $reviews, 
+            $request->query->getInt('page', 1), 
+            2 
+        );
+
         return $this->render('admin/review_pill/index.html.twig', [
             'reviews' => $reviews,
+            'pagination' => $pagination,
+
         ]);
     }
 
