@@ -79,7 +79,7 @@ class ReviewPillController extends AbstractController
             // Returning a clear response to the client
             return $this->json(
                 [
-                    'message' => 'L\'avis a bien été créé'
+                    'message' => 'L\'avis ' . $review->getTitle() .  ' a bien été créé'
                 ],
                 201 // 201 - Created https://developer.mozilla.org/fr/docs/Web/HTTP/Status/201
             );
@@ -105,7 +105,7 @@ class ReviewPillController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->json([
-                'message' => 'La review a bien été mise à jour'
+                'message' => 'L\'avis ' . $review->getTitle() .  'a bien été mise à jour'
             ]);
         }
 
@@ -132,6 +132,6 @@ class ReviewPillController extends AbstractController
         $em->flush();
 
         // Code 204 : https://developer.mozilla.org/fr/docs/Web/HTTP/Status/204
-        return $this->json('Suppression de l\'avis', 200);
+        return $this->json('Suppression de l\'avis '  . $review->getTitle() , 200);
     }
 }

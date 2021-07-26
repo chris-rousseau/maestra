@@ -47,4 +47,35 @@ class PillRepository extends ServiceEntityRepository
         ;
     }
     */
+
+     /***
+     * Method enabling to return a pill based on its name 
+     * 
+     * Query Builder
+     */
+    public function findSearchByName($name)
+    {
+        $qb = $this->createQueryBuilder('pill'); // SELECT * FROM pill
+        $qb->where('pill.name LIKE :name'); // WHERE name LIKE %name%
+        $qb->setParameter(':name', "%$name%");
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+
+      /***
+     * Method enabling to return a pill based on its generation 
+     * 
+     * Query Builder
+     */
+    public function findSearchByGeneration($generation)
+    {
+        // On instancie le querybuilder
+        $qb = $this->createQueryBuilder('pill'); // SELECT * FROM pill
+        $qb->where('pill.generation = :generation'); // WHERE name LIKE %name%
+        $qb->setParameter(':generation', $generation);
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
 }
