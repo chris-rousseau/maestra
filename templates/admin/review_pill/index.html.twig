@@ -12,10 +12,10 @@
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Pilule</th>
              <th scope="col">Titre de l'avis</th>
             <th scope="col">Status de l'avis</th>
             <th scope="col">Auteur de l'avis</th>
+            <th scope="col">Pilule</th>
             <th scope="col"></th>
             <th scope="col">Actions</th>
             
@@ -26,7 +26,6 @@
         
         <tr>
             <td>{{review.id}}</td>
-            <td>{{review.pill.name}}</td>
             <td>{{ review.title }}</td>
              {% if review.status == 0 %}
                 <td class="text-danger"><strong>A valider</strong></td>
@@ -35,6 +34,7 @@
                 <td class="text-success">Validé</td>
             {% endif %}   
             <td>{{review.user.firstname }} {{review.user.lastname }} </a></td>
+            <td>{{review.pill.name}}</td>
         
             <td>
 					<a href="{{ path('admin_pill_review_details', {id:review.id}) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
