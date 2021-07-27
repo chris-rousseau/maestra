@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Toutes les pilules{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid px-4">
+		<h1 class="mt-4">Toutes les pilules</h1>
+		<ol class="breadcrumb mb-4">
+			<li class="breadcrumb-item">
+				<a href="{{ path('admin_home') }}">Dashboard</a>
+			</li>
+			<li class="breadcrumb-item active">Rechercher une pilule</li>
+		</ol>
+		<div class="card mb-4">
+			<div class="card-body">
+				<div class="input-group rounded">
+					<form class="d-flex m" action="{{ path('admin_pill_search') }}">
+						<input type="search" name="q" class="form-control rounded" placeholder="Rechercher une pilule" aria-label="Search" aria-describedby="search-addon"/>
+						<span class="input-group-text border-0" id="search-addon">
+							<i class="fas fa-search"></i>
+						</span>
+					</form>
+				</div>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">Nom de la pilule</th>
+							<th scope="col">Laboratoire</th>
+							<th scope="col">Avis</th>
+							<th scope="col">Menu</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for pill in allPills %}
+							<tr>
+								<th scope="row">{{ pill.name }}</th>
+								<td>{{ pill.laboratory }}</td>
+								<td>
+									<i class="fas fa-comment"></i>
+									{{ pill.countReviews }}</td>
+								<td>
+									<a class="btn btn-outline-primary" href="{{ path('admin_pill_edit', {id:pill.id}) }}">
+										<i class="fas fa-edit"></i>
+										Editer
+									</a>
+									<a class="btn btn-outline-danger" href="{{ path('admin_pill_delete', {id:pill.id}) }}" onclick="return confirm('Etes-vous sur de vouloir supprimer ?');">
+										<i class="fas fa-trash-alt"></i>
+										Supprimer</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{{ knp_pagination_render(allPills) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}
