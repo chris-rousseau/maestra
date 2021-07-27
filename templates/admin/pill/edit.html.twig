@@ -57,7 +57,7 @@
 					{{ form_row(form.composition) }}
 				</div>
 				<button type="submit" class="btn btn-success mt-4">Editer la pilule</button>
-				<button type="submit" class="btn btn-dark mt-4">Retourner à la liste</button>
+				<a class="btn btn-dark mt-4" href="{{ path('admin_pill_list') }}" role="button">Retourner à la liste</a>
 				{{ form_end(form) }}
 			</div>
 		</div>
