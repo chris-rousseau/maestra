@@ -78,11 +78,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="smallint")
-     * @Assert\Range(
-     *      min = 1,
-     *      max = 120,
-     *      notInRangeMessage = "L'age doit être compris entre {{ min }} et {{ max }} caractères."
-     * )
+     * @Assert\Date
+     * @var string A "Y-m-d" formatted value
      * @Groups({"users", "reviews_details", "reviews_list", "pill_reviews"})
      */
     private $age;

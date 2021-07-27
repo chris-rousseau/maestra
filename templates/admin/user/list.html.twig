@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les utilisateurs{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid px-4">
+		<h1 class="mt-4">Tous les utilisateurs</h1>
+		<ol class="breadcrumb mb-4">
+			<li class="breadcrumb-item">
+				<a href="{{ path('admin_home') }}">Dashboard</a>
+			</li>
+			<li class="breadcrumb-item active">Rechercher un utilisateur</li>
+		</ol>
+		<div class="card mb-4">
+			<div class="card-body">
+				<div class="input-group rounded">
+					<form class="d-flex m" action="{{ path('admin_user_search') }}">
+						<input type="search" name="q" class="form-control rounded" placeholder="Rechercher un utilisateur" aria-label="Search" aria-describedby="search-addon"/>
+						<span class="input-group-text border-0" id="search-addon">
+							<i class="fas fa-search"></i>
+						</span>
+					</form>
+				</div>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">Nom</th>
+							<th scope="col">Prénom</th>
+							<th scope="col">Email</th>
+							<th scope="col">Menu</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for user in allUsers %}
+							<tr>
+								<th scope="row">{{ user.lastname }}</th>
+								<td>{{ user.firstname }}</td>
+								<td>{{ user.email }}</td>
+								<td>
+									{% if user.roles == ['ROLE_USER'] %}
+										<a class="btn btn-outline-success" href="{{ path('admin_user_moderator', {id:user.id}) }}" onclick="return confirm('Etes-vous sur de vouloir passer cette personne en modérateur ?');">
+											<i class="far fa-arrow-alt-circle-up"></i>
+											Passer modérateur
+										</a>
+									{% else %}
+										<a class="btn btn-outline-secondary" href="{{ path('admin_user_unmoderator', {id:user.id}) }}" onclick="return confirm('Etes-vous sur de vouloir retirer cette personne de modérateur ?');">
+											<i class="far fa-arrow-alt-circle-up"></i>
+											Retirer modérateur
+										</a>
+									{% endif %}
+									{% if user.roles == ['ROLE_ADMIN', 'ROLE_USER'] %}
+										<a class="btn btn-outline-secondary" href="{{ path('admin_user_unmoderator', {id:user.id}) }}" onclick="return confirm('Etes-vous sur de vouloir retirer cette personne de admin ?');">
+											<i class="far fa-arrow-alt-circle-up"></i>
+											Retirer admin
+										</a>
+									{% else %}
+										<a class="btn btn-outline-dark" href="{{ path('admin_user_admin', {id:user.id}) }}" onclick="return confirm('Etes-vous sur de vouloir passer cette personne en admin ?');">
+											<i class="far fa-arrow-alt-circle-up"></i>
+											Passer admin
+										</a>
+									{% endif %}
+									<a class="btn btn-outline-danger" href="{{ path('admin_user_delete', {id:user.id}) }}" onclick="return confirm('Etes-vous sur de vouloir supprimer cet utilisateur?');">
+										<i class="fas fa-trash-alt"></i>
+										Supprimer</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{{ knp_pagination_render(allUsers) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

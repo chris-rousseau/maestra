@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,8 +25,8 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        //return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-        return $this->json("L'adresse mail ou le mot de passe est incorrect", 401);
+        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        // return $this->json("L'adresse mail ou le mot de passe est incorrect", 401);
     }
 
     /**
