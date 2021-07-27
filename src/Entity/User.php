@@ -77,12 +77,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $lastname;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="string")
      * @Assert\Date
      * @var string A "Y-m-d" formatted value
      * @Groups({"users", "reviews_details", "reviews_list", "pill_reviews"})
      */
-    private $age;
+    private $birthdate;
 
     /**
      * @ORM\Column(type="string", length=128, nullable=true, options={"default" : "no-avatar.jpg"})
@@ -238,14 +238,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAge(): ?int
+    public function getBirthdate(): ?string
     {
-        return $this->age;
+        return $this->birthdate;
     }
 
-    public function setAge(int $age): self
+    public function setBirthdate(string $birthdate): self
     {
-        $this->age = $age;
+        $this->birthdate = $birthdate;
 
         return $this;
     }

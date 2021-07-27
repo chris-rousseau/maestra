@@ -159,6 +159,11 @@ class ReviewPill
      */
     private $pill;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $user_age;
+
     public function __construct()
     {
         $this->created_at = new DateTimeImmutable();
@@ -357,6 +362,18 @@ class ReviewPill
     public function setPill(?Pill $pill): self
     {
         $this->pill = $pill;
+
+        return $this;
+    }
+
+    public function getUserAge(): ?int
+    {
+        return $this->user_age;
+    }
+
+    public function setUserAge(int $user_age): self
+    {
+        $this->user_age = $user_age;
 
         return $this;
     }
