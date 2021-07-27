@@ -43,6 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @var string The hashed password
+     * @Assert\NotBlank(message="Le mot de passe ne peut pas être vide")
      * @Assert\Regex(
      * pattern = "#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$#",
      * match=true,
