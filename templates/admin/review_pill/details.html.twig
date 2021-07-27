@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de l'avis {{review.title}}{{ parent() }}
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid px-4">
+  
+ <h1 class="fw-light"> Avis sur la pilule {{ review.pill.name }}</h1>
+<div class="card mb-4">
+			<div class="card-body">	
+
+  <table class="table">
+        <tbody>
+        <tr>
+                <th>Titre</th>
+                <td>{{ review.title }}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ review.content }}</td>
+            </tr>
+            {# <tr>
+                <th>Interruption</th>
+            </tr> #}
+          
+            <tr>
+                <th>Status</th>
+                 {% if review.status == 0 %}
+                <strong>
+                    <td class="text-danger"><strong>A valider</strong></td>
+                </strong>
+                {% endif %}
+                 {% if review.status == 1 %}
+                <td>Validé</td>
+                {% endif %}
+            </tr>
+
+        <tr>
+                <th>Auteur</th>
+                <td>{{ review.user.firstname }} {{ review.user.lastname }}</td>
+            </tr>
+
+            <tr>
+                <th>Pilule</th>
+                <td>{{ review.pill.name }}</td>
+            </tr>
+           
+        </tbody>
+    </table>
+
+{% if review.status == 0 %}
+    <a href="{{ path('admin_pill_review_validate', {'id': review.id}) }}" class="btn btn-sm btn-outline-success"><strong>Valider</strong></a>
+    <a href="{{ path('admin_pill_review_delete', {'id': review.id}) }}" class="btn btn-sm btn-outline-danger"><strong>Supprimer</strong></a>
+
+  {% endif %}
+{% if review.status == 1 %}
+  <a href="{{ path('admin_pill_review_delete', {'id': review.id}) }}" class="btn btn-sm btn-outline-danger"><strong>Supprimer</strong></a>
+  {% endif %}
+
+    <p class="mb-2">
+        <a href="{{ path('admin_pill_review_list') }}" class="btn btn-sm btn-outline-primary my-3"><strong>Retour à la liste générale</strong></a>
+        <a href="{{ path('admin_pill_review_pending') }}" class="btn btn-sm btn-outline-primary"><strong>Retour à la liste des avis à valider</strong></a>
+    </p>
+
+ {% endblock %}
