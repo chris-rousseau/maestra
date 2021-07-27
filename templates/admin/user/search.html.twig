@@ -45,23 +45,23 @@
 											Passer modérateur
 										</a>
 									{% else %}
-										<a class="btn btn-outline-secondary" href="{{ path('admin_user_unmoderator', {id:user.id}) }}" onclick="return confirm('Etes-vous sur de vouloir passer cette personne en modérateur ?');">
+										<a class="btn btn-outline-secondary" href="{{ path('admin_user_unmoderator', {id:user.id}) }}" onclick="return confirm('Etes-vous sur de vouloir retirer cette personne de modérateur ?');">
 											<i class="far fa-arrow-alt-circle-up"></i>
 											Retirer modérateur
 										</a>
 									{% endif %}
 									{% if user.roles == ['ROLE_ADMIN', 'ROLE_USER'] %}
-										<a class="btn btn-outline-secondary" href="{{ path('admin_user_unmoderator', {id:user.id}) }}" onclick="return confirm('Etes-vous sur de vouloir passer cette personne en modérateur ?');">
+										<a class="btn btn-outline-secondary" href="{{ path('admin_user_unmoderator', {id:user.id}) }}" onclick="return confirm('Etes-vous sur de vouloir retirer cette personne de admin ?');">
 											<i class="far fa-arrow-alt-circle-up"></i>
 											Retirer admin
 										</a>
 									{% else %}
-										<a class="btn btn-outline-dark" href="{{ path('admin_user_admin', {id:user.id}) }}" onclick="return confirm('Etes-vous sur de vouloir passer cette personne en modérateur ?');">
+										<a class="btn btn-outline-dark" href="{{ path('admin_user_admin', {id:user.id}) }}" onclick="return confirm('Etes-vous sur de vouloir passer cette personne en admin ?');">
 											<i class="far fa-arrow-alt-circle-up"></i>
 											Passer admin
 										</a>
 									{% endif %}
-									<a class="btn btn-outline-danger" href="{{ path('admin_user_delete', {id:user.id}) }}" onclick="return confirm('Etes-vous sur de vouloir supprimer ?');">
+									<a class="btn btn-outline-danger" href="{{ path('admin_user_delete', {id:user.id}) }}" onclick="return confirm('Etes-vous sur de vouloir supprimer cet utilisateur ?');">
 										<i class="fas fa-trash-alt"></i>
 										Supprimer</a>
 								</td>
