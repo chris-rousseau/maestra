@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ pill.name }}{{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid px-4">
+		<h1 class="mt-4">{{ pill.name }}
+			- Détails</h1>
+		<ol class="breadcrumb mb-4">
+			<li class="breadcrumb-item">
+				<a href="{{ path('admin_home') }}">Dashboard</a>
+			</li>
+			<li class="breadcrumb-item active">Détails d'une pilule</li>
+		</ol>
+		<div class="card mb-4">
+			<div class="card-body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Nom</th>
+							<th scope="col">Laboratoire</th>
+							<th scope="col">Type</th>
+							<th scope="col">Génération</th>
+							<th scope="col">Remboursement</th>
+							<th scope="col">Intéruption</th>
+							<th scope="col">Délai d'oubli</th>
+							<th scope="col">Avis</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">{{ pill.name }}</th>
+							<td>{{ pill.laboratory }}</td>
+							<td>{{ pill.type }}</td>
+							<td>{{ pill.generation }}</td>
+							<td>{{ pill.reimbursed }}</td>
+							<td>
+								{% if pill.interruption == 0 %}Non{% else %}Oui
+								{% endif %}
+							</td>
+							<td>{{ pill.delayIntake }}</td>
+							<td>
+								<i class="fas fa-comment"></i>
+								{{ pill.countReviews }}</td>
+						</tr>
+					</tbody>
+				</table>
+				<img src="{{ asset('uploads/pills/' ~ pill.picture) }}" width="250px" alt="Photo de la boite de {{ pill.name }}">
+				<h3>Description</h3>
+				<p>{{ pill.description }}</p>
+				<h3>Posologie</h3>
+				<p>{{ pill.posology }}</p>
+				<h3>Composition</h3>
+				<p>{{ pill.composition }}</p>
+				<a class="btn btn-dark" href="{{ path('admin_pill_list') }}" role="button">Retourner à la liste</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

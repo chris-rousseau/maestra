@@ -75,6 +75,16 @@ class PillController extends AbstractController
     }
 
     /**
+     * @Route("/details/{id}", name="details", requirements={"id"="\d+"})
+     */
+    public function details(Pill $pill): Response
+    {
+        return $this->render('admin/pill/details.html.twig', [
+            'pill' => $pill,
+        ]);
+    }
+
+    /**
      * @Route("/edit/{id}", name="edit", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
     public function edit(Request $request, Pill $pill, UploadImage $upload, SluggerInterface $slugger): Response
