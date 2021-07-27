@@ -16,6 +16,7 @@
 		{% endblock %}
 	</head>
 	<body>
+		{% set currentRoute =  app.request.uri %}
 		{% include "partials/_nav.html.twig" %}
 		{% include "partials/_sidebar-left.html.twig" %}
 		{% include "partials/_flash.html.twig" %}

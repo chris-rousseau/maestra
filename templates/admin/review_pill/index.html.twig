@@ -5,12 +5,17 @@
 
 
 {% block body %}
+
+
 	<div class="container-fluid px-4">
 		<h1 class="mt-4">Tous les avis</h1>
 		<ol class="breadcrumb mb-4">
 			<li class="breadcrumb-item">
 				<a href="{{ path('admin_home') }}">Dashboard</a>
 			</li>
+		</ol>
+		<div class="card mb-4">
+			<div class="card-body">	
         <table class="table table-striped">
             
     <thead>
@@ -57,7 +62,9 @@
         	{% endfor %}
     </tbody>
 </table>
+</div>
+</div>
             <ul class="pagination">
-            <li>{{ knp_pagination_render(data) }}</li>
+            {{ knp_pagination_render(data) }}
             </ul>
 {% endblock %}

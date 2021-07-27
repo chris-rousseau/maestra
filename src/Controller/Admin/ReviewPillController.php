@@ -26,7 +26,7 @@ class ReviewPillController extends AbstractController
         $data = $paginator->paginate(
             $reviews, 
             $request->query->getInt('page', 1), 
-            10
+            8
         );
 
         return $this->render('admin/review_pill/index.html.twig', [
@@ -46,7 +46,7 @@ class ReviewPillController extends AbstractController
         $data = $paginator->paginate(
             $reviews, 
             $request->query->getInt('page', 1), 
-            10
+            8
         );
 
         return $this->render('admin/review_pill/index.moderation.html.twig', [
