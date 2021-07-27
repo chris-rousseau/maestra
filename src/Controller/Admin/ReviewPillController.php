@@ -39,12 +39,18 @@ class ReviewPillController extends AbstractController
      * Method displaying all the newest reviews that has to be validated (meaning their status is 0)
      * @Route("/pending/list", name="pending")
      */
-    public function indexValidation(ReviewPillRepository $reviewPillRepository): Response
+    public function indexValidation(ReviewPillRepository $reviewPillRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $reviews = $reviewPillRepository->findByStatus(0);
 
+        $data = $paginator->paginate(
+            $reviews, 
+            $request->query->getInt('page', 1), 
+            10
+        );
+
         return $this->render('admin/review_pill/index.moderation.html.twig', [
-            'reviews' => $reviews,
+            'data' => $data
         ]);
     }
 

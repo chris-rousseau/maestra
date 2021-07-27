@@ -1,22 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des avis{{ parent() }}
+{% block title %}Tous les avis{{ parent() }}
 {% endblock %}
 
 
 {% block body %}
 	<div class="container-fluid px-4">
- <h1 class="fw-light">Liste des avis</h1>
-        <table class="table table-hover mt-4">
+		<h1 class="mt-4">Tous les avis</h1>
+		<ol class="breadcrumb mb-4">
+			<li class="breadcrumb-item">
+				<a href="{{ path('admin_home') }}">Dashboard</a>
+			</li>
+        <table class="table table-striped">
             
     <thead>
         <tr>
-            <th scope="col">#</th>
-             <th scope="col">Titre de l'avis</th>
+            <th scope="col">Titre de l'avis</th>
             <th scope="col">Status de l'avis</th>
             <th scope="col">Auteur de l'avis</th>
             <th scope="col">Pilule</th>
-            <th scope="col"></th>
             <th scope="col">Actions</th>
             
         </tr>
@@ -25,7 +27,7 @@
       {% for review in data %}
         
         <tr>
-            <td>{{review.id}}</td>
+        
             <td>{{ review.title }}</td>
              {% if review.status == 0 %}
                 <td class="text-danger"><strong>A valider</strong></td>
@@ -36,16 +38,18 @@
             <td>{{review.user.firstname }} {{review.user.lastname }} </a></td>
             <td>{{review.pill.name}}</td>
         
-            <td>
-					<a href="{{ path('admin_pill_review_details', {id:review.id}) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
-			</td>
+            
              <td class="text-right">
                        
                    <!-- Example single danger button -->
+					
+					<a href="{{ path('admin_pill_review_details', {id:review.id}) }}" class="btn btn btn-outline-secondary">Voir</a>
+                       
                         <div class="btn-group">
-                        <a href="{{ path('admin_pill_review_delete', {'id': review.id})}}" onclick="return confirm('Etes-vous sûr de vouloir supprimer?');" class="btn btn-sm btn-danger">
-                            <i class="far fa-trash-alt"></i>
-                        </a>
+
+							<a class="btn btn-outline-danger" href="{{ path('admin_pill_review_delete', {'id': review.id}) }}" onclick="return confirm('Etes-vous sur de vouloir supprimer ?');">
+										<i class="fas fa-trash-alt"></i>
+										Supprimer</a>
                            
                         </div>
                     </td>            
