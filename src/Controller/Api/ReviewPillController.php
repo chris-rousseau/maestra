@@ -30,6 +30,22 @@ class ReviewPillController extends AbstractController
         ]);
     }
 
+     /**
+     * Displays the reviews of the homepage
+     * @Route("/home", name="homepage", methods={"GET"})
+     */
+    public function homepagePills(ReviewPillRepository $reviewPillRepository): Response
+    {
+        $allReviews = $reviewPillRepository->findBy([], [
+            "created_at" => "ASC",
+
+        ], 5);
+
+        return $this->json($allReviews, 200, [], [
+            "groups" => "reviews_list"
+        ]);
+    }
+
     /**
      * Method displaying one review according to its id
      * @Route("/{id}", name="details", methods="GET", requirements={"id"="\d+"})
