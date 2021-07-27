@@ -1,10 +1,7 @@
 <div id="layoutSidenav">
 	<div id="layoutSidenav_nav">
-
 		<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-
 			<div class="sb-sidenav-menu">
-
 				<div class="nav">
 					<a class="nav-link" href="{{ path('admin_home') }}">
 						<div class="sb-nav-link-icon">
@@ -12,9 +9,8 @@
 						</div>
 						Dashboard
 					</a>
-					
 					<div class="sb-sidenav-menu-heading">Gestion</div>
-					<a class="nav-link collapsed" href="Pillules" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+					<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
 						<div class="sb-nav-link-icon">
 							<i class="fas fa-tablets"></i>
 						</div>
@@ -29,9 +25,21 @@
 							<a class="nav-link" href="{{ path('admin_pill_add') }}">Ajouter une pilule</a>
 						</nav>
 					</div>
-
-				
-			<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+					<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
+						<div class="sb-nav-link-icon">
+							<i class="fas fa-user"></i>
+						</div>
+						Utilisateurs
+						<div class="sb-sidenav-collapse-arrow">
+							<i class="fas fa-angle-down"></i>
+						</div>
+					</a>
+					<div class="collapse" id="collapseUsers" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+						<nav class="sb-sidenav-menu-nested nav">
+							<a class="nav-link" href="#">Toute la liste</a>
+						</nav>
+					</div>
+					<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReviews" aria-expanded="false" aria-controls="collapseReviews">
 						<div class="sb-nav-link-icon">
 							<i class="fas fa-comment"></i>
 						</div>
@@ -40,37 +48,14 @@
 							<i class="fas fa-angle-down"></i>
 						</div>
 					</a>
-					<div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+					<div class="collapse" id="collapseReviews" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
 						<nav class="sb-sidenav-menu-nested nav">
-							<a class="nav-link" href="{{ path('admin_pill_review_list') }}">Toute la liste</a>
-							<a class="nav-link" href="{{ path('admin_pill_review_pending') }}">Liste des avis à valider</a>
+							<a class="nav-link" href="{{ path('admin_pill_review_list ') }}">Toute la liste</a>
+							<a class="nav-link" href="{{ path('admin_pill_review_pending ') }}">Liste des avis à valider</a>
 						</nav>
 					</div>
-
-					
-			<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-						<div class="sb-nav-link-icon">
-							<i class="fas fa-comment"></i>
-						</div>
-						Utilisateurs
-						<div class="sb-sidenav-collapse-arrow">
-							<i class="fas fa-angle-down"></i>
-						</div>
-					</a>
-					<div class="collapse" id="collapsePages" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
-						<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link" href="#">Rechercher</a>
-							<a class="nav-link" href="#">Ajouter un utilisateur</a>
-						</nav>
-					</div>
-
-
-
 				</div>
-
-			
-						
-</div>
+			</div>
 			<div class="sb-sidenav-footer">
 				<div class="small">Logged in as:</div>
 				Start Bootstrap
@@ -79,4 +64,3 @@
 	</div>
 	<div id="layoutSidenav_content">
 		<main>
-
