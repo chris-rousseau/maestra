@@ -41,11 +41,11 @@
 									<i class="fas fa-comment"></i>
 									{{ pill.countReviews }}</td>
 								<td>
-									<a class="btn btn-outline-primary" href="">
+									<a class="btn btn-outline-primary" href="{{ path('admin_pill_edit', {id:pill.id}) }}">
 										<i class="fas fa-edit"></i>
 										Editer
 									</a>
-									<a class="btn btn-outline-danger" href="" onclick="return confirm('Etes-vous sur de vouloir supprimer ?');">
+									<a class="btn btn-outline-danger" href="{{ path('admin_pill_delete', {id:pill.id}) }}" onclick="return confirm('Etes-vous sur de vouloir supprimer ?');">
 										<i class="fas fa-trash-alt"></i>
 										Supprimer</a>
 								</td>
