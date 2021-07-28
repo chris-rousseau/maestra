@@ -4,7 +4,8 @@
 {% endblock %}
 {% block body %}
 <div class="container-fluid px-4">
-Vous n'avez pas les droits suffisants pour accéder à cette page. 
-<a href="{{ path('admin_pill_review_list') }}" class="btn btn-sm btn-outline-primary my-3"><strong>Revenir à la page d'accueil </strong></a>
+<h4 class="mt-4"><i class="fas fa-ban"></i>
+Vous n'avez pas les droits suffisants pour accéder à cette page. </h4>
+<p><a href="{{ path('admin_home') }}" class="btn btn-sm btn-outline-primary my-3"><strong>Revenir à la page d'accueil </strong></a></p>
 
 {% endblock %}
