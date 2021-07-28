@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accès refusé{{ parent() }}
+{% endblock %}
+{% block body %}
+<div class="container-fluid px-4">
+Vous n'avez pas les droits suffisants pour accéder à cette page. 
+<a href="{{ path('admin_pill_review_list') }}" class="btn btn-sm btn-outline-primary my-3"><strong>Revenir à la page d'accueil </strong></a>
+
+{% endblock %}

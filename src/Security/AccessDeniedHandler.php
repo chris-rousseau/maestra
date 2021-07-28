@@ -1,6 +1,7 @@
 <?php 
 namespace App\Security;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -13,5 +14,6 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
         // ...
 
         return new Response('admin/dashboard/home.html.twig', 403);
+        //return new RedirectResponse($this->urlGenerator->generate('admin_access_denied'));
     }
 }
