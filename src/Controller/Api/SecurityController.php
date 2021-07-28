@@ -72,10 +72,18 @@ class SecurityController extends AbstractController
     public function resetPassword(Request $request, string $token, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer)
     {
         if ($request->isMethod('POST')) {
+            // If the two passwords are not identical
             if ($request->request->get('password') !== $request->request->get('passwordConfirm')) {
                 $this->addFlash(
                     'danger',
                     'La confirmation n\'est pas identique au mot de passe'
+                );
+
+                return $this->render('api/security/reset.html.twig');
+            } elseif (preg_match('@^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$@', $request->request->get('password')) === 0) {
+                $this->addFlash(
+                    'danger',
+                    'Votre mot de passe doit comporter au moins huit caractères, dont des lettres majuscules et minuscules, un chiffre et un symbole.'
                 );
 
                 return $this->render('api/security/reset.html.twig');
@@ -97,6 +105,8 @@ class SecurityController extends AbstractController
                             $password
                         )
                     );
+
+                    $userByToken['0']->setToken(null);
 
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($userByToken['0']);
