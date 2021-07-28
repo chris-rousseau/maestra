@@ -9,10 +9,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
-* @Route("/admin/pill/review", name="admin_pill_review_")
-*/
+ * @Route("/admin/pill/review", name="admin_pill_review_")
+ * @IsGranted("ROLE_MODERATOR")
+ */
 class ReviewPillController extends AbstractController
 {
     /**
@@ -24,8 +26,8 @@ class ReviewPillController extends AbstractController
         $reviews = $reviewPillRepository->findAllOrderedByStatus();
 
         $data = $paginator->paginate(
-            $reviews, 
-            $request->query->getInt('page', 1), 
+            $reviews,
+            $request->query->getInt('page', 1),
             8
         );
 
@@ -44,8 +46,8 @@ class ReviewPillController extends AbstractController
         $reviews = $reviewPillRepository->findByStatus(0);
 
         $data = $paginator->paginate(
-            $reviews, 
-            $request->query->getInt('page', 1), 
+            $reviews,
+            $request->query->getInt('page', 1),
             8
         );
 
@@ -60,11 +62,11 @@ class ReviewPillController extends AbstractController
      */
     public function details(int $id, ReviewPillRepository $reviewPillRepository): Response
     {
-       $review = $reviewPillRepository->findWithDetails($id);
-            
+        $review = $reviewPillRepository->findWithDetails($id);
+
         return $this->render('admin/review_pill/details.html.twig', [
             'review' => $review,
-            
+
         ]);
     }
 
@@ -77,7 +79,7 @@ class ReviewPillController extends AbstractController
         // change the status to 1 when clicked on validated,
 
         $reviewValidate = $review->setStatus(1);
-        
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($reviewValidate);
         $em->flush();
@@ -98,7 +100,7 @@ class ReviewPillController extends AbstractController
      * @return Response
      */
     public function delete(ReviewPill $review)
-    {  
+    {
         $em = $this->getDoctrine()->getManager();
         $em->remove($review);
         $em->flush();
@@ -110,5 +112,4 @@ class ReviewPillController extends AbstractController
 
         return $this->redirectToRoute('admin_pill_review_list');
     }
-
 }
