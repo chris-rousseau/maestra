@@ -3,7 +3,9 @@
 namespace App\Controller\Api;
 
 use App\Entity\ReviewPill;
+use App\Entity\User;
 use App\Repository\ReviewPillRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,8 +16,8 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
-* @Route("api/pill/review", name="reviews_pills_")
-*/
+ * @Route("api/pill/review", name="reviews_pills_")
+ */
 class ReviewPillController extends AbstractController
 {
     /**
@@ -30,7 +32,7 @@ class ReviewPillController extends AbstractController
         ]);
     }
 
-     /**
+    /**
      * Displays the reviews of the homepage
      * @Route("/home", name="homepage", methods={"GET"})
      */
@@ -48,7 +50,7 @@ class ReviewPillController extends AbstractController
 
     /**
      * Method displaying one review according to its id
-     * @Route("/{id}", name="details", methods="GET", requirements={"id"="\d+"})
+     * @Route("/{id}", name="details", methods={"GET"}, requirements={"id"="\d+"})
      */
     public function details(ReviewPill $review): Response
     {
@@ -62,11 +64,11 @@ class ReviewPillController extends AbstractController
 
     /**
      * Method adding a new review associated to a pill
-     * @Route("/add", name="add", methods={"POST"})
+     * @Route("/{id}/add", name="add", methods={"POST"}, requirements={"id"="\d+"})
      */
-    public function add(Request $request, SerializerInterface $serializer, ValidatorInterface $validator): Response
+    public function add(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, User $user): Response
     {
-        
+
         $JsonData = $request->getContent();
         // transforming json into an object of ReviewPill
         $review = $serializer->deserialize($JsonData, ReviewPill::class, 'json');
@@ -75,7 +77,15 @@ class ReviewPillController extends AbstractController
         // Verifying that all validation criterias of entity ReviewPill are okay (Assert\NotBlank, ...)
         // will display an array of violations ("this value should not be blank")
         $errors = $validator->validate($review);
-        
+
+        // Calculation of the user's age according to the current date
+        $birthdate = new DateTime($user->getBirthdate());
+        $today = new DateTime();
+
+        $age = $birthdate->diff($today);
+        $ageInYear = $age->format('%Y');
+        $review->setUserAge(intval($ageInYear));
+
         if (count($errors) > 0) {
             // If there is at least one error
             $errorsString = (string) $errors;
@@ -87,7 +97,7 @@ class ReviewPillController extends AbstractController
             );
         } else {
             // if there is no error, we can save the new review in the DB (using manager)
-        
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($review);
             $em->flush();
@@ -117,7 +127,7 @@ class ReviewPillController extends AbstractController
         $errors = $validator->validate($review);
 
         if (count($errors) == 0) {
-         
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->json([
@@ -131,7 +141,6 @@ class ReviewPillController extends AbstractController
             'errors' => (string) $errors
             //(string) $errors => convertir un tableau d'objet en string, 
         ], 400);
-
     }
 
     /**
@@ -142,12 +151,12 @@ class ReviewPillController extends AbstractController
      * @return Response
      */
     public function delete(ReviewPill $review)
-    {  
+    {
         $em = $this->getDoctrine()->getManager();
         $em->remove($review);
         $em->flush();
 
         // Code 204 : https://developer.mozilla.org/fr/docs/Web/HTTP/Status/204
-        return $this->json('Suppression de l\'avis '  . $review->getTitle() , 200);
+        return $this->json('Suppression de l\'avis '  . $review->getTitle(), 200);
     }
 }
