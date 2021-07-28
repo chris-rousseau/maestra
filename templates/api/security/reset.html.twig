@@ -1,0 +1,38 @@
+{% extends 'base-login.html.twig' %}
+
+{% block title %}Mot de passe oublié - Maestra
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row justify-content-center align-items-center" style="height:100vh">
+			<div class="col-4">
+				<div class="card">
+					<div class="card-body">
+						<form method="post">
+							<h1 class="h3 mb-3 font-weight-normal">Réinitialiser votre mot de passe</h1>
+							<p>Veuillez entrer votre nouveau mot de passe.</p>
+							{% for label, messages in app.flashes %}
+								{% for message in messages %}
+									<div class="container">
+										<div class="alert alert-{{ label }}">
+											{{ message }}
+										</div>
+									</div>
+								{% endfor %}
+							{% endfor %}
+
+							<label for="inputPassword">Mot de passe</label>
+							<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="password" required autofocus>
+							<label for="inputPasswordConfirm">Confirmation</label>
+							<input type="password" name="passwordConfirm" id="inputPasswordConfirm" class="form-control" autocomplete="password" required>
+							<button class="btn btn-lg btn-primary mt-2" type="submit">
+								Envoyer
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

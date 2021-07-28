@@ -50,6 +50,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $query->getResult();
     }
 
+    /***
+     * Method enabling to return a user based on its token 
+     * 
+     * Query Builder
+     */
+    public function findSearchByToken($token)
+    {
+        $qb = $this->createQueryBuilder('user'); // SELECT * FROM user
+        $qb->where('user.token LIKE :token'); // WHERE token LIKE %token%
+        $qb->setParameter(':token', "$token");
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
