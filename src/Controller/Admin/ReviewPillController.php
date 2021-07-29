@@ -113,12 +113,14 @@ class ReviewPillController extends AbstractController
         $pillScoreNausea = $pill->setScoreNausea($reviewNausea + $scoreNausea );
         $pillScorePms = $pill->setScorePms($reviewPms + $scorePms);
         
+        $user = $review->getUser();
+        
         $email = (new Email())
         ->from('no-reply@maestra.fr')
-        ->to('maestra@chrisdev.fr')
+        ->to($user->getEmail())
         ->subject('Avis validé sur Mestra.fr ♥')
-        ->text('Bonjour ' . 'Votre avis pour la pilule a bien été validé ! Merci beaucoup pour ton retour !');
-
+        ->text('Bonjour ' . $user->getFirstname() . PHP_EOL . 'Votre avis ' . $review->getTitle() .  ' pour la pilule ' . $pill->getName(). ' a bien été validé !' . PHP_EOL . 'Merci beaucoup pour ton retour !');
+      
         $mailer->send($email);
         
         $em = $this->getDoctrine()->getManager();
