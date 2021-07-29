@@ -1,6 +1,6 @@
 {% extends 'base-login.html.twig' %}
 
-{% block title %}Log in!
+{% block title %}Connexion à l'administration
 {% endblock %}
 
 {% block body %}
@@ -27,6 +27,9 @@
 								<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
 								<label for="inputPassword">Mot de passe</label>
 								<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+								<p style="text-align:right">
+									<a href="{{ path('password_lost') }}">Mot de passe oublié ?</a>
+								</p>
 
 								<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 

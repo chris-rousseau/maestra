@@ -14,8 +14,8 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
-* @Route("/api/user/account", name="user_")
-*/
+ * @Route("/api/user/account", name="user_")
+ */
 class UserController extends AbstractController
 {
     /**
@@ -30,11 +30,11 @@ class UserController extends AbstractController
     }
 
     /**
-    * Method updating partially (patch) or entirely (put) the user
-    * @Route("/{id}", name="update", methods={"PUT|PATCH"}, requirements={"id"="\d+"})
-    *
-    * @return void
-    */
+     * Method updating partially (patch) or entirely (put) the user
+     * @Route("/{id}", name="update", methods={"PUT|PATCH"}, requirements={"id"="\d+"})
+     *
+     * @return void
+     */
     public function update(User $user, Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
     {
         $jsonData = $request->getContent();
@@ -44,7 +44,7 @@ class UserController extends AbstractController
         $errors = $validator->validate($user);
 
         if (count($errors) == 0) {
-         
+
             $this->getDoctrine()->getManager()->flush();
             return $this->json([
                 'message' => 'L\'utilisateur ' .  $user->getFirstname() . ' ' .  $user->getLastname() . ' a bien été mis à jour'
@@ -57,13 +57,12 @@ class UserController extends AbstractController
             'errors' => (string) $errors
             //(string) $errors => transform an array to string, 
         ], 400);
-
     }
 
     /**
-    * Method displaying the reviews of a user according to its id
-    * @Route("/{id}/review", name="reviews", methods={"GET"}, requirements={"id"="\d+"})
-    */
+     * Method displaying the reviews of a user according to its id
+     * @Route("/{id}/review", name="reviews", methods={"GET"}, requirements={"id"="\d+"})
+     */
     public function reviews(User $user, ReviewPillRepository $reviewPillRepository): Response
     {
         $reviewsUser = $reviewPillRepository->findBy([
@@ -86,15 +85,15 @@ class UserController extends AbstractController
      * @return Response
      */
     public function reviewsDelete(ReviewPill $reviewPill)
-    {  
+    {
         $em = $this->getDoctrine()->getManager();
         $em->remove($reviewPill);
         $em->flush();
-       
+
         return $this->json('La suppression de l\'avis ' . $reviewPill->getTitle() . ' a bien été prise en compte', 200);
-        
+
         // getting the id of review of said user to delete
-        
+
     }
 
     /**
@@ -105,14 +104,12 @@ class UserController extends AbstractController
      * @return Response
      */
     public function delete(User $user)
-    {  
-       
+    {
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($user);
         $em->flush();
-       
+
         return $this->json('La suppression du compte a bien été prise en compte', 200);
     }
-
-   
 }
