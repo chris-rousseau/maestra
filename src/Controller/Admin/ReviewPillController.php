@@ -110,17 +110,19 @@ class ReviewPillController extends AbstractController
         $pillScoreMigraine = $pill->setScoreMigraine($reviewMigraine + $scoreMigraine);
         $pillScoreWeight = $pill->setScoreWeight($reviewWeight + $scoreWeight);
         $pillScoreBreastPain = $pill->setScoreBreastPain($reviewBreastPain + $scoreBreastPain);
-        $pillScoreNausea = $pill->setScoreNausea($reviewNausea + $scoreNausea );
+        $pillScoreNausea = $pill->setScoreNausea($reviewNausea + $scoreNausea);
         $pillScorePms = $pill->setScorePms($reviewPms + $scorePms);
-        
+
+        $user = $review->getUser();
+
         $email = (new Email())
-        ->from('no-reply@maestra.fr')
-        ->to('maestra@chrisdev.fr')
-        ->subject('Avis validé sur Mestra.fr ♥')
-        ->text('Bonjour ' . 'Votre avis pour la pilule a bien été validé ! Merci beaucoup pour ton retour !');
+            ->from('no-reply@maestra.fr')
+            ->to($user->getEmail())
+            ->subject('Avis validé sur Mestra.fr ♥')
+            ->text('Bonjour ' . $user->getFirstname() . PHP_EOL . 'Votre avis ' . $review->getTitle() .  ' pour la pilule ' . $pill->getName() . ' a bien été validé !' . PHP_EOL . 'Merci beaucoup pour ton retour !');
 
         $mailer->send($email);
-        
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($reviewValidate);
         $em->persist($pillScoreAcne);
@@ -131,7 +133,7 @@ class ReviewPillController extends AbstractController
         $em->persist($pillScoreNausea);
         $em->persist($pillScorePms);
         $em->flush();
-       
+
         $this->addFlash(
             'success',
             'L\'avis à bien été validé !'
