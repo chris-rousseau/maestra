@@ -1,13 +1,21 @@
-{% extends 'base-login.html.twig' %}
+{% extends 'base-password-lost.html.twig' %}
 
 {% block title %}Mot de passe oublié - Maestra
 {% endblock %}
 
 {% block body %}
-	<div class="container">
-		<div class="row justify-content-center align-items-center" style="height:100vh">
-			<div class="col-4">
-				<div class="card">
+	<div class="allPage">
+		<header class="header">
+			<h1>
+				<nav class="" activeclassname="" to="/" exact>
+					<span class="header--span" id="ae">æ</span>
+				</nav>
+			</h1>
+		</header>
+		<div class="container">
+			<div class="row justify-content-center align-items-center">
+
+				<div class="card card-style">
 					<div class="card-body">
 						<form method="post">
 							<h1 class="h3 mb-3 font-weight-normal">Réinitialiser votre mot de passe</h1>
@@ -26,7 +34,7 @@
 							<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="password" required autofocus>
 							<label for="inputPasswordConfirm">Confirmation</label>
 							<input type="password" name="passwordConfirm" id="inputPasswordConfirm" class="form-control" autocomplete="password" required>
-							<button class="btn btn-lg btn-primary mt-2" type="submit">
+							<button class="btn btn-lg btn-primary mt-4 button-style" type="submit">
 								Envoyer
 							</button>
 						</form>
@@ -34,5 +42,34 @@
 				</div>
 			</div>
 		</div>
+		<footer class="footer">
+			<div class="footer__first-section">
+				<h2>Maestra.fr</h2>
+				<p>
+					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel
+																																																																																																													consequuntur debitis esse sunt officiis tempore nemo illo, possimus enim
+																																																																																																													velit maiores ex iste vitae mollitia commodi tempora tenetur molestiae.
+																																																																																																													Non.
+				</p>
+			</div>
+			<div class="footer__legal-mentions">
+				<ul>
+					<li>
+						<a>Mentions légales</a>
+					</li>
+					<li>
+						<a>L'équipe du site</a>
+					</li>
+					<li>
+						<NavLink class="" activeclassname="" to="/contact" exact>
+							Nous contacter
+						</NavLink>
+					</li>
+					<li>
+						<a>API</a>
+					</li>
+				</ul>
+			</div>
+		</footer>
 	</div>
 {% endblock %}

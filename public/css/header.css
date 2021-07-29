@@ -1,0 +1,45 @@
+.allPage {
+    background: linear-gradient(to bottom right, #fbfdd4, #fad371);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.header {
+    width: 100vw;
+    z-index: 100;
+    top: 0;
+    text-align: center;
+    padding: 1rem;
+    background-color: #fad371;
+}
+
+.header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.card-style {
+    border-radius: 10px;
+    border: 0;
+}
+
+.button-style {
+    background-color: #e0ba58;
+    border: 0;
+}
+
+.button-style:hover {
+    background-color: #d4ac45;
+    border: 0;
+}
+
+
+@media screen and (min-width:1024px) {
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
