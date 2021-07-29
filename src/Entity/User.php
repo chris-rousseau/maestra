@@ -79,6 +79,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Merci de saisir votre date de naissance")
      * @Assert\Date
      * @var string A "Y-m-d" formatted value
      * @Groups({"users", "reviews_details", "reviews_list", "pill_reviews"})
@@ -119,6 +120,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=ReviewPill::class, mappedBy="user", orphanRemoval=true)
      */
     private $reviewPills;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $token;
 
     public function __construct()
     {
@@ -337,6 +343,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $reviewPill->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
 
         return $this;
     }

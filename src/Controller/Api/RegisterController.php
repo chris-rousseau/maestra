@@ -6,6 +6,8 @@ use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -19,7 +21,7 @@ class RegisterController extends AbstractController
     /**
      * @Route("/register", name="register", methods={"POST"})
      */
-    public function register(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, UserPasswordHasherInterface $passwordHasher): Response
+    public function register(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer): Response
     {
         // We get the content of the request
         $JsonData = $request->getContent();
@@ -50,6 +52,15 @@ class RegisterController extends AbstractController
                 500
             );
         } else {
+            // Sending of a confirmation email for the creation of the account
+            $email = (new Email())
+                ->from('no-reply@maestra.fr')
+                ->to('maestra@chrisdev.fr')
+                ->subject('Merci pour votre inscription sur Mestra.fr ♥')
+                ->text('Bonjour ' . $user->getFirstname() . ', merci beaucoup pour ton inscription !');
+
+            $mailer->send($email);
+
             // If there is no error, we add in BDD
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
