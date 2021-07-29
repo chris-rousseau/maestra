@@ -2,7 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Pill;
 use App\Entity\ReviewPill;
+use App\Repository\PillRepository;
 use App\Repository\ReviewPillRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,16 +74,47 @@ class ReviewPillController extends AbstractController
 
     /**
      * Method to validate one review (will go from status : 0 to status:1)
-     * @Route("/{id}/validate", name="validate", methods="GET", requirements={"id"="\d+"})
+     * @Route("/{id}/validate/", name="validate", methods="GET", requirements={"id"="\d+"})
      */
-    public function validateReview(ReviewPill $review): Response
+    public function validateReview(ReviewPill $review, PillRepository $pill): Response
     {
         // change the status to 1 when clicked on validated,
-
         $reviewValidate = $review->setStatus(1);
 
+        $reviewAcne = $review->getAcne();
+        $reviewLibido = $review->getLibido();
+        $reviewMigraine = $review->getMigraine();
+        $reviewWeight = $review->getWeight();
+        $reviewBreastPain = $review->getBreastPain();
+        $reviewNausea = $review->getNausea();
+        $reviewPms = $review->getPms();
+
+        
+        $pill = $review->getPill();
+        
+        // change the score (increment) in the pill entity
+
+        $scoreAcne = $pill->getScoreAcne();
+
+        // change the score (increment) in the pill entity
+        $pillScoreAcne = $pill->setScoreAcne($reviewAcne + $scoreAcne);
+        
+        $pillScoreLibido = $pill->setScoreLibido($reviewLibido + $reviewLibido);
+        $pillScoreMigraine = $pill->setScoreMigraine($reviewMigraine + $reviewMigraine);
+        $pillScoreWeight = $pill->setScoreWeight($reviewWeight + $reviewWeight);
+        $pillScoreBreastPain = $pill->setScoreBreastPain($reviewBreastPain + $reviewBreastPain);
+        $pillScoreNausea = $pill->setScoreNausea($reviewNausea + $reviewNausea );
+        $pillScorePms = $pill->setScorePms($reviewPms + $reviewPms);
+        
         $em = $this->getDoctrine()->getManager();
         $em->persist($reviewValidate);
+        $em->persist($pillScoreAcne);
+        $em->persist($pillScoreLibido);
+        $em->persist($pillScoreMigraine);
+        $em->persist($pillScoreWeight);
+        $em->persist($pillScoreBreastPain);
+        $em->persist($pillScoreNausea);
+        $em->persist($pillScorePms);
         $em->flush();
 
         $this->addFlash(
