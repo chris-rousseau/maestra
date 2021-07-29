@@ -39,7 +39,7 @@ class ReviewPillController extends AbstractController
     public function homepagePills(ReviewPillRepository $reviewPillRepository): Response
     {
         $allReviews = $reviewPillRepository->findBy([], [
-            "created_at" => "ASC",
+            "created_at" => "DESC",
 
         ], 5);
 

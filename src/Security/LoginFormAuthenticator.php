@@ -28,7 +28,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     {
         $this->urlGenerator = $urlGenerator;
     }
-
+    
     public function authenticate(Request $request): PassportInterface
     {
         $email = $request->request->get('email', '');

@@ -5,15 +5,15 @@
 
 {% block body %}
 	<div class="container-fluid px-4">
-		<h1 class="mt-4">Static Navigation</h1>
+		<h1 class="mt-4">Bienvenue <strong>{{ app.user.firstname}}</strong> sur le back-office de Maestra</h1>
 		<ol class="breadcrumb mb-4">
 			<li class="breadcrumb-item">
-				<a href="index.html">Dashboard</a>
+				<a href="{{ path('admin_home') }}">Dashboard</a>
 			</li>
-			<li class="breadcrumb-item active">Static Navigation</li>
+			{# <li class="breadcrumb-item active">Static Navigation</li> #}
 		</ol>
 		<div class="card mb-4">
-			<div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div>
+			<div class="card-body">Gestion du site</div>
 		</div>
 	</div>
 {% endblock %}

@@ -161,6 +161,7 @@ class ReviewPill
 
     /**
      * @ORM\Column(type="smallint")
+     * @Groups({"reviews_list", "reviews_details", "user_reviews"})
      */
     private $user_age;
 
