@@ -31,7 +31,7 @@ class UserController extends AbstractController
 
     /**
      * Method updating partially (patch) or entirely (put) the user
-     * @Route("/{id}", name="update", methods={"PUT|PATCH"}, requirements={"id"="\d+"})
+     * @Route("/{id}/edit", name="update", methods={"PUT|PATCH"}, requirements={"id"="\d+"})
      *
      * @return void
      */
