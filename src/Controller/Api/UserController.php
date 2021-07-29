@@ -8,6 +8,7 @@ use App\Repository\ReviewPillRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -35,7 +36,7 @@ class UserController extends AbstractController
      *
      * @return void
      */
-    public function update(User $user, Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
+    public function update(User $user, Request $request, SerializerInterface $serializer, ValidatorInterface $validator, UserPasswordHasherInterface $passwordHasher)
     {
         $jsonData = $request->getContent();
         $user = $serializer->deserialize($jsonData, User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
@@ -45,6 +46,13 @@ class UserController extends AbstractController
 
         if (count($errors) == 0) {
 
+            $user->setPassword(
+                $passwordHasher->hashPassword(
+                    $user,
+                    $user->getPassword()
+                )
+            );
+            $user->setUpdatedAt(new \DateTimeImmutable());
             $this->getDoctrine()->getManager()->flush();
             return $this->json([
                 'message' => 'L\'utilisateur ' .  $user->getFirstname() . ' ' .  $user->getLastname() . ' a bien été mis à jour'
