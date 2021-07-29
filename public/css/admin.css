@@ -1,0 +1,22 @@
+.count {
+    font-size: 3em;
+    text-align: right;
+}
+
+.users-card {
+    background: linear-gradient(to right, #f94b67, #f7748b);
+    border: 0;
+    border-radius: 10px;
+}
+
+.pills-card {
+    background: linear-gradient(to right, #f76b2e, #eea45c);
+    border: 0;
+    border-radius: 10px;
+}
+
+.reviews-card {
+    background: linear-gradient(to right, #039767, #4ed6aa);
+    border: 0;
+    border-radius: 10px;
+}

@@ -44,7 +44,7 @@ class SecurityController extends AbstractController
                 // Sending an email with the link to reset your password
                 $email = (new Email())
                     ->from('no-reply@maestra.fr')
-                    ->to('maestra@chrisdev.fr')
+                    ->to($user->getEmail())
                     ->subject('Réinitialisation de votre mot de passe Maestra')
                     ->text('Bonjour ' . $user->getFirstname() . ' !' . PHP_EOL . 'Voici le lien pour réinitialiser votre mot de passe : http://localhost:8080/reinitialiser-mot-de-passe/' . $user->getToken() . PHP_EOL . 'Cliquez ou copiez/collez ce lien et suivez les instructions indiquées sur la page.' . PHP_EOL . PHP_EOL . 'Bonne journée !');
 
@@ -114,7 +114,7 @@ class SecurityController extends AbstractController
 
                     $email = (new Email())
                         ->from('no-reply@maestra.fr')
-                        ->to('maestra@chrisdev.fr')
+                        ->to($userByToken['0']->getEmail())
                         ->subject('Modification de votre mot de passe Maestra')
                         ->text('Bonjour ' . $userByToken['0']->getFirstname() . ', votre mot de passe à bien été modifié !');
 

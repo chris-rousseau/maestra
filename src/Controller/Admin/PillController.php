@@ -42,6 +42,16 @@ class PillController extends AbstractController
 
             $pill->setSlug(strtolower($slug));
 
+            $pill->setPicture('no-pill.jpg');
+            $pill->setCountReviews(0);
+            $pill->setScoreAcne(0);
+            $pill->setScoreLibido(0);
+            $pill->setScoreMigraine(0);
+            $pill->setScoreWeight(0);
+            $pill->setScoreBreastPain(0);
+            $pill->setScoreNausea(0);
+            $pill->setScorePms(0);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($pill);
             $em->flush();
