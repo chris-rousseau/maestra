@@ -73,12 +73,16 @@ class PillRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('pill'); // SELECT * FROM pill
         $qb->where('pill.interruption = :interruption'); 
         $qb->andWhere('pill.reimbursed = :reimbursed'); 
-        $qb->andWhere('pill.generation = :generation'); 
+        if ($generation !== 0) {
+            $qb->andWhere('pill.generation = :generation');
+        }
         $qb->orderBy('pill.' . $undesirable, 'ASC');
-        
+
         $qb->setParameter(':interruption', $interruption);
         $qb->setParameter(':reimbursed', $reimbursed);
-        $qb->setParameter(':generation', $generation);
+        if ($generation !== 0) {
+            $qb->setParameter(':generation', $generation);
+        }
         
         $query = $qb->getQuery();
         return $query->getResult();
