@@ -7,10 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("api/contact", name="contact_")
@@ -20,7 +17,7 @@ class ContactController extends AbstractController
     /**
      * @Route("/form", name="form_data", methods={"POST"})
      */
-    public function register(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer): Response
+    public function register(Request $request, MailerInterface $mailer): Response
     {
         // We get the content of the request
         $JsonData = $request->getContent();
@@ -29,6 +26,7 @@ class ContactController extends AbstractController
         $dataDecoded = json_decode($JsonData);
         
         // extracting the datas we need
+        $userName = $dataDecoded->name;
         $userEmail= $dataDecoded->email;
         $messageObject = $dataDecoded->object;
         $message = $dataDecoded->message;
@@ -41,6 +39,9 @@ class ContactController extends AbstractController
             $errors['email'] = "Cette adresse email n'est pas valide.";
         }
 
+        if (empty($userName)) {
+            $errors['name'] = "Merci de bien vouloir renseigner un prénom.";
+        }
         if (empty($messageObject)) {
             $errors['object'] = "Merci de bien vouloir renseigner un objet.";
         }
@@ -61,16 +62,10 @@ class ContactController extends AbstractController
             $email = (new Email())
             ->from($userEmail)
             ->to('maestra@chrisdev.fr')
-            ->subject($messageObject)
+            ->subject($messageObject . ' de ' . $userName)
             ->text($message);
         
             $mailer->send($email);
-        
-            // and a flashMessage so the user knows eveything went smoothly
-            $this->addFlash(
-                'success',
-                'Votre message a bien été envoyé'
-            );
         
             return $this->json('Le message a bien été envoyé', 201);
         }
