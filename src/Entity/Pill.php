@@ -26,6 +26,7 @@ class Pill
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(message="Merci de renseigner le nom de la pilule")
      * @Assert\Length(
      *      max = 100,
      *      maxMessage = "La longueur maximale du nom doit être de {{ limit }} caractères."
@@ -36,6 +37,7 @@ class Pill
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Merci d'ajouter une description pour la pilule")
      * @Assert\Length(
      *      max = 1000,
      *      maxMessage = "La longueur maximale de la description doit être de {{ limit }} caractères."
@@ -73,6 +75,7 @@ class Pill
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(message="Merci de renseigner la posologie de la pilule")
      * @Assert\Length(
      *      max = 100,
      *      maxMessage = "La longueur maximale doit être de {{ limit }} caractères."
@@ -93,7 +96,7 @@ class Pill
 
     /**
      * @ORM\Column(type="smallint")
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="Veuillez sélectionner une génération")
      * @Groups({"pills_details"})
      */
     private $generation;
@@ -107,6 +110,7 @@ class Pill
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\NotBlank(message="Merci de renseigner le laboratoire")
      * @Assert\Length(
      *      max = 64,
      *      maxMessage = "La longueur maximale doit être de {{ limit }} caractères."
@@ -117,7 +121,7 @@ class Pill
 
     /**
      * @ORM\Column(type="smallint")
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="Veuillez ajouter le délai d'oubli autorisé")
      * @Groups({"pills_details"})
      */
     private $delay_intake;
