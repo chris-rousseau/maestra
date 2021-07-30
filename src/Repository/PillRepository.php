@@ -48,7 +48,7 @@ class PillRepository extends ServiceEntityRepository
     }
     */
 
-     /***
+    /***
      * Method enabling to return a pill based on its name 
      * 
      * Query Builder
@@ -63,7 +63,7 @@ class PillRepository extends ServiceEntityRepository
     }
 
 
-     /***
+    /***
      * Method enabling to return a pill based on criterias
      * 
      * Query Builder
@@ -71,18 +71,20 @@ class PillRepository extends ServiceEntityRepository
     public function findSearchSortedBy($interruption, $reimbursed, $generation, $undesirable)
     {
         $qb = $this->createQueryBuilder('pill'); // SELECT * FROM pill
-        $qb->where('pill.interruption = :interruption'); 
-        $qb->andWhere('pill.reimbursed = :reimbursed'); 
-        $qb->andWhere('pill.generation = :generation'); 
+        $qb->where('pill.interruption = :interruption');
+        $qb->andWhere('pill.reimbursed = :reimbursed');
+        if ($generation !== 0) {
+            $qb->andWhere('pill.generation = :generation');
+        }
         $qb->orderBy('pill.' . $undesirable, 'ASC');
-        
+
         $qb->setParameter(':interruption', $interruption);
         $qb->setParameter(':reimbursed', $reimbursed);
-        $qb->setParameter(':generation', $generation);
-        
+        if ($generation !== 0) {
+            $qb->setParameter(':generation', $generation);
+        }
+
         $query = $qb->getQuery();
         return $query->getResult();
     }
-
-
 }
