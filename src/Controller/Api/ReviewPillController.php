@@ -40,7 +40,7 @@ class ReviewPillController extends AbstractController
     {
         $allReviews = $reviewPillRepository->findBy([], [
             "created_at" => "DESC",
-
+            "status" => 1
         ], 5);
 
         return $this->json($allReviews, 200, [], [

@@ -104,7 +104,6 @@ class PillController extends AbstractController
     public function homepagePills(PillRepository $pillRepository): Response
     {
         $allPills = $pillRepository->findBy([], [
-            'status' => 1,
             "count_reviews" => "DESC"
         ], 5);
 
