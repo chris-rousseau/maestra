@@ -60,7 +60,7 @@ class ContactController extends AbstractController
             // Sending the email
             $email = (new Email())
             ->from($userEmail)
-            ->to('lce.bouron@gmail.com')
+            ->to('maestra@chrisdev.fr')
             ->subject($messageObject)
             ->text($message);
         
