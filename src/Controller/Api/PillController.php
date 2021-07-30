@@ -48,7 +48,8 @@ class PillController extends AbstractController
     {
         // dd($pills->getId());
         $reviewsPill = $reviewPillRepository->findBy([
-            'pill' => $pill->getId()
+            'pill' => $pill->getId(),
+            'status' => 1
         ]);
         // dd($reviewsPill);
         return $this->json($reviewsPill, 200, [], [
@@ -87,9 +88,9 @@ class PillController extends AbstractController
         $reimbursed = $decodeur->reimbursed;
         $generation = $decodeur->generation;
         $undesirable = $decodeur->undesirable;
-        
+
         $pillSearch = $pillRepository->findSearchSortedBy($interruption, $reimbursed, $generation, $undesirable);
-        
+
         return $this->json($pillSearch, 200, [], [
             "groups" => "pill_search"
         ]);
