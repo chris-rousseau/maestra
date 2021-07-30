@@ -17,7 +17,7 @@ class ContactController extends AbstractController
     /**
      * @Route("/form", name="form_data", methods={"POST"})
      */
-    public function register(Request $request, MailerInterface $mailer): Response
+    public function contact(Request $request, MailerInterface $mailer): Response
     {
         // We get the content of the request
         $JsonData = $request->getContent();
