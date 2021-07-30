@@ -33,12 +33,32 @@ class ContactController extends AbstractController
         $messageObject = $dataDecoded->object;
         $message = $dataDecoded->message;
         
-        dd($JsonData, $dataDecoded, $userEmail, $messageObject, $message);
+        //dd($JsonData, $dataDecoded, $userEmail, $messageObject, $message);
 
-        
+        $errors = [];
 
-        // Sending the email
-        $email = (new Email())
+        if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = "Cette adresse email n'est pas valide.";
+        }
+
+        if (empty($messageObject)) {
+            $errors['object'] = "Merci de bien vouloir renseigner un objet.";
+        }
+
+        if (empty($message)) {
+            $errors['message'] = "Merci de bien vouloir renseigner un message.";
+        }
+
+                  
+        if (count($errors) > 0) {
+            return $this->json(
+                $errors,
+                500
+            );
+
+        } else {
+            // Sending the email
+            $email = (new Email())
             ->from($userEmail)
             ->to('lce.bouron@gmail.com')
             ->subject($messageObject)
@@ -46,14 +66,13 @@ class ContactController extends AbstractController
         
             $mailer->send($email);
         
-         // and a flashMessage so the user knows eveything went smoothly
-        $this->addFlash(
-            'success',
-             'Votre message a bien été envoyé'
-        );
+            // and a flashMessage so the user knows eveything went smoothly
+            $this->addFlash(
+                'success',
+                'Votre message a bien été envoyé'
+            );
         
-        return $this->json('Le message a bien été envoyé', 201);
-                
-
+            return $this->json('Le message a bien été envoyé', 201);
+        }
     }
 }
