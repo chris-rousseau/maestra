@@ -30,8 +30,7 @@ class RegisterController extends AbstractController
         $user = $serializer->deserialize($JsonData, User::class, 'json');
 
         $errors = $validator->validate($user);
-
-
+        
         // encode the plain password
         $user->setPassword(
             $passwordHasher->hashPassword(

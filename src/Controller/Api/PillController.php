@@ -87,7 +87,7 @@ class PillController extends AbstractController
         $reimbursed = $decodeur->reimbursed;
         $generation = $decodeur->generation;
         $undesirable = $decodeur->undesirable;
-
+        
         $pillSearch = $pillRepository->findSearchSortedBy($interruption, $reimbursed, $generation, $undesirable);
         
         return $this->json($pillSearch, 200, [], [
