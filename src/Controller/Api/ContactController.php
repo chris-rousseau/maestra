@@ -55,7 +55,7 @@ class ContactController extends AbstractController
             return $this->json(
                 $errors,
                 500
-            );
+            ) ; 
 
         } else {
             // Sending the email
