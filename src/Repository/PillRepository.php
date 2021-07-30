@@ -80,7 +80,7 @@ class PillRepository extends ServiceEntityRepository
 
         $qb->setParameter(':interruption', $interruption);
         $qb->setParameter(':reimbursed', $reimbursed);
-        if ($generation != 0) {
+        if ($generation !== 0) {
             $qb->setParameter(':generation', $generation);
         }
         
