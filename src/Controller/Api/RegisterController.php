@@ -43,7 +43,7 @@ class RegisterController extends AbstractController
         $pictureArray = ['no-avatar-1.png', 'no-avatar-2.png', 'no-avatar-3.png', 'no-avatar-4.png', 'no-avatar-5.png'];
         $user->setPicture($pictureArray[array_rand($pictureArray, 1)]);
 
-        // If there is at least one error, we return a 500
+        // If there is at least one error, we return a 400
         if (count($errors) > 0) {
             $errorsList = [];
             foreach ($errors as $erreur) {
@@ -55,7 +55,7 @@ class RegisterController extends AbstractController
                 [
                     'error' => $errorsList
                 ],
-                500
+                400
             );
         } else {
             // Sending of a confirmation email for the creation of the account

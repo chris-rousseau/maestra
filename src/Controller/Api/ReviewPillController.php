@@ -98,7 +98,7 @@ class ReviewPillController extends AbstractController
                 [
                     'error' => $errorsList
                 ],
-                500
+                400
             );
         } else {
             // if there is no error, we can save the new review in the DB (using manager)
