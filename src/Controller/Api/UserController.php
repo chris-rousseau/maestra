@@ -8,6 +8,8 @@ use App\Repository\ReviewPillRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,6 +65,49 @@ class UserController extends AbstractController
             'errors' => $errorsList
             //(string) $errors => transform an array to string, 
         ], 400);
+    }
+
+    /**
+     * Method changes the user's password
+     * @Route("/{id}/password-edit", name="password_edit", methods={"PATCH"}, requirements={"id"="\d+"})
+     *
+     * @return void
+     */
+    public function passwordEdit(User $user, Request $request, UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer)
+    {
+        $jsonData = $request->getContent();
+        $passwordObj = json_decode($jsonData);
+
+        if (!preg_match('@^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$@', $passwordObj->newPassword)) {
+            return $this->json([
+                'message' => 'Votre mot de passe doit comporter au moins huit caractères, dont au moins une majuscule et minuscule, un chiffre et un symbole.'
+            ], 400);
+        } else {
+            if (password_verify($passwordObj->oldPassword, $user->getPassword())) {
+                $user->setPassword($passwordHasher->hashPassword(
+                    $user,
+                    $passwordObj->newPassword
+                ));
+
+                $email = (new Email())
+                    ->from('no-reply@maestra.fr')
+                    ->to($user->getEmail())
+                    ->subject('Modification du mot de passe - Maestra')
+                    ->text('Bonjour ' . $user->getFirstname() . ', votre mot de passe à bien été modifié !');
+
+                $mailer->send($email);
+
+                $user->setUpdatedAt(new \DateTimeImmutable());
+                $this->getDoctrine()->getManager()->flush();
+                return $this->json([
+                    'message' => 'Le mot de passe a bien été mis à jour.'
+                ]);
+            } else {
+                return $this->json([
+                    'message' => 'Le mot de passe actuel est incorrect.'
+                ], 400);
+            }
+        }
     }
 
     /**
