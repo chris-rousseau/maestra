@@ -61,7 +61,7 @@ class RegisterController extends AbstractController
             // Sending of a confirmation email for the creation of the account
             $email = (new Email())
                 ->from('no-reply@maestra.fr')
-                ->to('maestra@chrisdev.fr')
+                ->to($user->getEmail())
                 ->subject('Merci pour votre inscription sur Mestra.fr ♥')
                 ->text('Bonjour ' . $user->getFirstname() . ', merci beaucoup pour ton inscription !');
 
