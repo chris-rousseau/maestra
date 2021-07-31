@@ -45,11 +45,15 @@ class RegisterController extends AbstractController
 
         // If there is at least one error, we return a 500
         if (count($errors) > 0) {
-            $errorsString = (string) $errors;
+            $errorsList = [];
+            foreach ($errors as $erreur) {
+                $input = $erreur->getPropertyPath();
+                $errorsList[$input] = $erreur->getMessage();
+            }
 
             return $this->json(
                 [
-                    'error' => $errorsString
+                    'error' => $errorsList
                 ],
                 500
             );

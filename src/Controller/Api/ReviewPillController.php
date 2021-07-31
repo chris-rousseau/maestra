@@ -88,10 +88,15 @@ class ReviewPillController extends AbstractController
 
         if (count($errors) > 0) {
             // If there is at least one error
-            $errorsString = (string) $errors;
+            $errorsList = [];
+            foreach ($errors as $erreur) {
+                $input = $erreur->getPropertyPath();
+                $errorsList[$input] = $erreur->getMessage();
+            }
+
             return $this->json(
                 [
-                    'error' => $errorsString
+                    'error' => $errorsList
                 ],
                 500
             );
