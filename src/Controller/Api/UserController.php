@@ -78,11 +78,13 @@ class UserController extends AbstractController
         $jsonData = $request->getContent();
         $passwordObj = json_decode($jsonData);
 
+        // We check if the password contains the minimum required
         if (!preg_match('@^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$@', $passwordObj->newPassword)) {
             return $this->json([
                 'message' => 'Votre mot de passe doit comporter au moins huit caractères, dont au moins une majuscule et minuscule, un chiffre et un symbole.'
             ], 400);
         } else {
+            // We check if the password entered by the user is the same as the one in the database
             if (password_verify($passwordObj->oldPassword, $user->getPassword())) {
                 $user->setPassword($passwordHasher->hashPassword(
                     $user,
@@ -97,6 +99,7 @@ class UserController extends AbstractController
 
                 $mailer->send($email);
 
+                // If all is good, we hash and modify the user's password, and we send him an email to warn him
                 $user->setUpdatedAt(new \DateTimeImmutable());
                 $this->getDoctrine()->getManager()->flush();
                 return $this->json([

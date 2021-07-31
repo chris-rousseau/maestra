@@ -148,7 +148,7 @@ class Pill
      *      max = 100,
      *      maxMessage = "La longueur maximale doit être de {{ limit }} caractères."
      * )
-     * @Groups({"pills", "pills_details", "pill_search", "pill_reviews"})
+     * @Groups({"pills", "pills_details", "pill_search", "pill_reviews", "reviews_list"})
      */
     private $slug;
 
