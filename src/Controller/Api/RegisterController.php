@@ -30,7 +30,7 @@ class RegisterController extends AbstractController
         $user = $serializer->deserialize($JsonData, User::class, 'json');
 
         $errors = $validator->validate($user);
-        
+
         // encode the plain password
         $user->setPassword(
             $passwordHasher->hashPassword(
@@ -39,14 +39,21 @@ class RegisterController extends AbstractController
             )
         );
 
+        // Selects a random picture in the table
+        $pictureArray = ['no-avatar-1.png', 'no-avatar-2.png', 'no-avatar-3.png', 'no-avatar-4.png', 'no-avatar-5.png'];
+        $user->setPicture($pictureArray[array_rand($pictureArray, 1)]);
 
         // If there is at least one error, we return a 500
         if (count($errors) > 0) {
-            $errorsString = (string) $errors;
+            $errorsList = [];
+            foreach ($errors as $erreur) {
+                $input = $erreur->getPropertyPath();
+                $errorsList[$input] = $erreur->getMessage();
+            }
 
             return $this->json(
                 [
-                    'error' => $errorsString
+                    'error' => $errorsList
                 ],
                 500
             );

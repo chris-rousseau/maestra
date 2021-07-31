@@ -82,7 +82,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\NotBlank(message="Merci de saisir votre date de naissance")
      * @Assert\Date
      * @var string A "Y-m-d" formatted value
-     * @Groups({"users", "reviews_details", "reviews_list", "pill_reviews"})
+     * @Groups({"users", "reviews_details", "reviews_list"})
      */
     private $birthdate;
 

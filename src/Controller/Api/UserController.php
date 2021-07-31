@@ -59,10 +59,16 @@ class UserController extends AbstractController
             ]);
         }
 
+        $errorsList = [];
+        foreach ($errors as $erreur) {
+            $input = $erreur->getPropertyPath();
+            $errorsList[$input] = $erreur->getMessage();
+        }
+
         // 400 : error code BAD request
         // to return if there is an error
         return $this->json([
-            'errors' => (string) $errors
+            'errors' => $errorsList
             //(string) $errors => transform an array to string, 
         ], 400);
     }
