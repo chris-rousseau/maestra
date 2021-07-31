@@ -29,8 +29,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message="Merci de saisir votre adresse email")
      * @Assert\Email(
-     *     message = "L'email '{{ value }}' saisi n'est pas valide"
+     *     message = "L'email saisie n'est pas valide"
      * )
      * @Groups({"users"})
      */
