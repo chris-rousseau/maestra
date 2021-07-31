@@ -38,9 +38,10 @@ class ReviewPillController extends AbstractController
      */
     public function homepagePills(ReviewPillRepository $reviewPillRepository): Response
     {
-        $allReviews = $reviewPillRepository->findBy([], [
-            "created_at" => "DESC",
+        $allReviews = $reviewPillRepository->findBy([
             "status" => 1
+        ], [
+            "created_at" => "DESC"
         ], 5);
 
         return $this->json($allReviews, 200, [], [
