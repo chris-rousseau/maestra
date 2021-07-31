@@ -31,8 +31,8 @@ class UserController extends AbstractController
     }
 
     /**
-     * Method updating partially (patch) or entirely (put) the user
-     * @Route("/{id}/edit", name="update", methods={"PUT|PATCH"}, requirements={"id"="\d+"})
+     * Method updating partially (patch) the user
+     * @Route("/{id}/edit", name="update", methods={"PATCH"}, requirements={"id"="\d+"})
      *
      * @return void
      */
@@ -40,18 +40,10 @@ class UserController extends AbstractController
     {
         $jsonData = $request->getContent();
         $user = $serializer->deserialize($jsonData, User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
-        //dd($user);
 
         $errors = $validator->validate($user);
 
         if (count($errors) == 0) {
-
-            $user->setPassword(
-                $passwordHasher->hashPassword(
-                    $user,
-                    $user->getPassword()
-                )
-            );
             $user->setUpdatedAt(new \DateTimeImmutable());
             $this->getDoctrine()->getManager()->flush();
             return $this->json([
