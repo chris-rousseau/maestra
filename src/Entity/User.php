@@ -11,9 +11,15 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(
+ * fields={"email"},
+ * errorPath="email",
+ * message="Cette adresse email est déjà utilisée"
+ *)
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -81,7 +87,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Merci de saisir votre date de naissance")
-     * @Assert\Date
+     * @Assert\Date(message="Merci d'entrer un format de date en Année-Mois-Jour (en chiffre)")
      * @var string A "Y-m-d" formatted value
      * @Groups({"users", "reviews_details", "reviews_list"})
      */
