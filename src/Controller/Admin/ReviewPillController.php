@@ -113,6 +113,10 @@ class ReviewPillController extends AbstractController
         $pillScoreNausea = $pill->setScoreNausea($reviewNausea + $scoreNausea);
         $pillScorePms = $pill->setScorePms($reviewPms + $scorePms);
 
+        // Add +1 to the reviews counter
+        $pillCountReviews = $pill->getCountReviews();
+        $pill->setCountReviews($pillCountReviews + 1);
+
         $user = $review->getUser();
 
         $email = (new Email())
