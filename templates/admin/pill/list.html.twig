@@ -23,40 +23,42 @@
 					</form>
 					<a class="btn btn-success ml-2" href="{{ path('admin_pill_add') }}" role="button">Ajouter une pilule</a>
 				</div>
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th scope="col">Nom de la pilule</th>
-							<th scope="col">Laboratoire</th>
-							<th scope="col">Avis</th>
-							<th scope="col">Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for pill in allPills %}
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
 							<tr>
-								<th scope="row">{{ pill.name }}</th>
-								<td>{{ pill.laboratory }}</td>
-								<td>
-									<i class="fas fa-comment"></i>
-									{{ pill.countReviews }}</td>
-								<td>
-									<a class="btn btn-outline-secondary" href="{{ path('admin_pill_details', {id:pill.id}) }}">
-										<i class="far fa-eye"></i>
-										Voir
-									</a>
-									<a class="btn btn-outline-primary" href="{{ path('admin_pill_edit', {id:pill.id}) }}">
-										<i class="fas fa-edit"></i>
-										Editer
-									</a>
-									<a class="btn btn-outline-danger" href="{{ path('admin_pill_delete', {id:pill.id}) }}" onclick="return confirm('Etes-vous sur de vouloir supprimer ?');">
-										<i class="fas fa-trash-alt"></i>
-										Supprimer</a>
-								</td>
+								<th scope="col">Nom de la pilule</th>
+								<th scope="col">Laboratoire</th>
+								<th scope="col">Avis</th>
+								<th scope="col">Action</th>
 							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							{% for pill in allPills %}
+								<tr>
+									<th scope="row">{{ pill.name }}</th>
+									<td>{{ pill.laboratory }}</td>
+									<td>
+										<i class="fas fa-comment"></i>
+										{{ pill.countReviews }}</td>
+									<td>
+										<a class="btn btn-outline-secondary" href="{{ path('admin_pill_details', {id:pill.id}) }}">
+											<i class="far fa-eye"></i>
+											Voir
+										</a>
+										<a class="btn btn-outline-primary" href="{{ path('admin_pill_edit', {id:pill.id}) }}">
+											<i class="fas fa-edit"></i>
+											Editer
+										</a>
+										<a class="btn btn-outline-danger" href="{{ path('admin_pill_delete', {id:pill.id}) }}" onclick="return confirm('Etes-vous sur de vouloir supprimer ?');">
+											<i class="fas fa-trash-alt"></i>
+											Supprimer</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 		{{ knp_pagination_render(allPills) }}
