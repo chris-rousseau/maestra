@@ -133,6 +133,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $token;
 
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\Type("boolean")
+     */
+    private $enabled;
+
     public function __construct()
     {
         $this->reviewPills = new ArrayCollection();
@@ -362,6 +368,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setToken(?string $token): self
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function getEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
 
         return $this;
     }
