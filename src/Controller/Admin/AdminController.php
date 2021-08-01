@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("", name="home")
+     * @Route("", name="home", methods={"GET"})
      */
     public function home(UserRepository $userRepository, ReviewPillRepository $reviewPillRepository, PillRepository $pillRepository): Response
     {
@@ -30,5 +30,37 @@ class AdminController extends AbstractController
             'reviewsWating' => $reviewsWating,
             'countPills' => $countPills,
         ]);
+    }
+
+    /**
+     * @Route("/delete-image", name="delete_image", methods={"GET"})
+     */
+    public function removeImage(PillRepository $pillRepository): Response
+    {
+        // We get all the pictures of the pills in an array
+        $allPills = $pillRepository->findAll();
+
+        $picturesPillArray = [];
+        foreach ($allPills as $image) {
+            $picturesPillArray[] = $image->getPicture();
+        }
+
+        // We get all the uploaded pictures in an array
+        $directory = $this->getParameter('pills_directory');
+        $picturesUploadedArray = glob($directory . "/*");
+
+        // If the image $uploadedPicture is not in $picturesPillArray then we delete it
+        foreach ($picturesUploadedArray as $uploadedPicture) {
+            if (!in_array(basename($uploadedPicture), $picturesPillArray)) {
+                unlink($uploadedPicture);
+            }
+        }
+
+        $this->addFlash(
+            'success',
+            'Les images des pilules non utilisées ont bien été supprimées !'
+        );
+
+        return $this->redirectToRoute('admin_home');
     }
 }

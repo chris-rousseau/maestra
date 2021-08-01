@@ -23,36 +23,38 @@
 						</span>
 					</form>
 				</div>
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th scope="col">Nom de la pilule</th>
-							<th scope="col">Laboratoire</th>
-							<th scope="col">Avis</th>
-							<th scope="col">Menu</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for pill in pills %}
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
 							<tr>
-								<th scope="row">{{ pill.name }}</th>
-								<td>{{ pill.laboratory }}</td>
-								<td>
-									<i class="fas fa-comment"></i>
-									{{ pill.countReviews }}</td>
-								<td>
-									<a class="btn btn-outline-primary" href="{{ path('admin_pill_edit', {id:pill.id}) }}">
-										<i class="fas fa-edit"></i>
-										Editer
-									</a>
-									<a class="btn btn-outline-danger" href="{{ path('admin_pill_delete', {id:pill.id}) }}" onclick="return confirm('Etes-vous sur de vouloir supprimer ?');">
-										<i class="fas fa-trash-alt"></i>
-										Supprimer</a>
-								</td>
+								<th scope="col">Nom de la pilule</th>
+								<th scope="col">Laboratoire</th>
+								<th scope="col">Avis</th>
+								<th scope="col">Menu</th>
 							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							{% for pill in pills %}
+								<tr>
+									<th scope="row">{{ pill.name }}</th>
+									<td>{{ pill.laboratory }}</td>
+									<td>
+										<i class="fas fa-comment"></i>
+										{{ pill.countReviews }}</td>
+									<td>
+										<a class="btn btn-outline-primary" href="{{ path('admin_pill_edit', {id:pill.id}) }}">
+											<i class="fas fa-edit"></i>
+											Editer
+										</a>
+										<a class="btn btn-outline-danger" href="{{ path('admin_pill_delete', {id:pill.id}) }}" onclick="return confirm('Etes-vous sur de vouloir supprimer ?');">
+											<i class="fas fa-trash-alt"></i>
+											Supprimer</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
 				<a class="btn btn-dark" href="{{ path('admin_pill_list') }}" role="button">Retourner à la liste</a>
 			</div>
 		</div>
