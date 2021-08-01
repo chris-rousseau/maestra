@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,6 +44,11 @@ class RegisterController extends AbstractController
         $pictureArray = ['no-avatar-1.png', 'no-avatar-2.png', 'no-avatar-3.png', 'no-avatar-4.png', 'no-avatar-5.png'];
         $user->setPicture($pictureArray[array_rand($pictureArray, 1)]);
 
+        // Create a token to validate the account by clicking on the link in the email
+        $token = uniqid();
+        $user->setToken($token);
+        $user->setEnabled(false);
+
         // If there is at least one error, we return a 400
         if (count($errors) > 0) {
             $errorsList = [];
@@ -63,7 +69,7 @@ class RegisterController extends AbstractController
                 ->from('no-reply@maestra.fr')
                 ->to($user->getEmail())
                 ->subject('Merci pour votre inscription sur Mestra.fr ♥')
-                ->text('Bonjour ' . $user->getFirstname() . ', merci beaucoup pour ton inscription !');
+                ->text('Bonjour ' . $user->getFirstname() . ', merci beaucoup pour ton inscription !' . PHP_EOL . 'Merci de cliquer sur ce lien pour activer votre compte : http://localhost:8080/confirm-email/' . $user->getToken());
 
             $mailer->send($email);
 

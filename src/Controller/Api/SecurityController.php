@@ -134,4 +134,24 @@ class SecurityController extends AbstractController
             'allUsers' => '',
         ]);
     }
+
+    /**
+     * @Route("/confirm-email/{token}", name="confirm_email", methods={"GET", "POST"}, requirements={"token"="\w+"})
+     */
+    public function confirmEmail(string $token, UserRepository $userRepository): Response
+    {
+        $user = $userRepository->findSearchByToken($token);
+        if ($user == []) {
+            return $this->json('Un problème est survenu, êtes-vous sur que le lien est correct ?', 498); // 498 : Token expired/invalid
+        } else {
+            $user[0]->setEnabled(true);
+            $user[0]->setToken(null);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user[0]);
+            $em->flush();
+
+            return $this->json('Votre adresse email à bien été validée !', 200);
+        }
+    }
 }
