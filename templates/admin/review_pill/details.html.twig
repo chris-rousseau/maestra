@@ -10,7 +10,7 @@
 			<li class="breadcrumb-item">
 				<a href="{{ path('admin_home') }}">Dashboard</a>
 			</li>
-             <li class="breadcrumb-item active">Détails</li>
+             <li class="breadcrumb-item active">{{ review.pill.name }}</li>
         </ol>   
 <div class="card mb-4">
 			<div class="card-body">	
@@ -63,9 +63,11 @@
   <a href="{{ path('admin_pill_review_delete', {'id': review.id}) }}" class="btn btn-sm btn-outline-danger"><strong>Supprimer</strong></a>
   {% endif %}
 
+    </div>
+</div>
     <p class="mb-2">
-        <a href="{{ path('admin_pill_review_list') }}" class="btn btn-sm btn-outline-primary my-3"><strong>Retour à la liste générale</strong></a>
-        <a href="{{ path('admin_pill_review_pending') }}" class="btn btn-sm btn-outline-primary"><strong>Retour à la liste des avis à valider</strong></a>
+        <a class="btn btn-dark" href="{{ path('admin_pill_review_list') }}" role="button">Retourner à la liste générale</a>
+        <a class="btn btn-dark" href="{{ path('admin_pill_review_pending') }}" role="button">Retour à la liste des avis à valider</a>
     </p>
 
  {% endblock %}
