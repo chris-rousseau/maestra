@@ -65,7 +65,7 @@ class PillType extends AbstractType
                 ],
             ])
             ->add('interruption', null, [
-                'label' => 'Prise en continu'
+                'label' => 'Interruption'
             ])
             ->add('laboratory', null, [
                 'label' => 'Laboratoire'
