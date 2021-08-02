@@ -68,18 +68,28 @@ class PillRepository extends ServiceEntityRepository
      * 
      * Query Builder
      */
-    public function findSearchSortedBy($interruption, $reimbursed, $generation, $undesirable)
+    public function findSearchSortedBy($interruption, $type, $generation, $undesirable)
     {
         $qb = $this->createQueryBuilder('pill'); // SELECT * FROM pill
         $qb->where('pill.interruption = :interruption');
-        $qb->andWhere('pill.reimbursed = :reimbursed');
+       
+        if($type !== "all"){
+            $qb->andWhere('pill.type = :type');
+        }
         if ($generation !== 0) {
             $qb->andWhere('pill.generation = :generation');
         }
-        $qb->orderBy('pill.' . $undesirable, 'ASC');
+        if($undesirable !== "alpha"){
+            $qb->orderBy('pill.' . $undesirable, 'ASC');
+        } else {
+            $qb->orderBy('pill.name', 'ASC');
+        }   
 
         $qb->setParameter(':interruption', $interruption);
-        $qb->setParameter(':reimbursed', $reimbursed);
+        
+        if ($type !== "all") {
+            $qb->setParameter(':type', $type);
+        }
         if ($generation !== 0) {
             $qb->setParameter(':generation', $generation);
         }

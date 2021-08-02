@@ -59,7 +59,7 @@ class Pill
      *      max = 100,
      *      notInRangeMessage = "Le taux de remboursement doit être compris entre {{ min }} et {{ max }}."
      * )
-     * @Groups({"pills_details"})
+     * @Groups({"pills_details", "pills", "pill_search"})
      */
     private $reimbursed;
 
