@@ -4,57 +4,57 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container-fluid px-4">
+	<div class="container px-4 mx-0">
 		<h1 class="mt-4">Ajouter une pilule</h1>
 		<ol class="breadcrumb mb-4">
 			<li class="breadcrumb-item">
-				<a href="index.html">Dashboard</a>
+				<a href="{{ path('admin_home') }}">Dashboard</a>
 			</li>
-			<li class="breadcrumb-item active">Static Navigation</li>
+			<li class="breadcrumb-item active">Ajouter une pilule</li>
 		</ol>
 		<div class="card mb-4">
 			<div class="card-body">
 				{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
 				{{ form_errors(form) }}
-
-				<div class="form-group">
-					{{ form_row(form.name) }}
+				<div class="row">
+					<div class="col">{{ form_label(form.name, null, { 'label_attr': {'class': 'label-style'} }) }}
+						{{ form_widget(form.name, { 'attr': {'class': 'input-style'} }) }}</div>
+					<div class="col">{{ form_label(form.generation, null, { 'label_attr': {'class': 'label-style'} }) }}
+						{{ form_widget(form.generation, { 'attr': {'class': 'select-style'} }) }}</div>
 				</div>
-				<div class="form-group">
-					{{ form_row(form.description) }}
+				<div class="row">
+					<div class="col">{{ form_label(form.description, null, { 'label_attr': {'class': 'label-style'} }) }}
+						{{ form_widget(form.description, { 'attr': {'class': 'textarea-style'} }) }}</div>
+					<div class="col">{{ form_label(form.reimbursed, null, { 'label_attr': {'class': 'label-style'} }) }}
+						{{ form_widget(form.reimbursed) }}</div>
 				</div>
-				<div class="form-group">
-					{{ form_row(form.pillImg) }}
+				<div class="row">
+					<div class="col">{{ form_label(form.composition, null, { 'label_attr': {'class': 'label-style'} }) }}
+						{{ form_widget(form.composition, { 'attr': {'class': 'textarea-style'} }) }}</div>
+					<div class="col">{{ form_label(form.generic, null, { 'label_attr': {'class': 'label-style'} }) }}
+						{{ form_widget(form.generic, { 'attr': {'class': 'input-style'} }) }}</div>
 				</div>
-				<div class="form-group">
-					{{ form_row(form.reimbursed) }}
+				<div class="row">
+					<div class="col">{{ form_label(form.posology, null, { 'label_attr': {'class': 'label-style'} }) }}
+						{{ form_widget(form.posology, { 'attr': {'class': 'input-style'} }) }}</div>
+					<div class="col">
+						<span class="label-style">Interruption</span>
+						{{ form_widget(form.interruption) }}</div>
 				</div>
-				<div class="form-group">
-					{{ form_row(form.generic) }}
+				<div class="row">
+					<div class="col">{{ form_label(form.type, null, { 'label_attr': {'class': 'label-style'} }) }}
+						{{ form_widget(form.type, { 'attr': {'class': 'select-style'} }) }}</div>
+					<div class="col">{{ form_label(form.delay_intake, null, { 'label_attr': {'class': 'label-style'} }) }}
+						{{ form_widget(form.delay_intake, { 'attr': {'class': 'input-style'} }) }}</div>
 				</div>
-				<div class="form-group">
-					{{ form_row(form.posology) }}
+				<div class="row">
+					<div class="col">{{ form_label(form.laboratory, null, { 'label_attr': {'class': 'label-style'} }) }}
+						{{ form_widget(form.laboratory, { 'attr': {'class': 'input-style'} }) }}</div>
+					<div class="col">{{ form_label(form.pillImg, null, { 'label_attr': {'class': 'label-style'} }) }}
+						{{ form_widget(form.pillImg) }}</div>
 				</div>
-				<div class="form-group">
-					{{ form_row(form.type) }}
-				</div>
-				<div class="form-group">
-					{{ form_row(form.generation) }}
-				</div>
-				<div class="form-group">
-					{{ form_row(form.interruption) }}
-				</div>
-				<div class="form-group">
-					{{ form_row(form.laboratory) }}
-				</div>
-				<div class="form-group">
-					{{ form_row(form.delay_intake) }}
-				</div>
-				<div class="form-group">
-					{{ form_row(form.composition) }}
-				</div>
-				<button type="submit" class="btn btn-dark mt-4">Ajouter une pilule</button>
+				<button type="submit" class="btn btn-success mt-2">Ajouter une pilule</button>
 				{{ form_end(form) }}
 			</div>
 		</div>

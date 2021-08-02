@@ -50,9 +50,18 @@ class PillType extends AbstractType
                 'label' => 'Générique'
             ])
             ->add('posology', null, [
-                'label' => 'Posologie de la pilule'
+                'label' => 'Posologie de la pilule',
+                'data' => '21 comprimés actifs et 7 jours d\'arrêt'
             ])
-            ->add('type')
+            ->add('type', ChoiceType::class, [
+                'label' => 'Type',
+                'required' => true,
+                'multiple' => false,
+                'choices'  => [
+                    'Oestroprogestatif' => 'Oestroprogestatif',
+                    'Microprogestatif' => 'Microprogestatif'
+                ],
+            ])
             ->add('generation', ChoiceType::class, [
                 'label' => 'Génération',
                 'required' => true,
