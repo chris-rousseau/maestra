@@ -85,11 +85,11 @@ class PillController extends AbstractController
         $decodeur = json_decode($searchValue);
 
         $interruption = $decodeur->interruption;
-        $reimbursed = $decodeur->reimbursed;
+        $type = $decodeur->type;
         $generation = $decodeur->generation;
         $undesirable = $decodeur->undesirable;
 
-        $pillSearch = $pillRepository->findSearchSortedBy($interruption, $reimbursed, $generation, $undesirable);
+        $pillSearch = $pillRepository->findSearchSortedBy($interruption, $type, $generation, $undesirable);
 
         return $this->json($pillSearch, 200, [], [
             "groups" => "pill_search"
