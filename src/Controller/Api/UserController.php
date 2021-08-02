@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Entity\ReviewPill;
 use App\Entity\User;
+use App\Repository\PillRepository;
 use App\Repository\ReviewPillRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -157,10 +158,24 @@ class UserController extends AbstractController
      * 
      * @return Response
      */
-    public function delete(User $user)
+    public function delete(User $user, ReviewPillRepository $reviewPillRepository, PillRepository $pillRepository)
     {
 
         $em = $this->getDoctrine()->getManager();
+        // We get the user's reviews
+        $userReviews = $reviewPillRepository->findBy([
+            "user" => $user->getId()
+        ]);
+        // For each review, we get the ID of the pill then we remove one to count_review
+        foreach ($userReviews as $review) {
+            $pillId = $review->getPill()->getId();
+            $pill = $pillRepository->findOneBy([
+                "id" => $pillId
+            ]);
+            $pill->setCountReviews($pill->getCountReviews() - 1);
+            $em->persist($pill);
+        }
+
         $em->remove($user);
         $em->flush();
 
