@@ -24,3 +24,28 @@
 .spacing {
     margin-bottom: 1em;
 }
+
+.input-style,
+.input-style:focus {
+    background-color: rgb(235, 235, 235);
+    border-radius: 25px;
+    border: none;
+}
+
+.textarea-style,
+.textarea-style:focus {
+    background-color: rgb(235, 235, 235);
+    border-radius: 10px;
+    border: 0;
+}
+
+.select-style,
+.select-style:focus {
+    background-color: rgb(219, 219, 219);
+    border-radius: 25px;
+    border: 0;
+}
+
+.bold {
+    font-weight: bold;
+}
