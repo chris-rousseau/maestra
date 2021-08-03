@@ -23,49 +23,34 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class UserController extends AbstractController
 {
     /**
-     * Method displaying the infos of a user according to its id
-     * @Route("/{id}", name="show", methods={"GET"}, requirements={"id"="\d+"})
-     */
-    public function show(User $user): Response
-    {
-        return $this->json($user, 200, [], [
-            "groups" => "users"
-        ]);
-    }
-
-    /**
-     * Method updating partially (patch) the user
-     * @Route("/{id}/edit", name="update", methods={"PATCH"}, requirements={"id"="\d+"})
+     * Method enabling the user to delete its account
      *
-     * @return void
+     * @Route("/{id}", name="delete", methods={"DELETE"}, requirements={"id"="\d+"})
+     * 
+     * @return Response
      */
-    public function update(User $user, Request $request, SerializerInterface $serializer, ValidatorInterface $validator, UserPasswordHasherInterface $passwordHasher)
+    public function delete(User $user, ReviewPillRepository $reviewPillRepository, PillRepository $pillRepository)
     {
-        $jsonData = $request->getContent();
-        $user = $serializer->deserialize($jsonData, User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
 
-        $errors = $validator->validate($user);
-
-        if (count($errors) == 0) {
-            $user->setUpdatedAt(new \DateTimeImmutable());
-            $this->getDoctrine()->getManager()->flush();
-            return $this->json([
-                'message' => 'L\'utilisateur ' .  $user->getFirstname() . ' ' .  $user->getLastname() . ' a bien été mis à jour'
+        $em = $this->getDoctrine()->getManager();
+        // We get the user's reviews
+        $userReviews = $reviewPillRepository->findBy([
+            "user" => $user->getId()
+        ]);
+        // For each review, we get the ID of the pill then we remove one to count_review
+        foreach ($userReviews as $review) {
+            $pillId = $review->getPill()->getId();
+            $pill = $pillRepository->findOneBy([
+                "id" => $pillId
             ]);
+            $pill->setCountReviews($pill->getCountReviews() - 1);
+            $em->persist($pill);
         }
 
-        $errorsList = [];
-        foreach ($errors as $erreur) {
-            $input = $erreur->getPropertyPath();
-            $errorsList[$input] = $erreur->getMessage();
-        }
+        $em->remove($user);
+        $em->flush();
 
-        // 400 : error code BAD request
-        // to return if there is an error
-        return $this->json([
-            'errors' => $errorsList
-            //(string) $errors => transform an array to string, 
-        ], 400);
+        return $this->json('La suppression du compte a bien été prise en compte', 200);
     }
 
     /**
@@ -124,9 +109,6 @@ class UserController extends AbstractController
             'user' => $user->getId()
         ]);
 
-        //dd($reviewsUser);
-        // Display of only the name of the pill to which is associated the review. 
-
         return $this->json($reviewsUser, 200, [], [
             "groups" => "user_reviews"
         ]);
@@ -135,7 +117,7 @@ class UserController extends AbstractController
     /**
      * Method enabling the user to delete one of its review according to the review id
      *
-     * @Route("/review/{id}", name="review_delete", methods={"DELETE"})
+     * @Route("/review/{id}", name="review_delete", methods={"DELETE"}, requirements={"id"="\d+"})
      * 
      * @return Response
      */
@@ -160,33 +142,48 @@ class UserController extends AbstractController
     }
 
     /**
-     * Method enabling the user to delete its account
-     *
-     * @Route("/{id}", name="delete", methods={"DELETE"}, requirements={"id"="\d+"})
-     * 
-     * @return Response
+     * Method displaying the infos of a user according to its id
+     * @Route("/{id}", name="show", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function delete(User $user, ReviewPillRepository $reviewPillRepository, PillRepository $pillRepository)
+    public function show(User $user): Response
     {
-
-        $em = $this->getDoctrine()->getManager();
-        // We get the user's reviews
-        $userReviews = $reviewPillRepository->findBy([
-            "user" => $user->getId()
+        return $this->json($user, 200, [], [
+            "groups" => "users"
         ]);
-        // For each review, we get the ID of the pill then we remove one to count_review
-        foreach ($userReviews as $review) {
-            $pillId = $review->getPill()->getId();
-            $pill = $pillRepository->findOneBy([
-                "id" => $pillId
+    }
+
+    /**
+     * Method updating partially (patch) the user
+     * @Route("/{id}/edit", name="update", methods={"PATCH"}, requirements={"id"="\d+"})
+     *
+     * @return void
+     */
+    public function update(User $user, Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
+    {
+        $jsonData = $request->getContent();
+        $user = $serializer->deserialize($jsonData, User::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
+
+        $errors = $validator->validate($user);
+
+        if (count($errors) == 0) {
+            $user->setUpdatedAt(new \DateTimeImmutable());
+            $this->getDoctrine()->getManager()->flush();
+            return $this->json([
+                'message' => 'L\'utilisateur ' .  $user->getFirstname() . ' ' .  $user->getLastname() . ' a bien été mis à jour'
             ]);
-            $pill->setCountReviews($pill->getCountReviews() - 1);
-            $em->persist($pill);
         }
 
-        $em->remove($user);
-        $em->flush();
+        $errorsList = [];
+        foreach ($errors as $erreur) {
+            $input = $erreur->getPropertyPath();
+            $errorsList[$input] = $erreur->getMessage();
+        }
 
-        return $this->json('La suppression du compte a bien été prise en compte', 200);
+        // 400 : error code BAD request
+        // to return if there is an error
+        return $this->json([
+            'errors' => $errorsList
+            //(string) $errors => transform an array to string, 
+        ], 400);
     }
 }

@@ -20,7 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/admin/{id}", name="admin", methods={"GET", "POST"}, requirements={"id"="\d+"})
+     * @Route("/admin/{id}", name="admin", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
     public function admin(User $user): Response
     {
@@ -39,7 +39,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/delete", name="delete", requirements={"id"="\d+"})
+     * @Route("/{id}/delete", name="delete", requirements={"id"="\d+"}, methods={"GET"})
      */
     public function delete(User $user, ReviewPillRepository $reviewPillRepository, PillRepository $pillRepository): Response
     {
@@ -87,7 +87,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/moderator/{id}", name="moderator", methods={"GET", "POST"}, requirements={"id"="\d+"})
+     * @Route("/moderator/{id}", name="moderator", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
     public function moderator(User $user): Response
     {
@@ -120,7 +120,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/unmoderator/{id}", name="unmoderator", methods={"GET", "POST"}, requirements={"id"="\d+"})
+     * @Route("/unmoderator/{id}", name="unmoderator", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
     public function unmoderator(User $user): Response
     {
