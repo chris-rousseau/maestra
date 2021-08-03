@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/admin/pill", name="admin_pill_")
@@ -71,7 +70,7 @@ class PillController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/delete", name="delete", requirements={"id"="\d+"})
+     * @Route("/{id}/delete", name="delete", requirements={"id"="\d+"}, methods={"GET","POST"})
      */
     public function delete(Pill $pill): Response
     {
@@ -88,7 +87,7 @@ class PillController extends AbstractController
     }
 
     /**
-     * @Route("/details/{id}", name="details", requirements={"id"="\d+"})
+     * @Route("/details/{id}", name="details", requirements={"id"="\d+"}, methods={"GET"})
      */
     public function details(Pill $pill): Response
     {

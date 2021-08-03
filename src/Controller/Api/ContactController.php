@@ -21,17 +21,15 @@ class ContactController extends AbstractController
     {
         // We get the content of the request
         $JsonData = $request->getContent();
-        
+
         // transforming the JSON into a php OBJECT
         $dataDecoded = json_decode($JsonData);
-        
+
         // extracting the datas we need
         $userName = $dataDecoded->name;
-        $userEmail= $dataDecoded->email;
+        $userEmail = $dataDecoded->email;
         $messageObject = $dataDecoded->object;
         $message = $dataDecoded->message;
-        
-        //dd($JsonData, $dataDecoded, $userEmail, $messageObject, $message);
 
         $errors = [];
 
@@ -50,23 +48,21 @@ class ContactController extends AbstractController
             $errors['message'] = "Merci de bien vouloir renseigner un message.";
         }
 
-                  
         if (count($errors) > 0) {
             return $this->json(
                 $errors,
                 500
-            ) ; 
-
+            );
         } else {
             // Sending the email
             $email = (new Email())
-            ->from($userEmail)
-            ->to('maestra@chrisdev.fr')
-            ->subject($messageObject . ' de ' . $userName)
-            ->text($message);
-        
+                ->from($userEmail)
+                ->to('maestra@chrisdev.fr')
+                ->subject($messageObject . ' de ' . $userName)
+                ->text($message);
+
             $mailer->send($email);
-        
+
             return $this->json('Le message a bien été envoyé', 201);
         }
     }
