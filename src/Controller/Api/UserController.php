@@ -39,12 +39,14 @@ class UserController extends AbstractController
         ]);
         // For each review, we get the ID of the pill then we remove one to count_review
         foreach ($userReviews as $review) {
-            $pillId = $review->getPill()->getId();
-            $pill = $pillRepository->findOneBy([
-                "id" => $pillId
-            ]);
-            $pill->setCountReviews($pill->getCountReviews() - 1);
-            $em->persist($pill);
+            if ($review->getStatus() === 1) {
+                $pillId = $review->getPill()->getId();
+                $pill = $pillRepository->findOneBy([
+                    "id" => $pillId
+                ]);
+                $pill->setCountReviews($pill->getCountReviews() - 1);
+                $em->persist($pill);
+            }
         }
 
         $em->remove($user);
@@ -124,14 +126,18 @@ class UserController extends AbstractController
     public function reviewsDelete(ReviewPill $reviewPill, PillRepository $pillRepository)
     {
         // We get the id of the pill, to remove 1 from the CountReviews
-        $pillId = $reviewPill->getPill()->getId();
-        $pill = $pillRepository->findOneBy([
-            "id" => $pillId
-        ]);
-        $pill->setCountReviews($pill->getCountReviews() - 1);
-
         $em = $this->getDoctrine()->getManager();
-        $em->persist($pill);
+
+        if ($reviewPill->getStatus() === 1) {
+            dd($reviewPill->getStatus());
+            $pillId = $reviewPill->getPill()->getId();
+            $pill = $pillRepository->findOneBy([
+                "id" => $pillId
+            ]);
+            $pill->setCountReviews($pill->getCountReviews() - 1);
+            $em->persist($pill);
+        }
+
         $em->remove($reviewPill);
         $em->flush();
 
