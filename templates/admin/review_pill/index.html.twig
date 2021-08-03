@@ -7,7 +7,7 @@
 {% block body %}
 
 
-	<div class="container-fluid px-4">
+	<div class="container px-4 mx-0">
 		<h1 class="mt-4">Tous les avis</h1>
 		<ol class="breadcrumb mb-4">
 			<li class="breadcrumb-item">
@@ -17,6 +17,8 @@
 		</ol>
 		<div class="card mb-4">
 			<div class="card-body">	
+{# Responsive/mobile first #}
+        <div class="table-responsive">    
         <table class="table table-striped">
             
     <thead>
@@ -63,6 +65,7 @@
         	{% endfor %}
     </tbody>
 </table>
+</div>
 </div>
 </div>
             
