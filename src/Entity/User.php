@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
