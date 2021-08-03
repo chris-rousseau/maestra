@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends AbstractController
 {
     /**
+     * Route for users to send an email to the webmaster
      * @Route("/form", name="form_data", methods={"POST"})
      */
     public function contact(Request $request, MailerInterface $mailer): Response

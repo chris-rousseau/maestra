@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SecurityController extends AbstractController
 {
     /**
+     * Method for the user to confirm their email address
      * @Route("/confirm-email/{token}", name="confirm_email", methods={"GET","POST"}, requirements={"token"="\w+"})
      */
     public function confirmEmail(string $token, UserRepository $userRepository): Response
@@ -53,6 +54,7 @@ class SecurityController extends AbstractController
 
                 return $this->render('api/security/index.html.twig');
             } else {
+                // Creation of the token
                 $token = uniqid();
                 $user->setToken($token);
 
@@ -99,6 +101,7 @@ class SecurityController extends AbstractController
                 );
 
                 return $this->render('api/security/reset.html.twig');
+                // Check if the password contains what is requested
             } elseif (preg_match('@^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$@', $request->request->get('password')) === 0) {
                 $this->addFlash(
                     'danger',
@@ -116,6 +119,7 @@ class SecurityController extends AbstractController
 
                     return $this->render('api/security/reset.html.twig');
                 } else {
+                    // If the token is found in the database, we change the password
                     $password = $request->request->get('password');
 
                     $userByToken['0']->setPassword(
@@ -131,6 +135,7 @@ class SecurityController extends AbstractController
                     $em->persist($userByToken['0']);
                     $em->flush();
 
+                    // And we send a confirmation email
                     $email = (new Email())
                         ->from('no-reply@maestra.fr')
                         ->to($userByToken['0']->getEmail())

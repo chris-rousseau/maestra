@@ -21,6 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class PillController extends AbstractController
 {
     /**
+     * Route to add a new pill
      * @Route("/add", name="add", methods={"GET","POST"})
      */
     public function add(Request $request, UploadImage $upload, SluggerInterface $slugger): Response
@@ -70,6 +71,7 @@ class PillController extends AbstractController
     }
 
     /**
+     * Route to remove a pill
      * @Route("/{id}/delete", name="delete", requirements={"id"="\d+"}, methods={"GET","POST"})
      */
     public function delete(Pill $pill): Response
@@ -87,6 +89,7 @@ class PillController extends AbstractController
     }
 
     /**
+     * Route to display the details of a pill
      * @Route("/details/{id}", name="details", requirements={"id"="\d+"}, methods={"GET"})
      */
     public function details(Pill $pill): Response
@@ -97,6 +100,7 @@ class PillController extends AbstractController
     }
 
     /**
+     * Route for editing a pill
      * @Route("/edit/{id}", name="edit", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
     public function edit(Request $request, Pill $pill, UploadImage $upload, SluggerInterface $slugger): Response
@@ -105,13 +109,14 @@ class PillController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            // Upload an image
             $imagePill = $upload->uploadImg($form, 'pillImg');
             // If there is no image uploaded, we do not change the picture
             if ($imagePill !== null) {
                 $pill->setPicture($imagePill);
             }
 
+            // Creation of the slug with the name of the pill
             $slug = $slugger->slug($pill->getName());
             $pill->setSlug(strtolower($slug));
 
@@ -135,6 +140,7 @@ class PillController extends AbstractController
     }
 
     /**
+     * Route to list all pills
      * @Route("", name="list", methods={"GET"})
      */
     public function list(Request $request, PillRepository $pillRepository, PaginatorInterface $paginator): Response
@@ -152,6 +158,7 @@ class PillController extends AbstractController
     }
 
     /**
+     * Route to search for a pill by name
      * @Route("/search", name="search", methods={"GET"})
      */
     public function search(Request $request, PillRepository $pillRepository): Response

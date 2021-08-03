@@ -20,6 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class UserController extends AbstractController
 {
     /**
+     * Route to make a user an administrator
      * @Route("/admin/{id}", name="admin", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
     public function admin(User $user): Response
@@ -39,6 +40,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * Route to delete a user
      * @Route("/{id}/delete", name="delete", requirements={"id"="\d+"}, methods={"GET"})
      */
     public function delete(User $user, ReviewPillRepository $reviewPillRepository, PillRepository $pillRepository): Response
@@ -72,6 +74,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * Route to list users
      * @Route("", name="list", methods={"GET"})
      */
     public function list(Request $request, UserRepository $userRepository, PaginatorInterface $paginator): Response
@@ -89,6 +92,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * Route to make a user a moderator
      * @Route("/moderator/{id}", name="moderator", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
     public function moderator(User $user): Response
@@ -108,6 +112,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * Route to search for a user by name
      * @Route("/search", name="search", methods={"GET"})
      */
     public function search(Request $request, UserRepository $userRepository): Response
@@ -122,6 +127,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * Route to remove a user's moderation/administrator rights
      * @Route("/unmoderator/{id}", name="unmoderator", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
     public function unmoderator(User $user): Response

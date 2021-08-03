@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class RegisterController extends AbstractController
 {
     /**
+     * Route for user registration
      * @Route("/register", name="register", methods={"POST"})
      */
     public function register(Request $request, SerializerInterface $serializer, ValidatorInterface $validator, UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer): Response
