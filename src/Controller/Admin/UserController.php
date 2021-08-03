@@ -50,12 +50,14 @@ class UserController extends AbstractController
         ]);
         // For each review, we get the ID of the pill then we remove one to count_review
         foreach ($userReviews as $review) {
-            $pillId = $review->getPill()->getId();
-            $pill = $pillRepository->findOneBy([
-                "id" => $pillId
-            ]);
-            $pill->setCountReviews($pill->getCountReviews() - 1);
-            $em->persist($pill);
+            if ($review->getStatus() === 1) {
+                $pillId = $review->getPill()->getId();
+                $pill = $pillRepository->findOneBy([
+                    "id" => $pillId
+                ]);
+                $pill->setCountReviews($pill->getCountReviews() - 1);
+                $em->persist($pill);
+            }
         }
 
         $em->remove($user);
