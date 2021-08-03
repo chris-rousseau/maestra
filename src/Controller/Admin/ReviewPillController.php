@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Pill;
 use App\Entity\ReviewPill;
 use App\Repository\PillRepository;
 use App\Repository\ReviewPillRepository;
@@ -22,8 +21,43 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class ReviewPillController extends AbstractController
 {
     /**
+     * Method removing a review in the DB
+     *
+     * @Route("/{id}/delete", name="delete", methods={"GET"}, requirements={"id"="\d+"})
+     * 
+     * @return Response
+     */
+    public function delete(ReviewPill $review)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($review);
+        $em->flush();
+
+        $this->addFlash(
+            'success',
+            'L\'avis à bien été supprimé !'
+        );
+
+        return $this->redirectToRoute('admin_pill_review_list');
+    }
+
+    /**
+     * Method displaying one review according to its id
+     * @Route("/{id}", name="details", methods={"GET"}, requirements={"id"="\d+"})
+     */
+    public function details(int $id, ReviewPillRepository $reviewPillRepository): Response
+    {
+        $review = $reviewPillRepository->findWithDetails($id);
+
+        return $this->render('admin/review_pill/details.html.twig', [
+            'review' => $review,
+
+        ]);
+    }
+
+    /**
      * Method displaying all the reviews
-     * @Route("/list", name="list")
+     * @Route("/list", name="list", methods={"GET"})
      */
     public function index(ReviewPillRepository $reviewPillRepository, PaginatorInterface $paginator, Request $request): Response
     {
@@ -43,7 +77,7 @@ class ReviewPillController extends AbstractController
 
     /**
      * Method displaying all the newest reviews that has to be validated (meaning their status is 0)
-     * @Route("/pending/list", name="pending")
+     * @Route("/pending/list", name="pending", methods={"GET"})
      */
     public function indexValidation(ReviewPillRepository $reviewPillRepository, PaginatorInterface $paginator, Request $request): Response
     {
@@ -57,20 +91,6 @@ class ReviewPillController extends AbstractController
 
         return $this->render('admin/review_pill/index.moderation.html.twig', [
             'data' => $data
-        ]);
-    }
-
-    /**
-     * Method displaying one review according to its id
-     * @Route("/{id}", name="details", methods="GET", requirements={"id"="\d+"})
-     */
-    public function details(int $id, ReviewPillRepository $reviewPillRepository): Response
-    {
-        $review = $reviewPillRepository->findWithDetails($id);
-
-        return $this->render('admin/review_pill/details.html.twig', [
-            'review' => $review,
-
         ]);
     }
 
@@ -141,27 +161,6 @@ class ReviewPillController extends AbstractController
         $this->addFlash(
             'success',
             'L\'avis à bien été validé !'
-        );
-
-        return $this->redirectToRoute('admin_pill_review_list');
-    }
-
-    /**
-     * Method removing a review in the DB
-     *
-     * @Route("/{id}/delete", name="delete", methods={"GET"}, requirements={"id"="\d+"})
-     * 
-     * @return Response
-     */
-    public function delete(ReviewPill $review)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($review);
-        $em->flush();
-
-        $this->addFlash(
-            'success',
-            'L\'avis à bien été supprimé !'
         );
 
         return $this->redirectToRoute('admin_pill_review_list');
