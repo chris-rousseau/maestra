@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Repository\PillRepository;
+use App\Repository\ReviewPillRepository;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,9 +41,23 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/delete", name="delete", requirements={"id"="\d+"})
      */
-    public function delete(User $user): Response
+    public function delete(User $user, ReviewPillRepository $reviewPillRepository, PillRepository $pillRepository): Response
     {
         $em = $this->getDoctrine()->getManager();
+        // We get the user's reviews
+        $userReviews = $reviewPillRepository->findBy([
+            "user" => $user->getId()
+        ]);
+        // For each review, we get the ID of the pill then we remove one to count_review
+        foreach ($userReviews as $review) {
+            $pillId = $review->getPill()->getId();
+            $pill = $pillRepository->findOneBy([
+                "id" => $pillId
+            ]);
+            $pill->setCountReviews($pill->getCountReviews() - 1);
+            $em->persist($pill);
+        }
+
         $em->remove($user);
         $em->flush();
 
