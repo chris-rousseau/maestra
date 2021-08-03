@@ -59,10 +59,9 @@ class UserTest extends WebTestCase
         $user = $userRepository->findOneByEmail('chris@gmail.com');
         $client->loginUser($user);
 
+        // Testing and asserting if the click on "Passer modérateur" works
         $crawler = $client->request('GET', '/admin/user');
-
         $crawler->selectLink('Passer modérateur')->link();
-
 
         $this->assertResponseIsSuccessful();
     }
@@ -76,10 +75,9 @@ class UserTest extends WebTestCase
         $user = $userRepository->findOneByEmail('chris@gmail.com');
         $client->loginUser($user);
 
+        // Testing and asserting if the click on "Passer admin" works
         $crawler = $client->request('GET', '/admin/user');
-
         $crawler->selectLink('Passer admin')->link();
-
 
         $this->assertResponseIsSuccessful();
     }
