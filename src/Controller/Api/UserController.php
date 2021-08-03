@@ -139,9 +139,17 @@ class UserController extends AbstractController
      * 
      * @return Response
      */
-    public function reviewsDelete(ReviewPill $reviewPill)
+    public function reviewsDelete(ReviewPill $reviewPill, PillRepository $pillRepository)
     {
+        // We get the id of the pill, to remove 1 from the CountReviews
+        $pillId = $reviewPill->getPill()->getId();
+        $pill = $pillRepository->findOneBy([
+            "id" => $pillId
+        ]);
+        $pill->setCountReviews($pill->getCountReviews() - 1);
+
         $em = $this->getDoctrine()->getManager();
+        $em->persist($pill);
         $em->remove($reviewPill);
         $em->flush();
 
