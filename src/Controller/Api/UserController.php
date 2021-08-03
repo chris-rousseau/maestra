@@ -129,7 +129,6 @@ class UserController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         if ($reviewPill->getStatus() === 1) {
-            dd($reviewPill->getStatus());
             $pillId = $reviewPill->getPill()->getId();
             $pill = $pillRepository->findOneBy([
                 "id" => $pillId
