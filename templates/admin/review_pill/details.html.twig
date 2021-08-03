@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-<div class="container px-4 mx-0">
+	<div class="container px-4 mx-0">
 		<h1 class="mt-4">Avis sur la pilule {{ review.pill.name }}</h1>
 		<ol class="breadcrumb mb-4">
         <li class="breadcrumb-item">
@@ -18,7 +18,8 @@
         </ol>   
 <div class="card mb-4">
 			<div class="card-body">	
-
+{# Responsive/mobile first #}
+        <div class="table-responsive">    
   <table class="table">
         <tbody>
         <tr>
@@ -69,9 +70,9 @@
 
     </div>
 </div>
+   </div>
     <p class="mb-2">
-        <a class="btn btn-dark" href="{{ path('admin_pill_review_list') }}" role="button">Retourner à la liste générale</a>
-        <a class="btn btn-dark" href="{{ path('admin_pill_review_pending') }}" role="button">Retour à la liste des avis à valider</a>
+        <a class="btn btn-dark mb-2" href="{{ path('admin_pill_review_list') }}" role="button">Retourner à la liste générale</a>
+        <a class="btn btn-dark mb-2" href="{{ path('admin_pill_review_pending') }}" role="button">Retour à la liste des avis à valider</a>
     </p>
-
  {% endblock %}
