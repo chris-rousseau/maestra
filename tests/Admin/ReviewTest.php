@@ -14,7 +14,7 @@ class ReviewTest extends WebTestCase
         $crawler = $client->request('GET', '/admin/pill/review/list');
 
         // testing that we are redirected to another page when
-        // attempting to access the page admin/pill (listing of all the pills) if not logged in
+        // attempting to access the page of a single review if not logged in
         $this->assertResponseStatusCodeSame(302);
     }
 
@@ -22,14 +22,13 @@ class ReviewTest extends WebTestCase
     {
         $client = static::createClient();
 
-        // Simulating a connexion with a role moderator (ROLE_MODERATOR)        
-        // findOneByEmail ==> findOneBy(['email' => 'demo1@oclock.io'])
+        // Simulating a connexion with a role user (ROLE_USER)        
         $userRepository = static::getContainer()->get(UserRepository::class);
         $user = $userRepository->findOneByEmail('random@gmail.com');
         $client->loginUser($user);
 
-        // Testing and asserting that a user with a ROLE_MODERATOR doesn't have
-        // access to the admin page listing the pills (Error 403)
+        // Testing and asserting that a user with a ROLE_USER doesn't have
+        // access to the admin page listing the reviews (Error 403)
         $crawler = $client->request('GET', '/admin/pill/review/list');
         $this->assertResponseStatusCodeSame(403);
     }
@@ -39,13 +38,12 @@ class ReviewTest extends WebTestCase
         $client = static::createClient();
 
         // Simulating a connexion with a role moderator (ROLE_MODERATOR)        
-        // findOneByEmail ==> findOneBy(['email' => 'demo1@oclock.io'])
         $userRepository = static::getContainer()->get(UserRepository::class);
         $user = $userRepository->findOneByEmail('lulu@boubou.fr');
         $client->loginUser($user);
 
         // Testing and asserting that a user with a ROLE_MODERATOR doesn't have
-        // access to the admin page listing the pills (Error 403)
+        // access to the admin page listing the reviews (Error 403)
         $crawler = $client->request('GET', '/admin/pill/review/list');
         $this->assertResponseIsSuccessful();
     }
@@ -60,7 +58,7 @@ class ReviewTest extends WebTestCase
 
         $client->loginUser($user);
 
-        // Testing and asserting that as an ADMIN, we have access to the page
+        // Testing and asserting that as an ADMIN, we have access to the page listing the reviews
         $client->request('GET', '/admin/pill/review/list');
         $this->assertResponseIsSuccessful();
     }
@@ -74,7 +72,7 @@ class ReviewTest extends WebTestCase
         $user = $userRepository->findOneByEmail('chris@gmail.com');
         $client->loginUser($user);
 
-        // Testing and asserting if the click on "Passer admin" works
+        // Testing and asserting if the click on "Voir" works
         $crawler = $client->request('GET', '/admin/pill/review/list');
         $crawler->selectLink('Voir')->link();
 

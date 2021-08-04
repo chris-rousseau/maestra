@@ -22,13 +22,13 @@ class PillTest extends WebTestCase
     {
         $client = static::createClient();
 
-        // Simulating a connexion with a role moderator (ROLE_MODERATOR)        
+        // Simulating a connexion with a role user (ROLE_USER)        
         // findOneByEmail ==> findOneBy(['email' => 'demo1@oclock.io'])
         $userRepository = static::getContainer()->get(UserRepository::class);
         $user = $userRepository->findOneByEmail('random@gmail.com');
         $client->loginUser($user);
 
-        // Testing and asserting that a user with a ROLE_MODERATOR doesn't have
+        // Testing and asserting that a user with a ROLE_USER doesn't have
         // access to the admin page listing the pills (Error 403)
         $crawler = $client->request('GET', '/admin/pill');
         $this->assertResponseStatusCodeSame(403);
