@@ -15,10 +15,23 @@ class PillTest extends WebTestCase
 
         // testing that we are redirected to another page when
         // attempting to access the page admin/pill (listing of all the pills) if not logged in
-    
-        dump('Test ok');
         $this->assertResponseStatusCodeSame(302);
+    }
 
+    public function testAdminPillUnAuthorizedUser()
+    {
+        $client = static::createClient();
+
+        // Simulating a connexion with a role moderator (ROLE_MODERATOR)        
+        // findOneByEmail ==> findOneBy(['email' => 'demo1@oclock.io'])
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $user = $userRepository->findOneByEmail('random@gmail.com');
+        $client->loginUser($user);
+
+        // Testing and asserting that a user with a ROLE_MODERATOR doesn't have
+        // access to the admin page listing the pills (Error 403)
+        $crawler = $client->request('GET', '/admin/pill');
+        $this->assertResponseStatusCodeSame(403);
     }
 
     public function testAdminPillUnAuthorized()
@@ -73,7 +86,7 @@ class PillTest extends WebTestCase
             'pill[generation]' => 1,
             'pill[interruption]' => 1,
             'pill[laboratory]' => 'Test2',
-            'pill[delay_intake]' => 12,   
+            'pill[delay_intake]' => 12,
         ]);
 
         // We check that after the submit, we are redirected to 
