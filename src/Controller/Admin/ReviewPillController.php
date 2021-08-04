@@ -142,8 +142,8 @@ class ReviewPillController extends AbstractController
         $email = (new Email())
             ->from('no-reply@maestra.fr')
             ->to($user->getEmail())
-            ->subject('Avis validé sur Mestra.fr ♥')
-            ->text('Bonjour ' . $user->getFirstname() . PHP_EOL . 'Votre avis ' . $review->getTitle() .  ' pour la pilule ' . $pill->getName() . ' a bien été validé !' . PHP_EOL . 'Merci beaucoup pour ton retour !');
+            ->subject('✔️ Avis validé sur Maestra.fr')
+            ->text('Bonjour ' . $user->getFirstname() . ' !' . PHP_EOL . 'Votre avis ' . $review->getTitle() .  ' pour la pilule ' . $pill->getName() . ' a bien été validé !' . PHP_EOL . 'Merci beaucoup pour votre contribution et n\'hésitez pas à parler de Maestra autour de vous :)');
 
         $mailer->send($email);
 

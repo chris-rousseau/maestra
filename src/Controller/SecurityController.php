@@ -67,7 +67,7 @@ class SecurityController extends AbstractController
                     ->from('no-reply@maestra.fr')
                     ->to($user->getEmail())
                     ->subject('Réinitialisation de votre mot de passe Maestra')
-                    ->text('Bonjour ' . $user->getFirstname() . ' !' . PHP_EOL . 'Voici le lien pour réinitialiser votre mot de passe : http://localhost:8080/reinitialiser-mot-de-passe/' . $user->getToken() . PHP_EOL . 'Cliquez ou copiez/collez ce lien et suivez les instructions indiquées sur la page.' . PHP_EOL . PHP_EOL . 'Bonne journée !');
+                    ->text('Bonjour ' . $user->getFirstname() . ' !' . PHP_EOL . 'Voici le lien pour réinitialiser votre mot de passe : https://maestra.chrisdev.fr/reinitialiser-mot-de-passe/' . $user->getToken() . PHP_EOL . 'Cliquez ou copiez/collez ce lien et suivez les instructions indiquées sur la page.' . PHP_EOL . PHP_EOL . 'L\'équipe Maestra');
 
                 $mailer->send($email);
 

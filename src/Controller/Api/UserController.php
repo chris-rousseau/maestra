@@ -82,8 +82,8 @@ class UserController extends AbstractController
                 $email = (new Email())
                     ->from('no-reply@maestra.fr')
                     ->to($user->getEmail())
-                    ->subject('Modification du mot de passe - Maestra')
-                    ->text('Bonjour ' . $user->getFirstname() . ', votre mot de passe à bien été modifié !');
+                    ->subject('Mot de passe modifié - Maestra')
+                    ->text('Bonjour ' . $user->getFirstname() . ',' . PHP_EOL . PHP_EOL . 'Votre mot de passe a été modifié, comme vous l\'avez demandé. Pour consulter ou changer les informations relatives à votre compte, cliquez sur le menu Mon compte en haut à droite du site.' . PHP_EOL . PHP_EOL . 'L\'équipe Maestra');
 
                 $mailer->send($email);
 

@@ -69,7 +69,7 @@ class RegisterController extends AbstractController
                 ->from('no-reply@maestra.fr')
                 ->to($user->getEmail())
                 ->subject('Merci pour votre inscription sur Mestra.fr ♥')
-                ->text('Bonjour ' . $user->getFirstname() . ', merci beaucoup pour ton inscription !' . PHP_EOL . 'Merci de cliquer sur ce lien pour activer votre compte : http://localhost:8080/confirm-email/' . $user->getToken());
+                ->text('Bonjour ' . $user->getFirstname() . ', bienvenue sur Maestra !' . PHP_EOL . 'Nous vous confirmons la création de votre compte sur le site maestra.fr et vous remercions pour votre confiance.' . PHP_EOL . PHP_EOL . 'Merci de cliquer sur ce lien pour activer votre compte : https://maestra.chrisdev.fr/confirm-email/' . $user->getToken() . PHP_EOL . PHP_EOL . 'Merci et à très bientôt !' . PHP_EOL . 'L\'équipe Maestra');
 
             $mailer->send($email);
 
