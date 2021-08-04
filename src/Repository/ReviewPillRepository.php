@@ -54,6 +54,7 @@ class ReviewPillRepository extends ServiceEntityRepository
     {
        $qb = $this->createQueryBuilder('review'); 
        $qb->orderBy('review.status', 'ASC'); 
+       $qb->orderBy('review.created_at', 'DESC'); 
 
        $qb->leftJoin('review.user', 'user');
         $qb->leftJoin('review.pill', 'pill');
@@ -68,6 +69,7 @@ class ReviewPillRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('review'); 
         $qb->where('review.status = :status'); 
+        $qb->orderBy('review.created_at', 'DESC'); 
         
         $qb->setParameter(':status', $status);
         
