@@ -25,7 +25,8 @@ class AuthenticationSuccessListener
         $data['data'] = array(
             'id' => $user->getId(),
             'firstname' => $user->getFirstname(),
-            'enabled' => $user->getEnabled()
+            'enabled' => $user->getEnabled(),
+            'role' => $user->getRoles()
         );
 
         $event->setData($data);
