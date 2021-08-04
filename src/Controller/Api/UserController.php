@@ -6,10 +6,12 @@ use App\Entity\ReviewPill;
 use App\Entity\User;
 use App\Repository\PillRepository;
 use App\Repository\ReviewPillRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -79,11 +81,15 @@ class UserController extends AbstractController
                     $passwordObj->newPassword
                 ));
 
-                $email = (new Email())
+                $email = (new TemplatedEmail())
                     ->from('no-reply@maestra.fr')
-                    ->to($user->getEmail())
+                    ->to(new Address($user->getEmail()))
                     ->subject('Modification du mot de passe - Maestra')
-                    ->text('Bonjour ' . $user->getFirstname() . ', votre mot de passe à bien été modifié !');
+                    ->htmlTemplate('emails/password_edit.html.twig')
+                    ->context([
+                        'firstname' => $user->getFirstname(),
+                        'lastname' => $user->getLastname(),
+                ]);
 
                 $mailer->send($email);
 
