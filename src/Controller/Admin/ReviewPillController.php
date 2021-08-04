@@ -28,9 +28,18 @@ class ReviewPillController extends AbstractController
      * 
      * @return Response
      */
-    public function delete(ReviewPill $review)
+    public function delete(ReviewPill $review, PillRepository $pillRepository)
     {
         $em = $this->getDoctrine()->getManager();
+        if ($review->getStatus() === 1) {
+            $pillId = $review->getPill()->getId();
+            $pill = $pillRepository->findOneBy([
+                "id" => $pillId
+            ]);
+            $pill->setCountReviews($pill->getCountReviews() - 1);
+            $em->persist($pill);
+        }
+
         $em->remove($review);
         $em->flush();
 
