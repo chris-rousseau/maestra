@@ -79,7 +79,9 @@ class UserController extends AbstractController
      */
     public function list(Request $request, UserRepository $userRepository, PaginatorInterface $paginator): Response
     {
-        $users = $userRepository->findAll();
+        $users = $userRepository->findBy([], [
+            'created_at' => "DESC"
+        ]);
 
         $allUsers = $paginator->paginate(
             $users,

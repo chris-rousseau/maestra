@@ -146,7 +146,9 @@ class PillController extends AbstractController
      */
     public function list(Request $request, PillRepository $pillRepository, PaginatorInterface $paginator): Response
     {
-        $pills = $pillRepository->findAll();
+        $pills = $pillRepository->findBy([], [
+            'created_at' => "DESC"
+        ]);
 
         $allPills = $paginator->paginate(
             $pills,
