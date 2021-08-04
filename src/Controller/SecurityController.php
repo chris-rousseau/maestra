@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Repository\UserRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,12 +65,16 @@ class SecurityController extends AbstractController
                 $em->flush();
 
                 // Sending an email with the link to reset your password
-                $email = (new Email())
+                $email = (new TemplatedEmail())
                     ->from('no-reply@maestra.fr')
-                    ->to($user->getEmail())
+                    ->to(new Address($user->getEmail()))
                     ->subject('Réinitialisation de votre mot de passe Maestra')
-                    ->text('Bonjour ' . $user->getFirstname() . ' !' . PHP_EOL . 'Voici le lien pour réinitialiser votre mot de passe : http://localhost:8080/reinitialiser-mot-de-passe/' . $user->getToken() . PHP_EOL . 'Cliquez ou copiez/collez ce lien et suivez les instructions indiquées sur la page.' . PHP_EOL . PHP_EOL . 'Bonne journée !');
-
+                    ->htmlTemplate('emails/password_reset.html.twig')
+                    ->context([
+                        'firstname' => $user->getFirstname(),
+                        'lastname' => $user->getLastname(),
+                        'token' => $user->getToken(),
+                ]);
                 $mailer->send($email);
 
                 $this->addFlash(

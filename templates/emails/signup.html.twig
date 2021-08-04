@@ -1,0 +1,32 @@
+{# '@images/' refers to the Twig namespace defined earlier #}
+<img src="{{ email.image('@images/mailing-maestra-top.png') }}" alt="Logo">
+
+{% apply inline_css %}
+    <style>
+        {# here, define your CSS styles as usual #}
+        h1, p {
+            color: #42330d;
+        }
+
+        
+    </style>
+
+
+<h1>Bonjour {{ firstname }}, bienvenue sur Maestra !</h1>
+
+<p>
+    Nous vous confirmons la création de votre compte sur le site <strong>maestra.fr</strong> et vous remercions pour votre confiance.
+</p>
+
+<p>
+    Merci de cliquer sur ce lien pour activer votre compte :
+    <strong>https://maestra.chrisdev.fr/confirm-email/{{token}}</strong>
+
+</p>
+
+<p>
+Merci et à très bientôt !</p>
+<p><strong>L'équipe Maestra</strong></p>
+{% endapply %}
+
+<img src="{{ email.image('@images/mailing-maestra-bottom.png') }}" alt="Logo">

@@ -7,12 +7,13 @@ use App\Repository\PillRepository;
 use App\Repository\ReviewPillRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
 
 /**
  * @Route("/admin/pill/review", name="admin_pill_review_")
@@ -139,11 +140,17 @@ class ReviewPillController extends AbstractController
 
         $user = $review->getUser();
 
-        $email = (new Email())
+        $email = (new TemplatedEmail())
             ->from('no-reply@maestra.fr')
-            ->to($user->getEmail())
+            ->to(new Address($user->getEmail()))
             ->subject('Avis validé sur Mestra.fr ♥')
-            ->text('Bonjour ' . $user->getFirstname() . PHP_EOL . 'Votre avis ' . $review->getTitle() .  ' pour la pilule ' . $pill->getName() . ' a bien été validé !' . PHP_EOL . 'Merci beaucoup pour ton retour !');
+            ->htmlTemplate('emails/review_validation.html.twig')
+            ->context([
+                'firstname' => $user->getFirstname(),
+                'lastname' => $user->getLastname(),
+                'review' => $review->getTitle(),
+                'pill' => $pill->getName()
+        ]);
 
         $mailer->send($email);
 
