@@ -49,28 +49,29 @@ class ReviewPillRepository extends ServiceEntityRepository
     */
 
     // 
-    
+
     public function findAllOrderedByStatus()
     {
-       $qb = $this->createQueryBuilder('review'); 
-       $qb->orderBy('review.status', 'ASC'); 
+        $qb = $this->createQueryBuilder('review');
+        $qb->orderBy('review.status', 'ASC');
+        $qb->orderBy('review.created_at', 'DESC');
 
-       $qb->leftJoin('review.user', 'user');
+        $qb->leftJoin('review.user', 'user');
         $qb->leftJoin('review.pill', 'pill');
         $qb->addSelect('user, pill');
 
-       $query = $qb->getQuery();
+        $query = $qb->getQuery();
 
-       return $query->getResult();
+        return $query->getResult();
     }
 
     public function findByStatus($status)
     {
-        $qb = $this->createQueryBuilder('review'); 
-        $qb->where('review.status = :status'); 
-        
+        $qb = $this->createQueryBuilder('review');
+        $qb->where('review.status = :status');
+
         $qb->setParameter(':status', $status);
-        
+
         $query = $qb->getQuery();
         return $query->getResult();
     }
@@ -79,9 +80,9 @@ class ReviewPillRepository extends ServiceEntityRepository
     public function findWithDetails($id)
     {
         $qb = $this->createQueryBuilder('review');
-        $qb->where('review.id = :id'); 
+        $qb->where('review.id = :id');
         $qb->setParameter(':id', $id);
-       
+
         $qb->leftJoin('review.user', 'user');
         $qb->leftJoin('review.pill', 'pill');
         $qb->addSelect('user, pill');
@@ -90,6 +91,4 @@ class ReviewPillRepository extends ServiceEntityRepository
 
         return $query->getOneOrNullResult();
     }
-    
-
 }
