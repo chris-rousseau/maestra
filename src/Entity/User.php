@@ -44,7 +44,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="json", nullable=true, options={"default" : "[]"})
+     * @ORM\Column(type="json")
      */
     private $roles = [];
 
@@ -94,7 +94,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $birthdate;
 
     /**
-     * @ORM\Column(type="string", length=128, nullable=true, options={"default" : "no-avatar.jpg"})
+     * @ORM\Column(type="string", length=128, nullable=true)
      * @Groups({"users", "reviews_list", "reviews_details", "pill_reviews"})
      */
     private $picture;
