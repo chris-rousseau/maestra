@@ -32,7 +32,7 @@ class SecurityController extends AbstractController
             $em->persist($user[0]);
             $em->flush();
 
-            return $this->json('Votre adresse email à bien été validée !', 200);
+            return $this->redirect('https://maestra.surge.sh/connexion');
         }
     }
 
