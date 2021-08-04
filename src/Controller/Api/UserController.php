@@ -88,7 +88,7 @@ class UserController extends AbstractController
                     ->context([
                         'firstname' => $user->getFirstname(),
                         'lastname' => $user->getLastname(),
-                ]);
+                    ]);
 
                 $mailer->send($email);
 

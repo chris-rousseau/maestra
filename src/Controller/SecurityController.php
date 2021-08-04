@@ -74,7 +74,7 @@ class SecurityController extends AbstractController
                         'firstname' => $user->getFirstname(),
                         'lastname' => $user->getLastname(),
                         'token' => $user->getToken(),
-                ]);
+                    ]);
                 $mailer->send($email);
 
                 $this->addFlash(

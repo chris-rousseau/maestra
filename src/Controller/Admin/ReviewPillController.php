@@ -150,7 +150,7 @@ class ReviewPillController extends AbstractController
                 'lastname' => $user->getLastname(),
                 'review' => $review->getTitle(),
                 'pill' => $pill->getName()
-        ]);
+            ]);
 
         $mailer->send($email);
 
