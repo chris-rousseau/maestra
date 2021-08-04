@@ -16,7 +16,7 @@ class UserTest extends WebTestCase
 
         $client->loginUser($testUser);
 
-        // Testing and asserting that as an ADMIN, we have access to the page
+        // Testing and asserting that as an ADMIN, we have access to the admin routes
         $client->request('GET', '/admin');
         $this->assertResponseIsSuccessful();
     }
@@ -25,14 +25,13 @@ class UserTest extends WebTestCase
     {
         $client = static::createClient();
 
-        // Simulating a connexion with a role moderator (ROLE_MODERATOR)        
-        // findOneByEmail ==> findOneBy(['email' => 'demo1@oclock.io'])
+        // Simulating a connexion with a role user (ROLE_USER)        
         $userRepository = static::getContainer()->get(UserRepository::class);
         $user = $userRepository->findOneByEmail('random@gmail.com');
         $client->loginUser($user);
 
-        // Testing and asserting that a user with a ROLE_MODERATOR doesn't have
-        // access to the admin page listing the pills (Error 403)
+        // Testing and asserting that a user with a ROLE_USER doesn't have
+        // access to the admin page listing the users (Error 403)
         $crawler = $client->request('GET', '/admin/user');
         $this->assertResponseStatusCodeSame(403);
     }

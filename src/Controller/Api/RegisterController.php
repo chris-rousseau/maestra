@@ -3,11 +3,12 @@
 namespace App\Controller\Api;
 
 use App\Entity\User;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -65,11 +66,20 @@ class RegisterController extends AbstractController
             );
         } else {
             // Sending of a confirmation email for the creation of the account
-            $email = (new Email())
+            $email = (new TemplatedEmail())
                 ->from('no-reply@maestra.fr')
-                ->to($user->getEmail())
+                ->to(new Address($user->getEmail()))
                 ->subject('Merci pour votre inscription sur Mestra.fr ♥')
+<<<<<<< HEAD
                 ->text('Bonjour ' . $user->getFirstname() . ', bienvenue sur Maestra !' . PHP_EOL . 'Nous vous confirmons la création de votre compte sur le site maestra.fr et vous remercions pour votre confiance.' . PHP_EOL . PHP_EOL . 'Merci de cliquer sur ce lien pour activer votre compte : https://maestra.chrisdev.fr/confirm-email/' . $user->getToken() . PHP_EOL . PHP_EOL . 'Merci et à très bientôt !' . PHP_EOL . 'L\'équipe Maestra');
+=======
+                ->htmlTemplate('emails/signup.html.twig')
+                ->context([
+                    'firstname' => $user->getFirstname(),
+                    'lastname' => $user->getLastname(),
+                    'token' => $user->getToken(),
+                ]);
+>>>>>>> dev
 
             $mailer->send($email);
 

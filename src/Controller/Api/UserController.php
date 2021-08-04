@@ -6,11 +6,12 @@ use App\Entity\ReviewPill;
 use App\Entity\User;
 use App\Repository\PillRepository;
 use App\Repository\ReviewPillRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Routing\Annotation\Route;
@@ -79,11 +80,21 @@ class UserController extends AbstractController
                     $passwordObj->newPassword
                 ));
 
-                $email = (new Email())
+                $email = (new TemplatedEmail())
                     ->from('no-reply@maestra.fr')
+<<<<<<< HEAD
                     ->to($user->getEmail())
                     ->subject('Mot de passe modifié - Maestra')
                     ->text('Bonjour ' . $user->getFirstname() . ',' . PHP_EOL . PHP_EOL . 'Votre mot de passe a été modifié, comme vous l\'avez demandé. Pour consulter ou changer les informations relatives à votre compte, cliquez sur le menu Mon compte en haut à droite du site.' . PHP_EOL . PHP_EOL . 'L\'équipe Maestra');
+=======
+                    ->to(new Address($user->getEmail()))
+                    ->subject('Modification du mot de passe - Maestra')
+                    ->htmlTemplate('emails/password_edit.html.twig')
+                    ->context([
+                        'firstname' => $user->getFirstname(),
+                        'lastname' => $user->getLastname(),
+                ]);
+>>>>>>> dev
 
                 $mailer->send($email);
 

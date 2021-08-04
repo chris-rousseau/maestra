@@ -1,0 +1,26 @@
+{# '@images/' refers to the Twig namespace defined earlier #}
+<img src="{{ email.image('@images/mailing-maestra-top.png') }}" alt="Logo">
+
+{% apply inline_css %}
+    <style>
+        {# here, define your CSS styles as usual #}
+        h1, p {
+            color: #42330d;
+        }
+
+        
+    </style>
+<h1>Bonjour {{ firstname }} !</h1>
+
+<p>
+  Nous avons le plaisir de t'annoncer que votre avis {{review}} pour la pilule {{pill}} a bien été validé !
+</p>
+
+<p>Il est désormais consultable sur maestra.fr. Merci beaucoup pour ton retour d'expérience !</p>
+
+<p>
+A très bientôt !</p>
+<p><strong>L'équipe Maestra</strong></p>
+{% endapply %}
+
+<img src="{{ email.image('@images/mailing-maestra-bottom.png') }}" alt="Logo">
