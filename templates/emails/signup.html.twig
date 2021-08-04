@@ -8,25 +8,31 @@
             color: #42330d;
         }
 
+        .container{
+            max-width: 600px;
+        }
         
     </style>
 
-
-<h1>Bonjour {{ firstname }}, bienvenue sur Maestra !</h1>
-
-<p>
-    Nous vous confirmons la création de votre compte sur le site <strong>maestra.fr</strong> et vous remercions pour votre confiance.
-</p>
-
-<p>
-    Merci de cliquer sur ce lien pour activer votre compte :
-    <strong>https://maestra.chrisdev.fr/confirm-email/{{token}}</strong>
-
-</p>
-
-<p>
-Merci et à très bientôt !</p>
-<p><strong>L'équipe Maestra</strong></p>
+<div class="container">
+    
+    <h1>Bonjour {{ firstname }}, bienvenue sur Maestra !</h1>
+    
+    <p>
+        Nous vous confirmons la création de votre compte sur le site <strong>maestra.fr</strong> et vous remercions pour votre confiance.
+    </p>
+    
+    <p>
+        Merci de cliquer sur ce lien pour activer votre compte :
+         <a href="https://maestra.chrisdev.fr/confirm-email/{{token}}"><strong>https://maestra.chrisdev.fr/confirm-email/{{token}}</strong></a>
+      
+    
+    </p>
+    
+    <p>
+    Merci et à très bientôt !</p>
+    <p><strong>L'équipe Maestra</strong></p>
+</div>
 {% endapply %}
 
 <img src="{{ email.image('@images/mailing-maestra-bottom.png') }}" alt="Logo">

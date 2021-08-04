@@ -59,7 +59,7 @@ class PillController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'La pilule à bien été ajoutée !'
+                'La pilule a bien été ajoutée !'
             );
 
             return $this->redirectToRoute('admin_pill_list');
@@ -82,7 +82,7 @@ class PillController extends AbstractController
 
         $this->addFlash(
             'danger',
-            'La pilule à bien été supprimée !'
+            'La pilule a bien été supprimée !'
         );
 
         return $this->redirectToRoute('admin_pill_list');
@@ -127,7 +127,7 @@ class PillController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'La pilule à bien été modifiée !'
+                'La pilule a bien été modifiée !'
             );
 
             return $this->redirectToRoute('admin_pill_list');

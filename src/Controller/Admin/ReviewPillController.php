@@ -36,7 +36,7 @@ class ReviewPillController extends AbstractController
 
         $this->addFlash(
             'success',
-            'L\'avis à bien été supprimé !'
+            'L\'avis a bien été supprimé !'
         );
 
         return $this->redirectToRoute('admin_pill_review_list');
@@ -167,7 +167,7 @@ class ReviewPillController extends AbstractController
 
         $this->addFlash(
             'success',
-            'L\'avis à bien été validé !'
+            'L\'avis a bien été validé !'
         );
 
         return $this->redirectToRoute('admin_pill_review_list');

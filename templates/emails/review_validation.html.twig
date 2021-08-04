@@ -3,33 +3,32 @@
 
 {% apply inline_css %}
 <style>
-	{
-		# here, define your CSS styles as usual #
-	}
-	h1,
-	p {
-		color: #42330d;
-	}
+	 {# here, define your CSS styles as usual #}
+        h1, p {
+            color: #42330d;
+        }
+
+        .container{
+            max-width: 600px;
+        }
 </style>
-<h1>Bonjour
-	{{ firstname }}
-	!</h1>
-
-<p>
-	Nous avons le plaisir de t'annoncer que votre avis "
-	{{review}}
-	"  pour la pilule
-	<strong>{{pill}}</strong>
-	a bien été validé !
-</p>
-
-<p>Il est désormais consultable sur maestra.fr. Merci beaucoup pour ton retour d'expérience !</p>
-
-<p>
-	A très bientôt !</p>
-<p>
-	<strong>L'équipe Maestra</strong>
-</p>
+<div class="container">
+	<h1>Bonjour
+		{{ firstname }}
+		!</h1>
+	
+	<p>
+		Nous avons le plaisir de t'annoncer que ton avis " {{review}} "  pour la pilule <strong>{{pill}}</strong> a bien été validé !
+	</p>
+	
+	<p>Il est désormais consultable sur maestra.fr. Merci beaucoup pour ton retour d'expérience !</p>
+	
+	<p>
+		A très bientôt !</p>
+	<p>
+		<strong>L'équipe Maestra</strong>
+	</p>
+</div>
 {% endapply %}
 
 <img src="{{ email.image('@images/mailing-maestra-bottom.png') }}" alt="Logo">
