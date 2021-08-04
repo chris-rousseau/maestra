@@ -58,6 +58,7 @@ class PillRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('pill'); // SELECT * FROM pill
         $qb->where('pill.name LIKE :name'); // WHERE name LIKE %name%
         $qb->setParameter(':name', "%$name%");
+        $qb->orderBy('pill.name', 'ASC');
         $query = $qb->getQuery();
         return $query->getResult();
     }
@@ -74,18 +75,18 @@ class PillRepository extends ServiceEntityRepository
         if ($interruption !== "all") {
             $qb->where('pill.interruption = :interruption');
         }
-       
-        if($type !== "all"){
+
+        if ($type !== "all") {
             $qb->andWhere('pill.type = :type');
         }
         if ($generation !== 0) {
             $qb->andWhere('pill.generation = :generation');
         }
-        if($undesirable !== "alpha"){
+        if ($undesirable !== "alpha") {
             $qb->orderBy('pill.' . $undesirable, 'ASC');
         } else {
             $qb->orderBy('pill.name', 'ASC');
-        }   
+        }
 
         if ($interruption !== "all") {
             $qb->setParameter(':interruption', $interruption);

@@ -142,11 +142,6 @@ class ReviewPillController extends AbstractController
 
         $email = (new TemplatedEmail())
             ->from('no-reply@maestra.fr')
-<<<<<<< HEAD
-            ->to($user->getEmail())
-            ->subject('✔️ Avis validé sur Maestra.fr')
-            ->text('Bonjour ' . $user->getFirstname() . ' !' . PHP_EOL . 'Votre avis ' . $review->getTitle() .  ' pour la pilule ' . $pill->getName() . ' a bien été validé !' . PHP_EOL . 'Merci beaucoup pour votre contribution et n\'hésitez pas à parler de Maestra autour de vous :)');
-=======
             ->to(new Address($user->getEmail()))
             ->subject('Avis validé sur Mestra.fr ♥')
             ->htmlTemplate('emails/review_validation.html.twig')
@@ -155,8 +150,7 @@ class ReviewPillController extends AbstractController
                 'lastname' => $user->getLastname(),
                 'review' => $review->getTitle(),
                 'pill' => $pill->getName()
-        ]);
->>>>>>> dev
+            ]);
 
         $mailer->send($email);
 

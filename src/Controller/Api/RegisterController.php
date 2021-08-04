@@ -70,16 +70,12 @@ class RegisterController extends AbstractController
                 ->from('no-reply@maestra.fr')
                 ->to(new Address($user->getEmail()))
                 ->subject('Merci pour votre inscription sur Mestra.fr ♥')
-<<<<<<< HEAD
-                ->text('Bonjour ' . $user->getFirstname() . ', bienvenue sur Maestra !' . PHP_EOL . 'Nous vous confirmons la création de votre compte sur le site maestra.fr et vous remercions pour votre confiance.' . PHP_EOL . PHP_EOL . 'Merci de cliquer sur ce lien pour activer votre compte : https://maestra.chrisdev.fr/confirm-email/' . $user->getToken() . PHP_EOL . PHP_EOL . 'Merci et à très bientôt !' . PHP_EOL . 'L\'équipe Maestra');
-=======
                 ->htmlTemplate('emails/signup.html.twig')
                 ->context([
                     'firstname' => $user->getFirstname(),
                     'lastname' => $user->getLastname(),
                     'token' => $user->getToken(),
                 ]);
->>>>>>> dev
 
             $mailer->send($email);
 

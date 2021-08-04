@@ -69,17 +69,12 @@ class SecurityController extends AbstractController
                     ->from('no-reply@maestra.fr')
                     ->to(new Address($user->getEmail()))
                     ->subject('Réinitialisation de votre mot de passe Maestra')
-<<<<<<< HEAD
-                    ->text('Bonjour ' . $user->getFirstname() . ' !' . PHP_EOL . 'Voici le lien pour réinitialiser votre mot de passe : https://maestra.chrisdev.fr/reinitialiser-mot-de-passe/' . $user->getToken() . PHP_EOL . 'Cliquez ou copiez/collez ce lien et suivez les instructions indiquées sur la page.' . PHP_EOL . PHP_EOL . 'L\'équipe Maestra');
-
-=======
                     ->htmlTemplate('emails/password_reset.html.twig')
                     ->context([
                         'firstname' => $user->getFirstname(),
                         'lastname' => $user->getLastname(),
                         'token' => $user->getToken(),
-                ]);
->>>>>>> dev
+                    ]);
                 $mailer->send($email);
 
                 $this->addFlash(
