@@ -53,8 +53,8 @@ class ReviewPillRepository extends ServiceEntityRepository
     public function findAllOrderedByStatus()
     {
         $qb = $this->createQueryBuilder('review');
-        $qb->orderBy('review.status', 'ASC');
-        $qb->orderBy('review.created_at', 'DESC');
+        $qb->addOrderBy('review.status', 'ASC');
+        $qb->addOrderBy('review.created_at', 'DESC');
 
         $qb->leftJoin('review.user', 'user');
         $qb->leftJoin('review.pill', 'pill');
