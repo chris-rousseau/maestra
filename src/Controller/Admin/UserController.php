@@ -33,7 +33,7 @@ class UserController extends AbstractController
 
         $this->addFlash(
             'success',
-            'L\'utilisateur à bien été upgradé en admin !'
+            'L\'utilisateur a bien été upgradé en admin !'
         );
 
         return $this->redirectToRoute('admin_user_list');
@@ -67,7 +67,7 @@ class UserController extends AbstractController
 
         $this->addFlash(
             'danger',
-            'L\'utilisateur à bien été supprimé !'
+            'L\'utilisateur a bien été supprimé !'
         );
 
         return $this->redirectToRoute('admin_user_list');
@@ -105,7 +105,7 @@ class UserController extends AbstractController
 
         $this->addFlash(
             'success',
-            'L\'utilisateur à bien été upgradé en modérateur !'
+            'L\'utilisateur a bien été upgradé en modérateur !'
         );
 
         return $this->redirectToRoute('admin_user_list');
@@ -140,7 +140,7 @@ class UserController extends AbstractController
 
         $this->addFlash(
             'success',
-            'L\'utilisateur à bien été rétrogradé en utilisateur classique !'
+            'L\'utilisateur a bien été rétrogradé en utilisateur classique !'
         );
 
         return $this->redirectToRoute('admin_user_list');
