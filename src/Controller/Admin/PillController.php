@@ -37,13 +37,14 @@ class PillController extends AbstractController
 
             if ($imagePill !== null) {
                 $pill->setPicture($imagePill);
+            } else {
+                $pill->setPicture('no-pill.jpg');
             }
 
             $slug = $slugger->slug($pill->getName());
 
             $pill->setSlug(strtolower($slug));
 
-            $pill->setPicture('no-pill.jpg');
             $pill->setCountReviews(0);
             $pill->setScoreAcne(0);
             $pill->setScoreLibido(0);
