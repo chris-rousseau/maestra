@@ -69,7 +69,7 @@ class RegisterController extends AbstractController
             $email = (new TemplatedEmail())
                 ->from('no-reply@maestra.fr')
                 ->to(new Address($user->getEmail()))
-                ->subject('Merci pour votre inscription sur Mestra.fr ♥')
+                ->subject('Merci pour votre inscription sur Maestra.fr ♥')
                 ->htmlTemplate('emails/signup.html.twig')
                 ->context([
                     'firstname' => $user->getFirstname(),

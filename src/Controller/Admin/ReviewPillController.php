@@ -152,7 +152,7 @@ class ReviewPillController extends AbstractController
         $email = (new TemplatedEmail())
             ->from('no-reply@maestra.fr')
             ->to(new Address($user->getEmail()))
-            ->subject('Avis validé sur Mestra.fr ♥')
+            ->subject('Avis validé sur Maestra.fr ♥')
             ->htmlTemplate('emails/review_validation.html.twig')
             ->context([
                 'firstname' => $user->getFirstname(),
